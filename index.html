@@ -31,7 +31,7 @@
         <div class="input-group">
             <label>1. 本月累積讚數</label>
             <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
-            <div id="rankDisplay" class="current-rank-tag">目前等級：</div>
+            <div id="rankDisplay" class="current-rank-tag">目前等級：一般用戶</div>
         </div>
 
         <div class="input-group">
@@ -48,27 +48,27 @@
         </div>
 
         <div class="input-group">
-            <label>3. 活動加倍倍數</label>
+            <label>3. 活動加倍倍數 (無加倍讚請填1)</label>
             <input type="number" id="multi" value="30">
         </div>
 
-        <button onclick="doCalc()">立即計算實戰預算</button>
+        <button onclick="doCalc()">立即試算實戰成本</button>
 
         <div id="resBoard" class="result-box">
             <div class="res-highlight">
-                <span style="font-size: 1.1rem;">🔥 預計還需送出</span>
+                <span style="font-size: 1.1rem;">🔥 建議刷入</span>
                 <span class="big-num"><span id="outGift">0</span> 顆 9999</span>
             </div>
             
             <div class="res-item"><span>預估台幣成本：</span><span class="res-val" id="outCash" style="color:#ffd700;">$0</span></div>
             <div class="res-item"><span>尚差讚數：</span><span class="res-val" id="outDiff">0</span></div>
-            <div class="res-item"><span>換算總罐頭：</span><span class="res-val" id="outCan">0</span></div>
+            <div class="res-item"><span>總需罐頭：</span><span class="res-val" id="outCan">0</span></div>
         </div>
 
         <div class="note">
             策略建議：<span style="color:#ffd700">升級優於續等</span> (跨月保留等級)<br>
-            實戰基準：12 顆 9999 ≈ 1000 萬讚 (30倍活動下)<br>
-            匯率參考：$1 台幣 ≈ 2 罐頭 (賈高賽匯率)<br>
+            實戰效率：一顆 9999 罐禮物 = 27,497 讚<br>
+            實戰匯率：$1 台幣 ≈ 2 罐頭 (賈高賽匯率)<br>
             <span style="color:#aaa;">我男朋友來了 製作 | 2026.03.30</span>
             <div class="thanks">數據提供：感謝 賈高賽 分享 30 倍實戰心得</div>
         </div>
@@ -94,26 +94,30 @@
             const target = parseFloat(document.getElementById('targetRank').value);
             const multi = parseFloat(document.getElementById('multi').value) || 1;
             
-            // 邏輯校對：
-            // 1. 賈高賽數據：12顆 9999 = 119,988 罐頭
-            // 2. 119,988 罐頭在 30 倍下 = 119,988 * 2.75 * 30 / 30 (誤)
-            // 簡化：一顆 9999 在 30 倍下約等於 824,917 讚
-            
+            // 根據提供數據校對：1倍時，一顆 9999罐 = 27,497 讚
+            const giftCan = 9999;
+            const zanPerGiftAtOne = 27497;
+            const exchangeRate = 0.5; // 罐頭/2 = 台幣
+
             let diff = target - curr;
             if (diff < 0) diff = 0;
 
-            // 算出總罐頭 (讚數 / (2.75 * 倍數))
-            const totalCan = Math.ceil(diff / (2.75 * multi));
+            // 1. 算出當前倍數下，一顆 9999 產出多少讚
+            const currentZanPerGift = zanPerGiftAtOne * multi;
+
+            // 2. 算出需要幾顆 9999 (取小數點一位供參考)
+            const giftNumExact = diff / currentZanPerGift;
+            const giftNumDisplay = giftNumExact.toFixed(1);
+
+            // 3. 算出總罐頭 (以剛好達標的顆數計算)
+            const totalCan = Math.ceil(giftNumExact * giftCan);
             
-            // 算出需要幾顆 9999 (總罐頭 / 9999)
-            const giftNum = (totalCan / 9999).toFixed(1);
-            
-            // 算出台幣 (總罐頭 / 2)
-            const cash = Math.ceil(totalCan * 0.5);
+            // 4. 算出總台幣
+            const cash = Math.ceil(totalCan * exchangeRate);
 
             document.getElementById('outDiff').innerText = diff.toLocaleString();
             document.getElementById('outCan').innerText = totalCan.toLocaleString();
-            document.getElementById('outGift').innerText = giftNum;
+            document.getElementById('outGift').innerText = giftNumDisplay;
             document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
             
             document.getElementById('resBoard').style.display = 'block';

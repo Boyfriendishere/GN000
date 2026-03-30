@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goodnight 貴族晉升</title>
+    <title>Goodnight 貴族助手</title>
     <style>
         :root { --gn-pink: #ff4d6d; --gn-dark: #121212; }
         body { font-family: sans-serif; background: var(--gn-dark); color: white; display: flex; justify-content: center; padding: 20px; }
@@ -16,7 +16,7 @@
         button { width: 100%; background: var(--gn-pink); color: white; border: none; padding: 18px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
         .result-box { background: rgba(255, 77, 109, 0.1); border: 1px dashed var(--gn-pink); padding: 20px; border-radius: 15px; margin-top: 25px; display: none; }
         .res-highlight { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #444; }
-        .big-num { color: #ffd700; font-size: 2rem; font-weight: bold; display: block; margin-top: 5px; }
+        .big-num { color: #ffd700; font-size: 2.2rem; font-weight: bold; display: block; margin-top: 5px; }
         .res-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 1rem; color: #ccc; }
         .res-val { color: white; font-weight: bold; }
         .note { font-size: 0.75rem; color: #666; margin-top: 25px; line-height: 1.6; text-align: center; }
@@ -26,16 +26,16 @@
 <body>
 
     <div class="card">
-        <h1>Goodnight 貴族晉升</h1>
+        <h1>Goodnight 貴族助手</h1>
 
         <div class="input-group">
-            <label> 1.主頁>貴族等級>左下角數字 </label>
+            <label>1. 本月累積讚數 (主頁>貴族等級>左下角)</label>
             <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
             <div id="rankDisplay" class="current-rank-tag">目前等級：</div>
         </div>
 
         <div class="input-group">
-            <label>2. 目標爵位</label>
+            <label>2. 目標晉升爵位</label>
             <select id="targetRank">
                 <option value="25500">劍客 (25,500)</option>
                 <option value="175500">騎士 (175,500)</option>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="input-group">
-            <label>3. 活動加倍倍數</label>
+            <label>3. 活動加倍倍數 (無加倍請填1)</label>
             <input type="number" id="multi" value="30">
         </div>
 
@@ -56,11 +56,10 @@
 
         <div id="resBoard" class="result-box">
             <div class="res-highlight">
-                <span style="font-size: 1.1rem;">🔥 建議刷入</span>
-                <span class="big-num"><span id="outGift">0</span> 顆 9999</span>
+                <span style="font-size: 1.1rem;">💰 預估晉升台幣成本</span>
+                <span class="big-num" id="outCash">$0</span>
             </div>
             
-            <div class="res-item"><span>預估台幣成本：</span><span class="res-val" id="outCash" style="color:#ffd700;">$0</span></div>
             <div class="res-item"><span>尚差讚數：</span><span class="res-val" id="outDiff">0</span></div>
             <div class="res-item"><span>總需罐頭：</span><span class="res-val" id="outCan">0</span></div>
         </div>
@@ -70,7 +69,7 @@
             實戰效率：一顆 9999 罐禮物 = 27,497 讚<br>
             實戰匯率：$1 台幣 ≈ 2 罐頭 (資深玩家提供)<br>
             <span style="color:#aaa;">我男朋友來了 製作 | 2026.03.30</span>
-            <div class="thanks">數據提供：感謝 甜甜小學 分享心得</div>
+            <div class="thanks">數據提供：感謝 賈高賽 分享心得</div>
         </div>
     </div>
 
@@ -94,7 +93,6 @@
             const target = parseFloat(document.getElementById('targetRank').value);
             const multi = parseFloat(document.getElementById('multi').value) || 1;
             
-            const giftCan = 9999;
             const zanPerGiftAtOne = 27497;
             const exchangeRate = 0.5;
 
@@ -103,16 +101,14 @@
 
             const currentZanPerGift = zanPerGiftAtOne * multi;
 
-            // 改為 Math.ceil 直接進位成整數顆
-            const giftNumCeil = Math.ceil(diff / currentZanPerGift);
-            
-            // 台幣與罐頭則根據實際要刷的整數顆數計算
-            const totalCan = giftNumCeil * giftCan;
+            // 算出需要多少罐頭 (讚數差 / (27497 * 倍數 / 9999))
+            // 簡化邏輯：先算需要幾顆禮物(含小數)，再換算回罐頭
+            const giftNumExact = diff / currentZanPerGift;
+            const totalCan = Math.ceil(giftNumExact * 9999);
             const cash = Math.ceil(totalCan * exchangeRate);
 
             document.getElementById('outDiff').innerText = diff.toLocaleString();
             document.getElementById('outCan').innerText = totalCan.toLocaleString();
-            document.getElementById('outGift').innerText = giftNumCeil; // 顯示整數
             document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
             
             document.getElementById('resBoard').style.display = 'block';

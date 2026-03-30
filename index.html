@@ -49,11 +49,11 @@
         </div>
 
         <div class="input-group">
-            <label>3. 活動加倍倍數 (無則填 1)</label>
+            <label>3. 活動加倍倍數 (老玩家推薦填 30)</label>
             <input type="number" id="multi" value="1" min="1">
         </div>
 
-        <button onclick="doCalc()">立即計算並顯示公式</button>
+        <button onclick="doCalc()">立即計算實戰預算</button>
 
         <div id="resBoard" class="result-box">
             <div class="res-section">
@@ -75,8 +75,9 @@
 
         <div class="note">
             計算基準：最高效率 2.75 讚/罐頭<br>
-            匯率參考：$20,000 / 32,400 罐 ($0.617/罐)<br>
+            匯率參考：老玩家經驗 $1 = 2 罐頭 ($0.5/罐)<br>
             <span class="highlight">我男朋友來了</span>：僅供估算參考，實際請以 App 為準<br>
+            感謝賈高賽提供算法<br>
             製作日期：2026.03.30
         </div>
     </div>
@@ -103,26 +104,22 @@
             const targetThreshold = parseFloat(document.getElementById('targetRank').value);
             const multiplier = parseFloat(document.getElementById('multi').value) || 1;
             const baseRate = 2.75;
-            const exchangeRate = 0.617;
+            const exchangeRate = 0.5; // 更新為老玩家匯率
 
-            // 1. 升級計算
             let diff = targetThreshold - currentTotal;
             if (diff < 0) diff = 0;
             const canCount = Math.ceil(diff / (baseRate * multiplier));
             const twdCost = Math.ceil(canCount * exchangeRate);
 
-            // 2. 續等計算 (60%)
             const keepThreshold = targetThreshold * 0.6;
             let kDiff = keepThreshold - currentTotal;
             if (kDiff < 0) kDiff = 0;
             const kCanCount = Math.ceil(kDiff / (baseRate * multiplier));
             const kTwdCost = Math.ceil(kCanCount * exchangeRate);
 
-            // 顯示公式文字
             document.getElementById('formulaUp').innerText = `公式：(${targetThreshold.toLocaleString()} 門檻 - ${currentTotal.toLocaleString()} 現有) ÷ (${baseRate} × ${multiplier}倍)`;
             document.getElementById('formulaKeep').innerText = `公式：(${targetThreshold.toLocaleString()} × 60% - ${currentTotal.toLocaleString()} 現有) ÷ (${baseRate} × ${multiplier}倍)`;
 
-            // 渲染結果
             document.getElementById('outDiff').innerText = diff.toLocaleString();
             document.getElementById('outCan').innerText = canCount.toLocaleString();
             document.getElementById('outCash').innerText = '$' + twdCost.toLocaleString();

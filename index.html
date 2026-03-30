@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goodnight 貴族助手</title>
+    <title>Goodnight 貴族等級計算</title>
     <style>
         :root { --gn-pink: #ff4d6d; --gn-dark: #121212; }
         body { font-family: sans-serif; background: var(--gn-dark); color: white; display: flex; justify-content: center; padding: 20px; }
@@ -30,12 +30,12 @@
 <body>
 
     <div class="card">
-        <h1>Goodnight 貴族助手</h1>
+        <h1>Goodnight 貴族等級計算</h1>
 
         <div class="input-group">
             <label>1. 本月累積讚數 (主頁>貴族等級>左下角)</label>
             <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
-            <div id="rankDisplay" class="current-rank-tag">目前等級：一般用戶</div>
+            <div id="rankDisplay" class="current-rank-tag">目前等級：</div>
         </div>
 
         <div class="input-group">
@@ -56,11 +56,11 @@
             <input type="number" id="multi" value="30">
         </div>
 
-        <button onclick="doCalc()">立即試算</button>
+        <button onclick="doCalc()">立即試算(水水水)</button>
 
         <div id="resBoard" class="result-box">
             <div class="res-highlight">
-                <span style="font-size: 1.1rem;">💰 預估晉升台幣成本</span>
+                <span style="font-size: 1.1rem;">💰 預估台幣成本</span>
                 <span class="big-num" id="outCash">$0</span>
             </div>
             
@@ -80,7 +80,7 @@
             實戰效率：一顆 9999 罐禮物 = 27,497 讚<br>
             實戰匯率：$1 台幣 ≈ 2 罐頭 (資深玩家提供)<br>
             <span style="color:#aaa;">我男朋友來了 製作 | 2026.03.30</span>
-            <div class="thanks">數據提供：感謝 賈高賽 分享心得</div>
+            <div class="thanks">感謝 賈高賽 分享心得</div>
         </div>
     </div>
 

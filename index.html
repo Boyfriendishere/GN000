@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goodnight 貴族計算</title>
+    <title>Goodnight 貴族爵位計算</title>
     <style>
         :root { --gn-pink: #ff4d6d; --gn-dark: #121212; }
         body { font-family: sans-serif; background: var(--gn-dark); color: white; display: flex; justify-content: center; padding: 20px; }
@@ -57,7 +57,7 @@
 <body>
 
     <div class="card">
-        <h1>Goodnight 貴族計算</h1>
+        <h1>Goodnight 貴族爵位計算</h1>
 
         <div class="input-group">
             <label>1. 本月累積讚數 (主頁>貴族等級>左下角)</label>
@@ -79,7 +79,7 @@
         </div>
 
         <div class="input-group">
-            <label>3. 活動加倍倍數</label>
+            <label>3. 加倍讚倍數</label>
             <input type="number" id="multi" value="30">
             <div class="quick-btn-grid">
                 <button class="btn-small" onclick="setMulti(30)">30x</button>
@@ -115,7 +115,7 @@
         <div class="note">
             實戰效率：一顆 9999 罐禮物 = 27,497 讚<br>
             實戰匯率：$1 台幣 ≈ 2 罐頭 (資深玩家提供)<br>
-            <span style="color:#aaa;">我男朋友來了 | 2026.03.31</span>
+            <span style="color:#aaa;">我男朋友來了 | 2026.03.30</span>
             <div class="thanks">感謝 賈高賽 分享心得</div>
         </div>
     </div>
@@ -138,9 +138,9 @@
 
         function updateRank() {
             const val = parseFloat(document.getElementById('currZan').value) || 0;
-            let name = "V4";
+            let name = "一般玩家";
             for (let r of ranks) { if (val >= r.val) { name = r.name; break; } }
-            document.getElementById('rankDisplay').innerText = "目前等級：" + name;
+            document.getElementById('rankDisplay').innerText = "目前爵位：" + name;
         }
 
         function doCalc() {

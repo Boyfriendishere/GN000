@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goodnight 貴族等級計算</title>
+    <title>Goodnight 貴族計算</title>
     <style>
         :root { --gn-pink: #ff4d6d; --gn-dark: #121212; }
         body { font-family: sans-serif; background: var(--gn-dark); color: white; display: flex; justify-content: center; padding: 20px; }
@@ -13,16 +13,43 @@
         label { display: block; margin-bottom: 5px; color: #888; font-size: 0.9rem; }
         select, input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #444; background: #2a2a2a; color: white; font-size: 1.1rem; box-sizing: border-box; }
         .current-rank-tag { margin-top: 5px; font-size: 0.9rem; color: #ffd700; font-weight: bold; }
-        button { width: 100%; background: var(--gn-pink); color: white; border: none; padding: 18px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
+        
+        /* 快捷按鈕組排版 */
+        .quick-btn-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 8px; 
+            margin-top: 10px; 
+        }
+        .btn-small { 
+            background: #333; 
+            color: #ccc; 
+            border: 1px solid #444; 
+            padding: 10px 5px; 
+            border-radius: 8px; 
+            font-size: 0.85rem; 
+            cursor: pointer; 
+            transition: 0.2s;
+            font-weight: bold;
+        }
+        .btn-small:hover { background: #444; color: white; border-color: var(--gn-pink); }
+        .btn-small:active { transform: scale(0.95); }
+        /* 讓「無加倍」佔兩格，比較好點 */
+        .btn-wide { grid-column: span 2; }
+
+        .btn-main { width: 100%; background: var(--gn-pink); color: white; border: none; padding: 18px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
+        
         .result-box { background: rgba(255, 77, 109, 0.1); border: 1px dashed var(--gn-pink); padding: 20px; border-radius: 15px; margin-top: 25px; display: none; }
         .res-highlight { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #444; }
         .big-num { color: #ffd700; font-size: 2.2rem; font-weight: bold; display: block; margin-top: 5px; }
         .res-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 1rem; color: #ccc; }
         .res-val { color: white; font-weight: bold; }
+        
         .strategy-box { background: rgba(255, 215, 0, 0.1); border-left: 4px solid #ffd700; padding: 15px; margin-top: 20px; border-radius: 4px; }
         .strategy-title { color: #ffd700; font-weight: bold; font-size: 0.95rem; margin-bottom: 8px; }
         .strategy-text { font-size: 0.85rem; color: #ddd; line-height: 1.6; }
         .important-tip { color: #ff4d6d; font-weight: bold; display: block; margin-top: 5px; }
+        
         .note { font-size: 0.75rem; color: #666; margin-top: 25px; line-height: 1.6; text-align: center; }
         .thanks { color: var(--gn-pink); font-weight: bold; margin-top: 10px; border-top: 1px solid #333; padding-top: 10px; font-size: 0.8rem; }
     </style>
@@ -30,16 +57,16 @@
 <body>
 
     <div class="card">
-        <h1>Goodnight 貴族等級計算</h1>
+        <h1>Goodnight 貴族計算</h1>
 
         <div class="input-group">
-            <label>1. 本月累積讚數 (主頁>貴族等級>左下角黃色數字)</label>
+            <label>1. 本月累積讚數 (主頁>貴族等級>左下角)</label>
             <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
             <div id="rankDisplay" class="current-rank-tag">目前等級：</div>
         </div>
 
         <div class="input-group">
-            <label>2. 目標晉升爵位</label>
+            <label>2. 目標爵位</label>
             <select id="targetRank">
                 <option value="25500">劍客 (25,500)</option>
                 <option value="175500">騎士 (175,500)</option>
@@ -52,11 +79,20 @@
         </div>
 
         <div class="input-group">
-            <label>3. 活動加倍倍數 (無加倍請填1)</label>
+            <label>3. 活動加倍倍數</label>
             <input type="number" id="multi" value="30">
+            <div class="quick-btn-grid">
+                <button class="btn-small" onclick="setMulti(30)">30x</button>
+                <button class="btn-small" onclick="setMulti(25)">25x</button>
+                <button class="btn-small" onclick="setMulti(20)">20x</button>
+                <button class="btn-small" onclick="setMulti(15)">15x</button>
+                <button class="btn-small" onclick="setMulti(10)">10x</button>
+                <button class="btn-small" onclick="setMulti(5)">5x</button>
+                <button class="btn-small btn-wide" onclick="setMulti(1)">無加倍</button>
+            </div>
         </div>
 
-        <button onclick="doCalc()">立即試算(水水水)</button>
+        <button class="btn-main" onclick="doCalc()">立即試算</button>
 
         <div id="resBoard" class="result-box">
             <div class="res-highlight">
@@ -69,17 +105,17 @@
         </div>
 
         <div class="strategy-box">
-            <div class="strategy-title">最佳策略</div>
+            <div class="strategy-title">💡 最佳策略</div>
             <div class="strategy-text">
                 1. <b>單數月晉升：</b>單月 (1,3,5...) 10-25號綁定最划算，享有當月+下月等級。<br>
-                2. <b>升等勝於續等：</b><span class="important-tip">「神王掉至尊再升等」比「神王續等」還划算！</span>此法則適用於任何爵位，避免在雙數月續等。
+                2. <b>升等勝於續等：</b><span class="important-tip">「神王掉至尊再升等」比「神王續等」還划算！</span>此法則適用於任何爵位。
             </div>
         </div>
 
         <div class="note">
             實戰效率：一顆 9999 罐禮物 = 27,497 讚<br>
             實戰匯率：$1 台幣 ≈ 2 罐頭 (資深玩家提供)<br>
-            <span style="color:#aaa;">我男朋友來了 製作 | 2026.03.30</span>
+            <span style="color:#aaa;">我男朋友來了 | 2026.03.31</span>
             <div class="thanks">感謝 賈高賽 分享心得</div>
         </div>
     </div>
@@ -92,9 +128,17 @@
             {name: "劍客", val: 25500}
         ];
 
+        function setMulti(val) {
+            document.getElementById('multi').value = val;
+            // 如果面板開著，切換倍數時自動重新計算結果
+            if (document.getElementById('resBoard').style.display === 'block') {
+                doCalc();
+            }
+        }
+
         function updateRank() {
             const val = parseFloat(document.getElementById('currZan').value) || 0;
-            let name = "一般用戶";
+            let name = "V4";
             for (let r of ranks) { if (val >= r.val) { name = r.name; break; } }
             document.getElementById('rankDisplay').innerText = "目前等級：" + name;
         }

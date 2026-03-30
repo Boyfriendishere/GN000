@@ -3,40 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goodnight 貴族預算助手</title>
+    <title>Goodnight 貴族晉升助手</title>
     <style>
         :root { --gn-pink: #ff4d6d; --gn-dark: #121212; }
         body { font-family: sans-serif; background: var(--gn-dark); color: white; display: flex; justify-content: center; padding: 20px; }
-        .card { background: #1e1e1e; width: 100%; max-width: 500px; padding: 25px; border-radius: 20px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1 { color: var(--gn-pink); text-align: center; font-size: 1.4rem; margin-bottom: 20px; }
+        .card { background: #1e1e1e; width: 100%; max-width: 480px; padding: 25px; border-radius: 20px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h1 { color: var(--gn-pink); text-align: center; font-size: 1.5rem; margin-bottom: 25px; }
         .input-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; color: #888; font-size: 0.9rem; }
-        select, input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #444; background: #2a2a2a; color: white; font-size: 1rem; box-sizing: border-box; }
-        .current-rank-tag { margin-top: 5px; font-size: 0.85rem; color: #ffd700; font-weight: bold; }
-        button { width: 100%; background: var(--gn-pink); color: white; border: none; padding: 18px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        select, input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #444; background: #2a2a2a; color: white; font-size: 1.1rem; box-sizing: border-box; }
+        .current-rank-tag { margin-top: 5px; font-size: 0.9rem; color: #ffd700; font-weight: bold; }
+        button { width: 100%; background: var(--gn-pink); color: white; border: none; padding: 18px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
         .result-box { background: rgba(255, 77, 109, 0.1); border: 1px dashed var(--gn-pink); padding: 20px; border-radius: 15px; margin-top: 25px; display: none; }
-        .res-section { margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 10px; }
-        .res-title { color: var(--gn-pink); font-size: 1rem; font-weight: bold; margin-bottom: 10px; }
-        .formula { font-size: 0.75rem; color: #888; margin-bottom: 8px; font-style: italic; background: #252525; padding: 5px; border-radius: 5px; }
-        .res-item { display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .res-val { color: #ffd700; font-weight: bold; font-size: 1.1rem; }
-        .note { font-size: 0.75rem; color: #666; margin-top: 20px; line-height: 1.6; text-align: center; }
-        .highlight { color: #aaa; font-weight: bold; }
+        .res-highlight { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #444; }
+        .big-num { color: #ffd700; font-size: 2rem; font-weight: bold; display: block; margin-top: 5px; }
+        .res-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 1rem; color: #ccc; }
+        .res-val { color: white; font-weight: bold; }
+        .note { font-size: 0.75rem; color: #666; margin-top: 25px; line-height: 1.6; text-align: center; }
+        .thanks { color: var(--gn-pink); font-weight: bold; margin-top: 10px; border-top: 1px solid #333; padding-top: 10px; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h1>💎 貴族升級/續等計算機</h1>
+        <h1>💎 貴族晉升助手</h1>
 
         <div class="input-group">
-            <label>1. 本月目前已累積讚數</label>
-            <input type="number" id="currTotalZan" placeholder="輸入目前讚數" value="0" oninput="updateCurrentRank()">
+            <label>1. 本月累積讚數</label>
+            <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
             <div id="rankDisplay" class="current-rank-tag">目前等級：一般用戶</div>
         </div>
 
         <div class="input-group">
-            <label>2. 欲達成/續等之爵位</label>
+            <label>2. 目標晉升爵位</label>
             <select id="targetRank">
                 <option value="25500">劍客 (25,500)</option>
                 <option value="175500">騎士 (175,500)</option>
@@ -49,36 +48,29 @@
         </div>
 
         <div class="input-group">
-            <label>3. 活動加倍倍數 (無活動填寫1)</label>
-            <input type="number" id="multi" value="1" min="1">
+            <label>3. 活動加倍倍數 (衝榜建議填 30)</label>
+            <input type="number" id="multi" value="30">
         </div>
 
         <button onclick="doCalc()">立即計算實戰預算</button>
 
         <div id="resBoard" class="result-box">
-            <div class="res-section">
-                <div class="res-title">【本月升級預估】</div>
-                <div id="formulaUp" class="formula"></div>
-                <div class="res-item"><span>尚差讚數：</span><span class="res-val" id="outDiff">0</span></div>
-                <div class="res-item"><span>所需罐頭：</span><span class="res-val" id="outCan">0</span></div>
-                <div class="res-item"><span>預估台幣：</span><span class="res-val" id="outCash">0</span></div>
+            <div class="res-highlight">
+                <span style="font-size: 1.1rem;">🔥 預計還需送出</span>
+                <span class="big-num"><span id="outGift">0</span> 顆 9999</span>
             </div>
-
-            <div class="res-section" style="border:none;">
-                <div class="res-title">【本月續等預估 (60%)】</div>
-                <div id="formulaKeep" class="formula"></div>
-                <div class="res-item"><span>續等尚差：</span><span class="res-val" id="keepDiff">0</span></div>
-                <div class="res-item"><span>續等罐頭：</span><span class="res-val" id="keepCan">0</span></div>
-                <div class="res-item"><span>續等台幣：</span><span class="res-val" id="keepCash">0</span></div>
-            </div>
+            
+            <div class="res-item"><span>預估台幣成本：</span><span class="res-val" id="outCash" style="color:#ffd700;">$0</span></div>
+            <div class="res-item"><span>尚差讚數：</span><span class="res-val" id="outDiff">0</span></div>
+            <div class="res-item"><span>換算總罐頭：</span><span class="res-val" id="outCan">0</span></div>
         </div>
 
         <div class="note">
-            計算基準：最高效率 2.75 讚/罐頭<br>
-            匯率參考：老玩家經驗 $1 = 2 罐頭 ($0.5/罐)<br>
-            <span class="highlight">我男朋友來了</span>：僅供估算參考，實際請以 App 為準<br>
-            感謝 甜甜小學 提供算法<br>
-            製作日期：2026.03.30
+            策略建議：<span style="color:#ffd700">升級優於續等</span> (跨月保留等級)<br>
+            實戰基準：12 顆 9999 ≈ 1000 萬讚 (30倍活動下)<br>
+            匯率參考：$1 台幣 ≈ 2 罐頭 (賈高賽匯率)<br>
+            <span style="color:#aaa;">我男朋友來了 製作 | 2026.03.30</span>
+            <div class="thanks">數據提供：感謝 賈高賽 分享 30 倍實戰心得</div>
         </div>
     </div>
 
@@ -90,43 +82,39 @@
             {name: "劍客", val: 25500}
         ];
 
-        function updateCurrentRank() {
-            const val = parseFloat(document.getElementById('currTotalZan').value) || 0;
-            let rankName = "一般用戶";
-            for (let r of ranks) {
-                if (val >= r.val) { rankName = r.name; break; }
-            }
-            document.getElementById('rankDisplay').innerText = "目前等級：" + rankName;
+        function updateRank() {
+            const val = parseFloat(document.getElementById('currZan').value) || 0;
+            let name = "一般用戶";
+            for (let r of ranks) { if (val >= r.val) { name = r.name; break; } }
+            document.getElementById('rankDisplay').innerText = "目前等級：" + name;
         }
 
         function doCalc() {
-            const currentTotal = parseFloat(document.getElementById('currTotalZan').value) || 0;
-            const targetThreshold = parseFloat(document.getElementById('targetRank').value);
-            const multiplier = parseFloat(document.getElementById('multi').value) || 1;
-            const baseRate = 2.75;
-            const exchangeRate = 0.5; // 更新為老玩家匯率
-
-            let diff = targetThreshold - currentTotal;
+            const curr = parseFloat(document.getElementById('currZan').value) || 0;
+            const target = parseFloat(document.getElementById('targetRank').value);
+            const multi = parseFloat(document.getElementById('multi').value) || 1;
+            
+            // 邏輯校對：
+            // 1. 賈高賽數據：12顆 9999 = 119,988 罐頭
+            // 2. 119,988 罐頭在 30 倍下 = 119,988 * 2.75 * 30 / 30 (誤)
+            // 簡化：一顆 9999 在 30 倍下約等於 824,917 讚
+            
+            let diff = target - curr;
             if (diff < 0) diff = 0;
-            const canCount = Math.ceil(diff / (baseRate * multiplier));
-            const twdCost = Math.ceil(canCount * exchangeRate);
 
-            const keepThreshold = targetThreshold * 0.6;
-            let kDiff = keepThreshold - currentTotal;
-            if (kDiff < 0) kDiff = 0;
-            const kCanCount = Math.ceil(kDiff / (baseRate * multiplier));
-            const kTwdCost = Math.ceil(kCanCount * exchangeRate);
-
-            document.getElementById('formulaUp').innerText = `公式：(${targetThreshold.toLocaleString()} 門檻 - ${currentTotal.toLocaleString()} 現有) ÷ (${baseRate} × ${multiplier}倍)`;
-            document.getElementById('formulaKeep').innerText = `公式：(${targetThreshold.toLocaleString()} × 60% - ${currentTotal.toLocaleString()} 現有) ÷ (${baseRate} × ${multiplier}倍)`;
+            // 算出總罐頭 (讚數 / (2.75 * 倍數))
+            const totalCan = Math.ceil(diff / (2.75 * multi));
+            
+            // 算出需要幾顆 9999 (總罐頭 / 9999)
+            const giftNum = (totalCan / 9999).toFixed(1);
+            
+            // 算出台幣 (總罐頭 / 2)
+            const cash = Math.ceil(totalCan * 0.5);
 
             document.getElementById('outDiff').innerText = diff.toLocaleString();
-            document.getElementById('outCan').innerText = canCount.toLocaleString();
-            document.getElementById('outCash').innerText = '$' + twdCost.toLocaleString();
-
-            document.getElementById('keepDiff').innerText = kDiff.toLocaleString();
-            document.getElementById('keepCan').innerText = kCanCount.toLocaleString();
-            document.getElementById('keepCash').innerText = '$' + kTwdCost.toLocaleString();
+            document.getElementById('outCan').innerText = totalCan.toLocaleString();
+            document.getElementById('outGift').innerText = giftNum;
+            document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
             
             document.getElementById('resBoard').style.display = 'block';
         }

@@ -11,6 +11,7 @@
             --brand-pink: #e8659a; --brand-gold: #f0b942;
             --card-bg: rgba(23, 28, 36, 0.9); --border: rgba(255, 255, 255, 0.08);
             --t1: rgba(255,255,255,0.94); --t2: rgba(255,255,255,0.52); --t3: rgba(255,255,255,0.24);
+            /* 貴族漸層色定義 */
             --rank-0-start: #444; --rank-0-end: #666;
             --rank-1-start: #2c3e50; --rank-1-end: #bdc3c7;
             --rank-2-start: #1a4d2e; --rank-2-end: #2ecc71;
@@ -110,12 +111,12 @@
             </div>
         </div>
         <div class="strategy-box">
-            <b>不建議續等</b><br>
+            <b>續等不划算</b><br>
             掉下再升比原階續等划算。單數月 10-25 號綁定最優。<br>
             例：神王需 2000萬讚，續等要 60% (1200萬)，<br>
             但掉回至尊再升神王只要 1000萬讚。
         </div>
-        <div class="note">讚與罐頭基準非線性<br>匯率：NT$1 ≈ 2 罐頭<br>我男朋友來了 | 2026.03.31<div class="thanks">感謝 賈高賽 數據提供及驗證</div></div>
+        <div class="note">基準：1 顆 9999 罐 = 27,497 讚<br>匯率：NT$1 ≈ 2 罐頭<br>我男朋友來了 | 2026.03.31<div class="thanks">感謝 賈高賽 分享心得</div></div>
     </div>
 
     <script>
@@ -147,29 +148,34 @@
             const data = bibleData[multi] || bibleData[1];
 
             let count9999 = 0, count3000 = 0, count1000 = 0, count300 = 0;
-            let tempDiff = diff;
+            let currentZan = 0;
 
-            count9999 = Math.floor(tempDiff / data.g9999);
-            tempDiff -= count9999 * data.g9999;
+            // 1. 大面額優先
+            count9999 = Math.floor(diff / data.g9999);
+            currentZan = count9999 * data.g9999;
 
-            if (tempDiff >= 1) {
-                if (tempDiff >= 1) {
-                    let needed3000 = Math.floor(tempDiff / data.g3000);
-                    count3000 += needed3000;
-                    tempDiff -= needed3000 * data.g3000;
-                }
-                if (tempDiff >= 1) {
-                    let needed1000 = Math.floor(tempDiff / data.g1000);
-                    count1000 += needed1000;
-                    tempDiff -= needed1000 * data.g1000;
-                }
-                if (tempDiff >= 1) {
-                    let needed300 = Math.ceil(tempDiff / data.g300);
-                    count300 += needed300;
-                    tempDiff -= needed300 * data.g300;
+            // 2. 判斷補齊 (使用 10 讚容錯牆，解決 20,022,840 浮點數溢位問題)
+            const tolerance = 10; 
+            
+            if (currentZan < (diff - tolerance)) {
+                let remaining = diff - currentZan;
+                
+                // 補 3000
+                count3000 = Math.ceil(remaining / data.g3000);
+                let check3000 = currentZan + (count3000 * data.g3000);
+
+                if (check3000 < (diff - tolerance)) {
+                    let remainingAfter3000 = diff - check3000;
+                    count1000 = Math.ceil(remainingAfter3000 / data.g1000);
+                    let check1000 = check3000 + (count1000 * data.g1000);
+
+                    if (check1000 < (diff - tolerance)) {
+                        count300 = Math.ceil((diff - check1000) / data.g300);
+                    }
                 }
             }
 
+            // 進位清理
             if (count300 * data.g300 >= data.g1000) { count1000++; count300 = 0; }
             if (count1000 * data.g1000 >= data.g3000) { count3000++; count1000 = 0; }
             if (count3000 * data.g3000 >= data.g9999) { count9999++; count3000 = 0; }

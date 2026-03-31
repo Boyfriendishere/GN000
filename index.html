@@ -4,142 +4,220 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Goodnight貴族</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* 基礎品牌色 */
             --brand-pink: #e8659a;
             --brand-gold: #f0b942;
-            --card-bg: rgba(23, 28, 36, 0.85);
-            --border-color: rgba(255, 255, 255, 0.1);
+            --brand-gold-glow: rgba(240, 185, 66, 0.45);
+            
+            /* 介面底色與邊框 */
+            --card-bg: rgba(23, 28, 36, 0.9);
+            --border: rgba(255, 255, 255, 0.08);
+            --t1: rgba(255,255,255,0.94);
+            --t2: rgba(255,255,255,0.52);
+            --t3: rgba(255,255,255,0.24);
+
+            /* === 貴族專屬漸層色定義 (Designer defined) === */
+            /* 0. 一般玩家 (預設粉紅) */
+            --rank-0-start: transparent; --rank-0-end: rgba(232, 101, 154, 0.5);
+            /* 1. 劍客 (灰黑 to 灰白) */
+            --rank-1-start: #2c3e50; --rank-1-end: #bdc3c7;
+            /* 2. 騎士 (暗綠 to 亮綠) */
+            --rank-2-start: #1a531a; --rank-2-end: #2ecc71;
+            /* 3. 伯爵 (暗藍 to 亮藍) */
+            --rank-3-start: #1a3c5a; --rank-3-end: #3498db;
+            /* 4. 公爵 (暗紫 to 亮紫) */
+            --rank-4-start: #4b0082; --rank-4-end: #9b59b6;
+            /* 5. 教皇 (暗紅 to 亮紅) */
+            --rank-5-start: #8b0000; --rank-5-end: #e74c3c;
+            /* 6. 至尊 (黑 to 黑金) */
+            --rank-6-start: #0a0a0a; --rank-6-end: #f0b942;
+            /* 7. 神王 (亮青 to 暗青) */
+            --rank-7-start: #1abc9c; --rank-7-end: #16a085;
+            /* (隱藏 V1-V4 預設) */
+            --rank-v-start: #333; --rank-v-end: #666;
+
+            /* 動態變數 (由 JS 控制) */
+            --current-rank-start: var(--rank-0-start);
+            --current-rank-end: var(--rank-0-end);
+            --target-rank-start: var(--rank-7-start);
+            --target-rank-end: var(--rank-7-end);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: "PingFang TC", "Inter", sans-serif;
-            background: radial-gradient(circle at top right, #1a0a14, #05070a);
-            color: #e6edf3;
+            font-family: 'Noto Sans TC', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0a14 0%, #071018 45%, #030608 100%);
+            color: var(--t1);
             display: flex;
             justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 40px 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 460px;
-            padding: 40px 30px;
-            border-radius: 32px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-            backdrop-filter: blur(20px);
+            align-items: flex-start;
+            padding: 52px 20px 88px;
+            overflow-x: hidden;
             position: relative;
         }
 
-        .card::before {
-            content: "";
+        /* 漂浮光球 - 與 GN711 同步 */
+        .orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(80px); }
+        .orb-1 {
+            width: 650px; height: 520px;
+            background: radial-gradient(circle, rgba(232,101,154,0.1) 0%, transparent 70%);
+            top: -150px; right: -160px;
+            animation: orb-drift 14s ease-in-out infinite alternate;
+        }
+        .orb-2 {
+            width: 420px; height: 380px;
+            background: radial-gradient(circle, rgba(240,185,66,0.08) 0%, transparent 70%);
+            bottom: 5%; left: -80px;
+            animation: orb-drift 18s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes orb-drift {
+            from { transform: translate(0, 0) scale(1); }
+            to   { transform: translate(-25px, 35px) scale(1.07); }
+        }
+
+        .card {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 460px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 36px;
+            padding: 48px 34px 44px;
+            backdrop-filter: blur(48px) saturate(180%);
+            -webkit-backdrop-filter: blur(48px) saturate(180%);
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset, 0 50px 100px rgba(0,0,0,0.6);
+            animation: card-in 0.75s cubic-bezier(0.22,1,0.36,1) both;
+            overflow: hidden;
+        }
+
+        @keyframes card-in {
+            from { opacity: 0; transform: translateY(32px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* === 動態貴族狀態列 === */
+        .rank-status-bar {
             position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: linear-gradient(45deg, var(--brand-pink), transparent, var(--brand-gold));
-            z-index: -1;
-            border-radius: 33px;
-            opacity: 0.2;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--current-rank-start), var(--current-rank-end), transparent);
+            box-shadow: 0 2px 10px var(--current-rank-end);
+            transition: all 0.5s ease;
         }
 
         h1 {
-            background: linear-gradient(135deg, #fff 0%, var(--brand-pink) 100%);
+            font-family: 'Sora', sans-serif;
+            background: linear-gradient(135deg, #ffffff 10%, var(--brand-pink) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 35px;
+            font-size: 1.75rem;
+            margin-bottom: 44px;
             font-weight: 800;
             letter-spacing: 2px;
         }
 
+        h1::after {
+            content: '';
+            display: block;
+            width: 36px; height: 2px;
+            background: linear-gradient(90deg, var(--brand-pink), transparent);
+            margin: 14px auto 0;
+            border-radius: 2px;
+        }
+
         label {
-            color: #8b949e;
-            font-size: 0.8rem;
+            font-family: 'Sora', sans-serif;
+            color: var(--t2);
+            font-size: 0.7rem;
             font-weight: 600;
-            margin-left: 10px;
             margin-bottom: 10px;
             display: block;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
-        input, select {
+        .input-group { margin-bottom: 30px; }
+
+        input[type="number"], select {
             width: 100%;
-            padding: 18px;
+            padding: 17px 22px;
             border-radius: 18px;
-            border: 1px solid rgba(255,255,255,0.05);
-            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.07);
+            background: rgba(0,0,0,0.28);
             color: white;
-            font-size: 1.3rem;
+            font-family: 'Sora', sans-serif;
+            font-size: 1.25rem;
             box-sizing: border-box;
             outline: none;
-            transition: 0.4s;
+            transition: all 0.3s;
+            backdrop-filter: blur(12px);
             -webkit-appearance: none;
         }
 
         input:focus, select:focus {
-            border-color: var(--brand-pink);
-            background: rgba(0, 0, 0, 0.5);
+            border-color: rgba(232, 101, 154, 0.4);
+            background: rgba(0,0,0,0.42);
+            box-shadow: 0 0 24px rgba(232, 101, 154, 0.1);
         }
 
         select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(232,101,154,0.8)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 20px center;
-            padding-right: 48px;
+            background-position: right 22px center;
             cursor: pointer;
+            font-size: 1.1rem;
         }
-
-        select option { background: #0f1218; color: #e6edf3; }
 
         .current-rank-tag {
             display: inline-block;
             margin-top: 12px;
-            margin-left: 4px;
             padding: 6px 16px;
             background: rgba(240, 185, 66, 0.08);
-            border: 1px solid rgba(240, 185, 66, 0.2);
+            border: 1px solid rgba(240, 185, 66, 0.15);
             border-radius: 50px;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--brand-gold);
             font-weight: 700;
-            letter-spacing: 0.5px;
+            transition: all 0.5s ease;
         }
 
         .quick-btn-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin: 15px 0 0 0;
+            gap: 10px;
+            margin-top: 12px;
         }
 
         .btn-small {
-            background: rgba(255, 255, 255, 0.03);
-            color: #8b949e;
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.03);
+            color: var(--t2);
+            border: 1px solid rgba(255,255,255,0.07);
             padding: 15px 0;
-            border-radius: 16px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 15px;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.85rem;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
         }
 
-        .btn-small:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-        }
+        .btn-small:hover { background: rgba(232, 101, 154, 0.08); color: #fff; transform: translateY(-1px); }
 
         .btn-small.active {
             background: linear-gradient(135deg, var(--brand-pink), var(--brand-gold));
             color: white;
             border: none;
-            box-shadow: 0 10px 20px rgba(232, 101, 154, 0.3);
+            box-shadow: 0 10px 28px rgba(232,101,154,0.35);
             transform: translateY(-3px);
         }
 
@@ -148,212 +226,235 @@
         .btn-main {
             width: 100%;
             background: linear-gradient(135deg, var(--brand-pink), #c0446e);
-            color: white;
+            color: #fff;
             border: none;
             padding: 18px;
             border-radius: 50px;
-            font-size: 1.1rem;
+            font-family: 'Sora', sans-serif;
             font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
-            margin-top: 30px;
-            transition: 0.3s;
-            letter-spacing: 1.5px;
-            box-shadow: 0 8px 25px rgba(232, 101, 154, 0.3);
+            margin-top: 36px;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            letter-spacing: 2px;
+            box-shadow: 0 8px 30px rgba(232, 101, 154, 0.3);
         }
 
-        .btn-main:hover {
-            filter: brightness(1.1);
-            box-shadow: 0 14px 35px rgba(232, 101, 154, 0.45);
-            transform: translateY(-2px);
-        }
+        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(232, 101, 154, 0.45); filter: brightness(1.1); }
 
         .result-panel {
-            margin-top: 40px;
-            border-radius: 28px;
+            margin-top: 10px;
+            border-radius: 26px;
             overflow: hidden;
-            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.2) 100%);
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(240, 185, 66, 0.15);
+            background: rgba(240, 185, 66, 0.03);
+            backdrop-filter: blur(24px);
             display: none;
         }
 
-        .res-header {
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        .res-header { padding: 32px 24px 24px; text-align: center; position: relative; }
+        .res-header::after {
+            content: ''; position: absolute; bottom: 0; left: 20px; right: 20px; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(240, 185, 66, 0.1), transparent);
         }
 
-        .res-label {
-            font-size: 0.85rem;
-            color: #8b949e;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
+        .res-label { font-family: 'Sora', sans-serif; font-size: 0.68rem; color: var(--t2); letter-spacing: 3px; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
+        
+        /* 金額數字同步漸層色 */
         .res-money {
-            font-size: 3.2rem;
+            font-family: 'Sora', sans-serif;
+            font-size: 3.4rem;
             font-weight: 800;
-            color: var(--brand-gold);
-            text-shadow: 0 0 30px rgba(240, 185, 66, 0.35);
+            background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(255,255,255,0.2);
+            display: block;
+            line-height: 1;
         }
 
-        .details { padding: 25px; font-size: 0.9rem; }
-
-        .row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            color: #c9d1d9;
-        }
-
-        .row span:last-child { color: #fff; font-weight: 600; }
+        .details { padding: 22px 24px 8px; }
+        .row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.88rem; color: var(--t2); }
+        .row:last-child { border-bottom: none; }
+        .row .val-white { color: var(--t1); font-weight: 600; font-family: 'Sora', sans-serif; }
 
         .strategy-box {
             background: rgba(240, 185, 66, 0.03);
-            border: 1px dashed rgba(240, 185, 66, 0.25);
-            padding: 20px;
-            margin-top: 45px;
+            border: 1px dashed rgba(240, 185, 66, 0.2);
+            padding: 22px 24px;
             border-radius: 20px;
-            font-size: 0.85rem;
-            color: #8b949e;
-            line-height: 1.8;
+            font-size: 0.82rem;
+            color: var(--t2);
+            line-height: 1.9;
+            margin-top: 36px;
         }
 
-        .strategy-box b {
-            color: var(--brand-gold);
-            display: block;
-            margin-bottom: 6px;
-        }
+        .strategy-box b { color: var(--brand-gold); display: block; margin-bottom: 8px; font-family: 'Sora', sans-serif; font-size: 0.78rem; }
 
-        .note {
-            font-size: 0.75rem;
-            color: #484f58;
-            margin-top: 50px;
-            text-align: center;
-        }
-
-        .thanks {
-            color: var(--brand-pink);
-            font-weight: bold;
-            margin-top: 15px;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
-            opacity: 0.8;
-        }
+        .note { font-size: 0.7rem; color: var(--t3); margin-top: 48px; text-align: center; line-height: 2.2; }
+        .thanks { color: var(--brand-pink); font-weight: 700; margin-top: 14px; font-size: 0.72rem; opacity: 0.7; }
     </style>
 </head>
 <body onload="updateRank()">
 
-<div class="card">
-    <h1>🎀Goodnight貴族</h1>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 
-    <div class="input-group">
-        <label>累積讚數 (主頁 › 貴族等級 › 左下黃色數字)</label>
-        <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
-        <div id="rankDisplay" class="current-rank-tag">目前爵位：</div>
-    </div>
+    <div class="card">
+        <div class="rank-status-bar" id="statusBar"></div>
 
-    <div class="input-group" style="margin-top: 28px;">
-        <label>選擇目標</label>
-        <select id="targetRank">
-            <option value="25500">劍客 (25,500)</option>
-            <option value="175500">騎士 (175,500)</option>
-            <option value="425500">伯爵 (425,500)</option>
-            <option value="2425500">公爵 (2,425,500)</option>
-            <option value="5000000">教皇 (5,000,000)</option>
-            <option value="10000000">至尊 (10,000,000)</option>
-            <option value="20000000" selected>神王 (20,000,000)</option>
-        </select>
-    </div>
+        <h1>🎀Goodnight貴族</h1>
 
-    <div class="input-group" style="margin-top: 28px;">
-        <label>加倍讚倍數</label>
-        <input type="number" id="multi" value="30">
-        <div class="quick-btn-grid">
-            <button class="btn-small active" onclick="setMulti(30, this)">30x</button>
-            <button class="btn-small" onclick="setMulti(25, this)">25x</button>
-            <button class="btn-small" onclick="setMulti(20, this)">20x</button>
-            <button class="btn-small" onclick="setMulti(15, this)">15x</button>
-            <button class="btn-small" onclick="setMulti(10, this)">10x</button>
-            <button class="btn-small" onclick="setMulti(5, this)">5x</button>
-            <button class="btn-small btn-wide" onclick="setMulti(1, this)">無加倍</button>
+        <div class="input-group">
+            <label>累積讚數 (Charm Data)</label>
+            <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
+            <div id="rankDisplay" class="current-rank-tag">目前爵位：V0</div>
+        </div>
+
+        <div class="input-group">
+            <label>目標晉升爵位</label>
+            <select id="targetRank" onchange="updateTargetGradients()">
+                <option value="25500" data-rank="1">劍客 (25,500)</option>
+                <option value="175500" data-rank="2">騎士 (175,500)</option>
+                <option value="425500" data-rank="3">伯爵 (425,500)</option>
+                <option value="2425500" data-rank="4">公爵 (2,425,500)</option>
+                <option value="5000000" data-rank="5">教皇 (5,000,000)</option>
+                <option value="10000000" data-rank="6">至尊 (10,000,000)</option>
+                <option value="20000000" data-rank="7" selected>神王 (20,000,000)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>加倍讚倍數</label>
+            <input type="number" id="multi" value="30">
+            <div class="quick-btn-grid">
+                <button class="btn-small active" onclick="setMulti(30, this)">30x</button>
+                <button class="btn-small" onclick="setMulti(25, this)">25x</button>
+                <button class="btn-small" onclick="setMulti(20, this)">20x</button>
+                <button class="btn-small" onclick="setMulti(15, this)">15x</button>
+                <button class="btn-small" onclick="setMulti(10, this)">10x</button>
+                <button class="btn-small" onclick="setMulti(5, this)">5x</button>
+                <button class="btn-small btn-wide" onclick="setMulti(1, this)">無加倍</button>
+            </div>
+        </div>
+
+        <button class="btn-main" onclick="doCalc()">START ANALYSIS</button>
+
+        <div id="resBoard" class="result-panel">
+            <div class="res-header">
+                <div class="res-label">預計晉升成本</div>
+                <span class="res-money" id="outCash">$0</span>
+            </div>
+            <div class="details">
+                <div class="row">
+                    <span>尚差讚數</span>
+                    <span class="val-white" id="outDiff">0</span>
+                </div>
+                <div class="row">
+                    <span>總需罐頭</span>
+                    <span class="val-white" id="outCan">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="strategy-box">
+            <b>💡 策略建議 (STRATEGY):</b>
+            不建議續等：掉下再升比原階續等划算。單數月 10-25 號綁定最優。
+            例如神王需兩千萬讚，續等要 60% (1200萬讚)，掉回至尊再升只要一千萬讚，所有爵位皆適用。
+        </div>
+
+        <div class="note">
+            基準：1 顆 9999 罐 = 27,497 讚 | 匯率：NT$1 ≈ 2 罐頭<br>
+            我男朋友來了 | 2026.03.31
+            <div class="thanks">感謝 賈高賽 數據提供</div>
         </div>
     </div>
 
-    <button class="btn-main" onclick="doCalc()">開始試算</button>
+    <script>
+        const root = document.documentElement;
 
-    <div id="resBoard" class="result-panel">
-        <div class="res-header">
-            <div class="res-label">預計晉升成本</div>
-            <span class="res-money" id="outCash">$0</span>
-        </div>
-        <div class="details">
-            <div class="row"><span>尚差讚數</span><span id="outDiff">0</span></div>
-            <div class="row"><span>總需罐頭</span><span id="outCan">0</span></div>
-        </div>
-    </div>
+        // 定義各爵位色控代碼 (對應 CSS 變數)
+        const rankGradients = {
+            0: [getComputedStyle(root).getPropertyValue('--rank-0-start'), getComputedStyle(root).getPropertyValue('--rank-0-end')],
+            1: [getComputedStyle(root).getPropertyValue('--rank-1-start'), getComputedStyle(root).getPropertyValue('--rank-1-end')],
+            2: [getComputedStyle(root).getPropertyValue('--rank-2-start'), getComputedStyle(root).getPropertyValue('--rank-2-end')],
+            3: [getComputedStyle(root).getPropertyValue('--rank-3-start'), getComputedStyle(root).getPropertyValue('--rank-3-end')],
+            4: [getComputedStyle(root).getPropertyValue('--rank-4-start'), getComputedStyle(root).getPropertyValue('--rank-4-end')],
+            5: [getComputedStyle(root).getPropertyValue('--rank-5-start'), getComputedStyle(root).getPropertyValue('--rank-5-end')],
+            6: [getComputedStyle(root).getPropertyValue('--rank-6-start'), getComputedStyle(root).getPropertyValue('--rank-6-end')],
+            7: [getComputedStyle(root).getPropertyValue('--rank-7-start'), getComputedStyle(root).getPropertyValue('--rank-7-end')],
+            'v': [getComputedStyle(root).getPropertyValue('--rank-v-start'), getComputedStyle(root).getPropertyValue('--rank-v-end')]
+        };
 
-    <div class="strategy-box">
-        <b>不建議續等：</b>
-        掉下再升比原階續等划算。單數月 10-25 號綁定最優。<br>
-        如神王需兩千萬讚，續等要 60% 換算為一千兩百萬讚，<br>
-        掉到至尊只要一千萬上神王，所有爵位皆適用。
-    </div>
+        const ranks = [
+            {name: "神王", val: 20000000, code: 7}, {name: "至尊", val: 10000000, code: 6},
+            {name: "教皇", val: 5000000, code: 5}, {name: "公爵", val: 2425500, code: 4},
+            {name: "伯爵", val: 425500, code: 3}, {name: "騎士", val: 175500, code: 2},
+            {name: "劍客", val: 25500, code: 1}, {name: "V4", val: 13000, code: 'v'},
+            {name: "V3", val: 5500, code: 'v'}, {name: "V2", val: 1800, code: 'v'},
+            {name: "V1", val: 500, code: 'v'}
+        ];
 
-    <div class="note">
-        基準：1 顆 9999 罐 = 27,497 讚<br>
-        匯率：NT$1 ≈ 2 罐頭<br>
-        我男朋友來了 | 2026.03.31
-        <div class="thanks">感謝 賈高賽 數據提供</div>
-    </div>
-</div>
-
-<script>
-    const ranks = [
-        {name: "神王", val: 20000000}, {name: "至尊", val: 10000000},
-        {name: "教皇", val: 5000000}, {name: "公爵", val: 2425500},
-        {name: "伯爵", val: 425500}, {name: "騎士", val: 175500},
-        {name: "劍客", val: 25500}, {name: "V4", val: 13000},
-        {name: "V3", val: 5500}, {name: "V2", val: 1800},
-        {name: "V1", val: 500}
-    ];
-
-    function setMulti(val, el) {
-        document.getElementById('multi').value = val;
-        document.querySelectorAll('.btn-small').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        if (document.getElementById('resBoard').style.display === 'block') doCalc();
-    }
-
-    function getCurrentRankInfo(val) {
-        for (let i = 0; i < ranks.length; i++) {
-            if (val >= ranks[i].val) return ranks[i];
+        function setMulti(val, el) {
+            document.getElementById('multi').value = val;
+            document.querySelectorAll('.btn-small').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            if (document.getElementById('resBoard').style.display === 'block') doCalc();
         }
-        return {name: "V0", val: 0};
-    }
 
-    function updateRank() {
-        const val = parseFloat(document.getElementById('currZan').value) || 0;
-        document.getElementById('rankDisplay').innerText = "目前爵位：" + getCurrentRankInfo(val).name;
-    }
+        function getCurrentRankInfo(val) {
+            for (let i = 0; i < ranks.length; i++) {
+                if (val >= ranks[i].val) return ranks[i];
+            }
+            return {name: "V0", val: 0, code: 0};
+        }
 
-    function doCalc() {
-        const curr = parseFloat(document.getElementById('currZan').value) || 0;
-        const targetVal = parseFloat(document.getElementById('targetRank').value);
-        const multi = parseFloat(document.getElementById('multi').value) || 1;
+        // 更新目前等級與狀態列漸層
+        function updateRank() {
+            const val = parseFloat(document.getElementById('currZan').value) || 0;
+            const currentRank = getCurrentRankInfo(val);
+            
+            // 更新文字
+            document.getElementById('rankDisplay').innerText = "目前爵位：" + currentRank.name;
+            
+            // 更新 CSS 動態變數 (控制狀態列漸層)
+            const colors = rankGradients[currentRank.code];
+            root.style.setProperty('--current-rank-start', colors[0]);
+            root.style.setProperty('--current-rank-end', colors[1]);
+        }
 
-        const zanPerGiftAtOne = 27497;
-        const exchangeRate = 0.5;
+        // 更新目標爵位 (結果面板數字色)
+        function updateTargetGradients() {
+            const select = document.getElementById('targetRank');
+            const rankCode = select.options[select.selectedIndex].getAttribute('data-rank');
+            const colors = rankGradients[rankCode];
 
-        let diff = Math.max(targetVal - curr, 0);
-        const totalCan = Math.ceil((diff / (zanPerGiftAtOne * multi)) * 9999);
-        const cash = Math.ceil(totalCan * exchangeRate);
+            // 更新 CSS 動態變數 (控制結果數字漸層)
+            root.style.setProperty('--target-rank-start', colors[0]);
+            root.style.setProperty('--target-rank-end', colors[1]);
+        }
 
-        document.getElementById('outDiff').innerText = diff.toLocaleString();
-        document.getElementById('outCan').innerText = totalCan.toLocaleString();
-        document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
-        document.getElementById('resBoard').style.display = 'block';
-    }
-</script>
+        function doCalc() {
+            const curr = parseFloat(document.getElementById('currZan').value) || 0;
+            const targetVal = parseFloat(document.getElementById('targetRank').value);
+            const multi = parseFloat(document.getElementById('multi').value) || 1;
+
+            const zanPerGiftAtOne = 27497;
+            const exchangeRate = 0.5;
+
+            let diff = Math.max(targetVal - curr, 0);
+            const totalCan = Math.ceil((diff / (zanPerGiftAtOne * multi)) * 9999);
+            const cash = Math.ceil(totalCan * exchangeRate);
+
+            document.getElementById('outDiff').innerText = diff.toLocaleString();
+            document.getElementById('outCan').innerText = totalCan.toLocaleString();
+            document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
+            
+            // 顯示結果面板並應用目標色系
+            updateTargetGradients();
+            document.getElementById('resBoard').style.display = 'block';
+        }
+    </script>
 </body>
 </html>

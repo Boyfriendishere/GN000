@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <button class="btn-main" onclick="doCalc()">立即試算成本對比</button>
+        <button class="btn-main" onclick="doCalc()">立即試算</button>
 
         <div id="resBoard" class="result-box">
             <div class="res-card">
@@ -89,14 +89,14 @@
             <div class="res-card keep">
                 <div class="res-title" id="keepTitle">🛡️ 原階續等</div>
                 <span class="big-num" id="keepCash" style="color:#aaa;">$0</span>
-                <div class="res-item"><span>續等門檻：</span><span class="res-val" id="keepThreshold">0</span></div>
-                <div class="res-item"><span>續等尚差：</span><span class="res-val" id="keepDiff">0</span></div>
-                <div class="res-item"><span>所需罐頭：</span><span class="res-val" id="keepCan">0</span></div>
+                <div class="res-item"><span>續等門檻 (60%)：</span><span class="res-val" id="keepThreshold">0</span></div>
+                <div class="res-item"><span>尚差讚數：</span><span class="res-val" id="keepDiff">0</span></div>
+                <div class="res-item"><span>總需罐頭：</span><span class="res-val" id="keepCan">0</span></div>
             </div>
         </div>
 
         <div class="strategy-box">
-            <div class="strategy-title">💡 建議</div>
+            <div class="strategy-title">💡 建議策略</div>
             <div class="strategy-text">
                 1. <b>單數月晉升：</b>單月 (1,3,5...) 10-25號綁定最划算，享有當月+下月等級。<br>
                 2. <b>晉升勝於續等：</b><span class="important-tip">「掉下再升」比「原階續等」還划算！</span>例如神王續等需1200萬讚，但掉下再升僅需1000萬讚。
@@ -105,9 +105,9 @@
 
         <div class="note">
             比例：一顆 9999 罐禮物 = 27,497 讚<br>
-            匯率：$1 台幣 ≈ 2 罐頭<br>
+            匯率：$1 台幣 ≈ 2 罐頭 (資深玩家提供)<br>
             <span style="color:#aaa;">我男朋友來了 | 2026.03.31</span>
-            <div class="thanks">感謝 賈高賽 心得分享</div>
+            <div class="thanks">感謝 賈高賽 分享心得</div>
         </div>
     </div>
 
@@ -147,21 +147,28 @@
             const zanPerGiftAtOne = 27497;
             const exchangeRate = 0.5;
 
-            // --- 晉升邏輯 (100%) ---
+            // 1. 晉升邏輯：下拉目標 - 目前讚數
             let diff = targetVal - curr;
             if (diff < 0) diff = 0;
             const giftNumExact = diff / (zanPerGiftAtOne * multi);
             const totalCan = Math.ceil(giftNumExact * 9999);
             const cash = Math.ceil(totalCan * exchangeRate);
 
-            // --- 續等邏輯 (抓目前等級的 60%) ---
+            document.getElementById('upTitle').innerText = `🚀 晉升至 ${targetName} (100%)`;
+            document.getElementById('outDiff').innerText = diff.toLocaleString();
+            document.getElementById('outCan').innerText = totalCan.toLocaleString();
+            document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
+
+            // 2. 續等邏輯：自動判定目前爵位，算該爵位的 60%
             const currentRank = getCurrentRankInfo(curr);
-            let kDiff = 0, kTotalCan = 0, kCash = 0, kThreshold = 0;
-            
+            let kThreshold = 0, kDiff = 0, kTotalCan = 0, kCash = 0;
+
             if (currentRank.val > 0) {
                 kThreshold = currentRank.val * 0.6;
                 kDiff = kThreshold - curr;
-                if (kDiff < 0) {
+                document.getElementById('keepTitle').innerText = `🛡️ ${currentRank.name} 原階續等`;
+                
+                if (kDiff <= 0) {
                     kDiff = 0;
                     document.getElementById('keepCash').innerText = "已達標";
                     document.getElementById('keepCash').style.color = "#4CAF50";
@@ -170,21 +177,13 @@
                     kTotalCan = Math.ceil(kGiftNumExact * 9999);
                     kCash = Math.ceil(kTotalCan * exchangeRate);
                     document.getElementById('keepCash').innerText = '$' + kCash.toLocaleString();
-                    document.getElementById('keepCash').style.color = "#aaa";
+                    document.getElementById('keepCash').style.color = "#ffd700";
                 }
-                document.getElementById('keepTitle').innerText = `🛡️ ${currentRank.name} 原階續等 (60%)`;
             } else {
-                document.getElementById('keepTitle').innerText = `🛡️ 原階續等 (目前無爵位)`;
+                document.getElementById('keepTitle').innerText = `🛡️ 續等 (目前無爵位)`;
                 document.getElementById('keepCash').innerText = "-";
             }
 
-            // 渲染晉升
-            document.getElementById('upTitle').innerText = `🚀 晉升至 ${targetName}`;
-            document.getElementById('outDiff').innerText = diff.toLocaleString();
-            document.getElementById('outCan').innerText = totalCan.toLocaleString();
-            document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
-            
-            // 渲染續等
             document.getElementById('keepThreshold').innerText = kThreshold.toLocaleString();
             document.getElementById('keepDiff').innerText = kDiff.toLocaleString();
             document.getElementById('keepCan').innerText = kTotalCan.toLocaleString();

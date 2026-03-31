@@ -5,96 +5,241 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Goodnight貴族</title>
     <style>
-        :root { 
-            --gn-soft-pink: #ff85a1; /* 調降飽和度的柔粉色 */
-            --gn-gold: #ffd700; 
-            --bg-deep: #0f0f12; 
-            --card-bg: rgba(28, 28, 33, 0.9);
-            --border-soft: rgba(255, 133, 161, 0.2);
+        :root {
+            --brand-pink: #e8659a;
+            --brand-gold: #f0b942;
+            --card-bg: rgba(23, 28, 36, 0.85);
+            --border-color: rgba(255, 255, 255, 0.1);
         }
-        
-        body { 
-            font-family: -apple-system, "PingFang TC", sans-serif; 
-            /* 背景改用極淡的粉色擴散感，避免全黑死板 */
-            background: radial-gradient(circle at top right, #251418, #0f0f12); 
-            color: #e0e0e6; 
-            display: flex; 
-            justify-content: center; 
+
+        body {
+            font-family: "PingFang TC", "Inter", sans-serif;
+            background: radial-gradient(circle at top right, #1a0a14, #05070a);
+            color: #e6edf3;
+            display: flex;
+            justify-content: center;
             min-height: 100vh;
             margin: 0;
             padding: 40px 20px;
         }
 
-        .card { 
-            background: var(--card-bg); 
-            width: 100%; 
-            max-width: 460px; 
-            padding: 40px 30px; 
-            border-radius: 32px; 
-            border: 1px solid var(--border-soft); 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            backdrop-filter: blur(15px);
+        .card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 460px;
+            padding: 40px 30px;
+            border-radius: 32px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            backdrop-filter: blur(20px);
             position: relative;
         }
 
-        h1 { 
-            color: var(--gn-soft-pink);
-            text-align: center; 
-            font-size: 1.6rem; 
-            margin-bottom: 35px; 
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--brand-pink), transparent, var(--brand-gold));
+            z-index: -1;
+            border-radius: 33px;
+            opacity: 0.2;
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #fff 0%, var(--brand-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 35px;
             font-weight: 800;
-            letter-spacing: 1.5px;
-        }
-        
-        label { color: #999; font-size: 0.8rem; font-weight: 600; margin-left: 5px; margin-bottom: 10px; display: block; }
-
-        input, select { 
-            width: 100%; padding: 16px; border-radius: 14px; 
-            border: 1px solid #333; background: #000; 
-            color: white; font-size: 1.1rem; box-sizing: border-box; 
-            outline: none; transition: 0.3s;
+            letter-spacing: 2px;
         }
 
-        input:focus { border-color: var(--gn-soft-pink); }
-
-        .current-rank-tag { margin-top: 10px; font-size: 0.9rem; color: var(--gn-gold); font-weight: bold; padding: 5px 12px; background: rgba(255, 215, 0, 0.1); border-radius: 8px; display: inline-block; }
-
-        .quick-btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
-        .btn-small { 
-            background: #25252b; color: #aaa; border: 1px solid #333; 
-            padding: 12px 0; border-radius: 10px; font-size: 0.85rem; 
-            cursor: pointer; transition: 0.2s;
+        label {
+            color: #8b949e;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+            margin-bottom: 10px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .btn-small:hover { border-color: var(--gn-soft-pink); color: #fff; }
-        .btn-small.active { background: var(--gn-soft-pink); color: white; border: none; }
+
+        input, select {
+            width: 100%;
+            padding: 18px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1.3rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.4s;
+            -webkit-appearance: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--brand-pink);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(232,101,154,0.8)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            padding-right: 48px;
+            cursor: pointer;
+        }
+
+        select option { background: #0f1218; color: #e6edf3; }
+
+        .current-rank-tag {
+            display: inline-block;
+            margin-top: 12px;
+            margin-left: 4px;
+            padding: 6px 16px;
+            background: rgba(240, 185, 66, 0.08);
+            border: 1px solid rgba(240, 185, 66, 0.2);
+            border-radius: 50px;
+            font-size: 0.82rem;
+            color: var(--brand-gold);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .quick-btn-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 15px 0 0 0;
+        }
+
+        .btn-small {
+            background: rgba(255, 255, 255, 0.03);
+            color: #8b949e;
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 15px 0;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+        }
+
+        .btn-small:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .btn-small.active {
+            background: linear-gradient(135deg, var(--brand-pink), var(--brand-gold));
+            color: white;
+            border: none;
+            box-shadow: 0 10px 20px rgba(232, 101, 154, 0.3);
+            transform: translateY(-3px);
+        }
+
         .btn-wide { grid-column: span 2; }
 
-        .btn-main { 
-            width: 100%; background: var(--gn-soft-pink); 
-            color: white; border: none; padding: 18px; border-radius: 50px; 
-            font-size: 1.2rem; font-weight: bold; cursor: pointer; 
-            margin-top: 25px; transition: 0.3s;
+        .btn-main {
+            width: 100%;
+            background: linear-gradient(135deg, var(--brand-pink), #c0446e);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: 0.3s;
+            letter-spacing: 1.5px;
+            box-shadow: 0 8px 25px rgba(232, 101, 154, 0.3);
         }
-        .btn-main:hover { filter: brightness(1.1); box-shadow: 0 10px 20px rgba(255, 133, 161, 0.2); }
 
-        /* 結果面板 - 降低粉紅色強度 */
-        .result-panel { 
-            margin-top: 35px; border-radius: 24px; 
-            background: rgba(255, 133, 161, 0.05); /* 改用極淡背景 */
-            border: 1px dashed var(--border-soft); 
-            display: none; 
+        .btn-main:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 14px 35px rgba(232, 101, 154, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .result-panel {
+            margin-top: 40px;
+            border-radius: 28px;
             overflow: hidden;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.2) 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+            display: none;
         }
-        .res-header { padding: 25px 20px; text-align: center; }
-        .res-money { font-size: 3rem; font-weight: 800; color: var(--gn-gold); display: block; margin-top: 5px; }
-        
-        .details { padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.05); }
-        .row { display: flex; justify-content: space-between; font-size: 0.95rem; color: #ccc; margin-bottom: 10px; }
-        
-        .strategy-box { background: rgba(255, 215, 0, 0.05); border-left: 3px solid var(--gn-gold); padding: 15px; margin-top: 30px; border-radius: 4px; font-size: 0.85rem; color: #999; }
 
-        .note { font-size: 0.75rem; color: #555; margin-top: 40px; text-align: center; }
-        .thanks { color: var(--gn-soft-pink); font-weight: bold; margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; font-size: 0.8rem; }
+        .res-header {
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .res-label {
+            font-size: 0.85rem;
+            color: #8b949e;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .res-money {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--brand-gold);
+            text-shadow: 0 0 30px rgba(240, 185, 66, 0.35);
+        }
+
+        .details { padding: 25px; font-size: 0.9rem; }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #c9d1d9;
+        }
+
+        .row span:last-child { color: #fff; font-weight: 600; }
+
+        .strategy-box {
+            background: rgba(240, 185, 66, 0.03);
+            border: 1px dashed rgba(240, 185, 66, 0.25);
+            padding: 20px;
+            margin-top: 45px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #8b949e;
+            line-height: 1.8;
+        }
+
+        .strategy-box b {
+            color: var(--brand-gold);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .note {
+            font-size: 0.75rem;
+            color: #484f58;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .thanks {
+            color: var(--brand-pink);
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body onload="updateRank()">
@@ -103,12 +248,12 @@
     <h1>🎀Goodnight貴族</h1>
 
     <div class="input-group">
-        <label>累積讚數 (主頁>貴族等級>左下黃色數字)</label>
+        <label>累積讚數 (主頁 › 貴族等級 › 左下黃色數字)</label>
         <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
         <div id="rankDisplay" class="current-rank-tag">目前爵位：</div>
     </div>
 
-    <div class="input-group">
+    <div class="input-group" style="margin-top: 28px;">
         <label>選擇目標</label>
         <select id="targetRank">
             <option value="25500">劍客 (25,500)</option>
@@ -121,17 +266,17 @@
         </select>
     </div>
 
-    <div class="input-group">
+    <div class="input-group" style="margin-top: 28px;">
         <label>加倍讚倍數</label>
         <input type="number" id="multi" value="30">
         <div class="quick-btn-grid">
-            <button class="btn-small" onclick="setMulti(30)">30x</button>
-            <button class="btn-small" onclick="setMulti(25)">25x</button>
-            <button class="btn-small" onclick="setMulti(20)">20x</button>
-            <button class="btn-small" onclick="setMulti(15)">15x</button>
-            <button class="btn-small" onclick="setMulti(10)">10x</button>
-            <button class="btn-small" onclick="setMulti(5)">5x</button>
-            <button class="btn-small btn-wide" onclick="setMulti(1)">無加倍</button>
+            <button class="btn-small active" onclick="setMulti(30, this)">30x</button>
+            <button class="btn-small" onclick="setMulti(25, this)">25x</button>
+            <button class="btn-small" onclick="setMulti(20, this)">20x</button>
+            <button class="btn-small" onclick="setMulti(15, this)">15x</button>
+            <button class="btn-small" onclick="setMulti(10, this)">10x</button>
+            <button class="btn-small" onclick="setMulti(5, this)">5x</button>
+            <button class="btn-small btn-wide" onclick="setMulti(1, this)">無加倍</button>
         </div>
     </div>
 
@@ -139,25 +284,26 @@
 
     <div id="resBoard" class="result-panel">
         <div class="res-header">
-            <div style="font-size: 0.85rem; color: #888;">預計晉升成本</div>
+            <div class="res-label">預計晉升成本</div>
             <span class="res-money" id="outCash">$0</span>
         </div>
         <div class="details">
-            <div class="row"><span>尚差讚數</span><span id="outDiff" style="color:#fff;">0</span></div>
-            <div class="row"><span>總需罐頭</span><span id="outCan" style="color:#fff;">0</span></div>
+            <div class="row"><span>尚差讚數</span><span id="outDiff">0</span></div>
+            <div class="row"><span>總需罐頭</span><span id="outCan">0</span></div>
         </div>
     </div>
 
     <div class="strategy-box">
-        <b>不建議續等：</b> 掉下再升比原階續等划算。單數月 10-25 號綁定最優。<br>
+        <b>不建議續等：</b>
+        掉下再升比原階續等划算。單數月 10-25 號綁定最優。<br>
         如神王需兩千萬讚，續等要 60% 換算為一千兩百萬讚，<br>
-        掉到至尊只要一千萬上神王，所有爵位皆適用。<br>
+        掉到至尊只要一千萬上神王，所有爵位皆適用。
     </div>
 
     <div class="note">
         基準：1 顆 9999 罐 = 27,497 讚<br>
         匯率：NT$1 ≈ 2 罐頭<br>
-        我男朋友來了 | 2026.03.31<br>
+        我男朋友來了 | 2026.03.31
         <div class="thanks">感謝 賈高賽 數據提供</div>
     </div>
 </div>
@@ -172,9 +318,11 @@
         {name: "V1", val: 500}
     ];
 
-    function setMulti(val) {
+    function setMulti(val, el) {
         document.getElementById('multi').value = val;
-        if (document.getElementById('resBoard').style.display === 'block') { doCalc(); }
+        document.querySelectorAll('.btn-small').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        if (document.getElementById('resBoard').style.display === 'block') doCalc();
     }
 
     function getCurrentRankInfo(val) {
@@ -186,32 +334,26 @@
 
     function updateRank() {
         const val = parseFloat(document.getElementById('currZan').value) || 0;
-        const currentRank = getCurrentRankInfo(val);
-        document.getElementById('rankDisplay').innerText = "目前爵位：" + currentRank.name;
+        document.getElementById('rankDisplay').innerText = "目前爵位：" + getCurrentRankInfo(val).name;
     }
 
     function doCalc() {
         const curr = parseFloat(document.getElementById('currZan').value) || 0;
-        const targetSelect = document.getElementById('targetRank');
-        const targetVal = parseFloat(targetSelect.value);
+        const targetVal = parseFloat(document.getElementById('targetRank').value);
         const multi = parseFloat(document.getElementById('multi').value) || 1;
-        
+
         const zanPerGiftAtOne = 27497;
         const exchangeRate = 0.5;
 
-        let diff = targetVal - curr;
-        if (diff < 0) diff = 0;
-        const giftNumExact = diff / (zanPerGiftAtOne * multi);
-        const totalCan = Math.ceil(giftNumExact * 9999);
+        let diff = Math.max(targetVal - curr, 0);
+        const totalCan = Math.ceil((diff / (zanPerGiftAtOne * multi)) * 9999);
         const cash = Math.ceil(totalCan * exchangeRate);
 
         document.getElementById('outDiff').innerText = diff.toLocaleString();
         document.getElementById('outCan').innerText = totalCan.toLocaleString();
         document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
-        
         document.getElementById('resBoard').style.display = 'block';
     }
 </script>
-
 </body>
 </html>

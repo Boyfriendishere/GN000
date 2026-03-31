@@ -11,7 +11,6 @@
             --brand-pink: #e8659a; --brand-gold: #f0b942;
             --card-bg: rgba(23, 28, 36, 0.9); --border: rgba(255, 255, 255, 0.08);
             --t1: rgba(255,255,255,0.94); --t2: rgba(255,255,255,0.52); --t3: rgba(255,255,255,0.24);
-            /* 貴族漸層色定義 */
             --rank-0-start: #444; --rank-0-end: #666;
             --rank-1-start: #2c3e50; --rank-1-end: #bdc3c7;
             --rank-2-start: #1a4d2e; --rank-2-end: #2ecc71;
@@ -107,16 +106,17 @@
                 <div class="row"><span>總需罐頭</span><span class="val-white" id="outCan">0</span></div>
                 <div class="row" style="border:none; padding-top:15px; flex-direction:column; align-items:center;">
                     <span id="outGiftText" style="color:var(--t1); font-weight:600; text-align:center; line-height:1.8;"></span>
+                    <span style="font-size:0.65rem; color:var(--t3); margin-top:8px;">* 建議補齊僅用 9999、3000、1000、300 為參考方案</span>
                 </div>
             </div>
         </div>
         <div class="strategy-box">
-            <b>續等不划算</b><br>
+            <b>💡 不建議續等:</b>
             掉下再升比原階續等划算。單數月 10-25 號綁定最優。<br>
             例：神王需 2000萬讚，續等要 60% (1200萬)，<br>
             但掉回至尊再升神王只要 1000萬讚。
         </div>
-        <div class="note">基準：1 顆 9999 罐 = 27,497 讚<br>匯率：NT$1 ≈ 2 罐頭<br>我男朋友來了 | 2026.03.31<div class="thanks">感謝 賈高賽 分享心得</div></div>
+        <div class="note">讚與罐頭基準並非線性，高額度罐頭讚數較高<br>匯率：NT$1 ≈ 2 罐頭<br>我男朋友來了 | 2026.03.31<div class="thanks">感謝 賈高賽 數據提供</div></div>
     </div>
 
     <script>
@@ -150,28 +150,26 @@
             let count9999 = 0, count3000 = 0, count1000 = 0, count300 = 0;
             let currentZan = 0;
 
-            // 1. 大面額優先
+            // 1. 優先計算 9999
             count9999 = Math.floor(diff / data.g9999);
             currentZan = count9999 * data.g9999;
 
-            // 2. 判斷補齊 (使用 10 讚容錯牆，解決 20,022,840 浮點數溢位問題)
-            const tolerance = 10; 
+            // 2. 判斷補齊 (修正：放寬容錯至 10000 讚，達成 25x 29+1 組合)
+            const tolerance = 10000; 
             
             if (currentZan < (diff - tolerance)) {
                 let remaining = diff - currentZan;
                 
-                // 補 3000
-                count3000 = Math.ceil(remaining / data.g3000);
-                let check3000 = currentZan + (count3000 * data.g3000);
-
-                if (check3000 < (diff - tolerance)) {
-                    let remainingAfter3000 = diff - check3000;
-                    count1000 = Math.ceil(remainingAfter3000 / data.g1000);
-                    let check1000 = check3000 + (count1000 * data.g1000);
-
-                    if (check1000 < (diff - tolerance)) {
-                        count300 = Math.ceil((diff - check1000) / data.g300);
-                    }
+                // 嘗試補 3000
+                // 判斷：如果剩下的讚數已經接近一個 3000 的產出，就補 3000
+                if (remaining > (data.g3000 * 0.9)) {
+                    count3000 = 1;
+                } else if (remaining > (data.g1000 * 0.9)) {
+                    // 否則如果接近 1000 的產出，就補 1000
+                    count1000 = 1;
+                } else if (remaining > tolerance) {
+                    // 真的不夠才補 300
+                    count300 = Math.ceil(remaining / data.g300);
                 }
             }
 

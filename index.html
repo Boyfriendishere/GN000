@@ -11,6 +11,7 @@
             --brand-pink: #e8659a; --brand-gold: #f0b942;
             --card-bg: rgba(23, 28, 36, 0.9); --border: rgba(255, 255, 255, 0.08);
             --t1: rgba(255,255,255,0.94); --t2: rgba(255,255,255,0.52); --t3: rgba(255,255,255,0.24);
+            /* 貴族漸層色定義 */
             --rank-0-start: #444; --rank-0-end: #666;
             --rank-1-start: #2c3e50; --rank-1-end: #bdc3c7;
             --rank-2-start: #1a4d2e; --rank-2-end: #2ecc71;
@@ -113,11 +114,12 @@
             </div>
         </div>
         <div class="strategy-box">
-            <b>💡 不建議續等:</b>
+            <b>建議不要續等</b>
             掉下再升比原階續等划算。單數月 10-25 號綁定最優。<br>
-            例：神王需 2000萬讚，續等要 60% (1200萬)，<br>但掉回至尊再升神王只要 1000萬讚，所有爵位皆適用。
+            例：神王需 2000萬讚，續等要 60% (1200萬)，<br>
+            但掉回至尊再升神王只要 1000萬讚，所有爵位皆適用。
         </div>
-        <div class="note">基準：1 顆 9999 罐 = 27,497 讚<br>匯率：NT$1 ≈ 2 罐頭<br>我男朋友來了 | 2026.03.31<div class="thanks">感謝 賈高賽 數據提供及驗證</div></div>
+        <div class="note">基準：1 顆 9999 罐 = 27,497 讚<br>匯率：NT$1 ≈ 2 罐頭<br>我男朋友來了 | 2026.03.31<div class="thanks">感謝 賈高賽 數據分享及驗證</div></div>
     </div>
 
     <script>
@@ -136,33 +138,39 @@
             const exchangeRate = 0.5;
             let diff = Math.max(targetVal - curr, 0);
             
-            // 讚數效率校正 (基於你提供的數據逆推)
+            // --- 賈高賽數據核心還原 ---
+            // 單罐產出讚數 = (基準讚數 / 基準倍數 / 基準罐頭) * 目前選擇倍數
             const zanPerCan9999 = (824910 / 30 / 9999) * multi; 
-            const zanPerCan3000 = (187500 / 25 / 3000) * multi; // 2.5 * multi
+            const zanPerCan3000 = (225000 / 30 / 3000) * multi; 
             const zanPerCan1000 = (66000 / 30 / 1000) * multi;  
             const zanPerCan300  = (19800 / 30 / 300) * multi;   
 
             let count9999 = 0, count3000 = 0, count1000 = 0, count300 = 0;
             let tempDiff = diff;
 
-            // 拆解邏輯
+            // 1. 優先使用效率最高的大禮物
             count9999 = Math.floor(tempDiff / (9999 * zanPerCan9999));
             tempDiff -= count9999 * (9999 * zanPerCan9999);
 
-            if (tempDiff > (3000 * zanPerCan3000 * 0.8)) {
-                count3000 = Math.floor(tempDiff / (3000 * zanPerCan3000));
-                tempDiff -= count3000 * (3000 * zanPerCan3000);
-            }
-
+            // 2. 針對剩下的部分尋找最佳組合方案
             if (tempDiff > 0) {
-                count1000 = Math.floor(tempDiff / (1000 * zanPerCan1000));
-                tempDiff -= count1000 * (1000 * zanPerCan1000);
-                if (tempDiff > 0) {
-                    count300 = Math.ceil(tempDiff / (300 * zanPerCan300));
+                // 如果剩下的讚數接近 9999 的效益，直接補 9999 其實更划算
+                if (tempDiff > (9999 * zanPerCan9999 * 0.8)) {
+                    count9999++; tempDiff = 0;
+                } else {
+                    count3000 = Math.floor(tempDiff / (3000 * zanPerCan3000));
+                    tempDiff -= count3000 * (3000 * zanPerCan3000);
+                    
+                    count1000 = Math.floor(tempDiff / (1000 * zanPerCan1000));
+                    tempDiff -= count1000 * (1000 * zanPerCan1000);
+                    
+                    if (tempDiff > 0) {
+                        count300 = Math.ceil(tempDiff / (300 * zanPerCan300));
+                    }
                 }
             }
 
-            // 再次檢查是否有更優的「進位」方案 (例如丟了太多 1000 不如丟一顆 3000)
+            // 3. 進位優化：檢查是否有「小買貴過大」的情況 (3 個 1000 不如一個 3000)
             if (count300 * 300 >= 1000) { count1000++; count300 = 0; }
             if (count1000 * 1000 >= 3000) { count3000++; count1000 = 0; }
             if (count3000 * 3000 >= 9999) { count9999++; count3000 = 0; }
@@ -176,7 +184,7 @@
             if (count1000 > 0) parts.push(`<span class="gift-tag">${count1000}</span> 個 1000`);
             if (count300 > 0)  parts.push(`<span class="gift-tag">${count300}</span> 個 300`);
             
-            let giftResult = parts.length > 0 ? "建議補齊方案：<br>" + parts.join(' + ') : "讚數已達標 🥳";
+            let giftResult = parts.length > 0 ? "建議補齊<br>" + parts.join(' + ') : "讚數已達標 🥳";
 
             document.getElementById('outDiff').innerText = Math.ceil(diff).toLocaleString();
             document.getElementById('outCan').innerText = totalCan.toLocaleString();

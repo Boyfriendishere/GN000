@@ -14,7 +14,6 @@
         select, input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #444; background: #2a2a2a; color: white; font-size: 1.1rem; box-sizing: border-box; }
         .current-rank-tag { margin-top: 5px; font-size: 0.9rem; color: #ffd700; font-weight: bold; }
         
-        /* 快捷按鈕組排版 */
         .quick-btn-grid { 
             display: grid; 
             grid-template-columns: repeat(4, 1fr); 
@@ -34,15 +33,16 @@
         }
         .btn-small:hover { background: #444; color: white; border-color: var(--gn-pink); }
         .btn-small:active { transform: scale(0.95); }
-        /* 讓「無加倍」佔兩格，比較好點 */
         .btn-wide { grid-column: span 2; }
 
         .btn-main { width: 100%; background: var(--gn-pink); color: white; border: none; padding: 18px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
         
-        .result-box { background: rgba(255, 77, 109, 0.1); border: 1px dashed var(--gn-pink); padding: 20px; border-radius: 15px; margin-top: 25px; display: none; }
-        .res-highlight { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #444; }
-        .big-num { color: #ffd700; font-size: 2.2rem; font-weight: bold; display: block; margin-top: 5px; }
-        .res-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 1rem; color: #ccc; }
+        .result-box { margin-top: 25px; display: none; }
+        .res-card { background: rgba(255, 77, 109, 0.1); border: 1px dashed var(--gn-pink); padding: 15px; border-radius: 15px; margin-bottom: 15px; }
+        .res-card.keep { background: rgba(255, 255, 255, 0.05); border: 1px dashed #666; }
+        .res-title { font-size: 0.9rem; color: #aaa; margin-bottom: 10px; text-align: center; }
+        .big-num { color: #ffd700; font-size: 2rem; font-weight: bold; display: block; text-align: center; }
+        .res-item { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.95rem; color: #ccc; }
         .res-val { color: white; font-weight: bold; }
         
         .strategy-box { background: rgba(255, 215, 0, 0.1); border-left: 4px solid #ffd700; padding: 15px; margin-top: 20px; border-radius: 4px; }
@@ -60,9 +60,9 @@
         <h1>Goodnight 貴族爵位計算</h1>
 
         <div class="input-group">
-            <label>1. 本月累積讚數 (主頁>貴族等級>左下角)</label>
+            <label>1. 本月累積讚數 (主頁>貴族等級>左下角黃色數字)</label>
             <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
-            <div id="rankDisplay" class="current-rank-tag">目前等級：</div>
+            <div id="rankDisplay" class="current-rank-tag">目前等級：一般玩家</div>
         </div>
 
         <div class="input-group">
@@ -92,31 +92,37 @@
             </div>
         </div>
 
-        <button class="btn-main" onclick="doCalc()">立即試算</button>
+        <button class="btn-main" onclick="doCalc()">開始計算</button>
 
         <div id="resBoard" class="result-box">
-            <div class="res-highlight">
-                <span style="font-size: 1.1rem;">💰 預估台幣成本</span>
+            <div class="res-card">
+                <div class="res-title">🚀 晉升/升級至該階 (100% 門檻)</div>
                 <span class="big-num" id="outCash">$0</span>
+                <div class="res-item"><span>尚差讚數：</span><span class="res-val" id="outDiff">0</span></div>
+                <div class="res-item"><span>總需罐頭：</span><span class="res-val" id="outCan">0</span></div>
             </div>
-            
-            <div class="res-item"><span>尚差讚數：</span><span class="res-val" id="outDiff">0</span></div>
-            <div class="res-item"><span>總需罐頭：</span><span class="res-val" id="outCan">0</span></div>
+
+            <div class="res-card keep">
+                <div class="res-title">🛡️ 原階續等/保級 (60% 門檻)</div>
+                <span class="big-num" id="keepCash" style="color:#aaa;">$0</span>
+                <div class="res-item"><span>續等尚差：</span><span class="res-val" id="keepDiff">0</span></div>
+                <div class="res-item"><span>續等罐頭：</span><span class="res-val" id="keepCan">0</span></div>
+            </div>
         </div>
 
         <div class="strategy-box">
-            <div class="strategy-title">💡 最佳策略</div>
+            <div class="strategy-title">💡 建議策略</div>
             <div class="strategy-text">
                 1. <b>單數月晉升：</b>單月 (1,3,5...) 10-25號綁定最划算，享有當月+下月等級。<br>
-                2. <b>升等勝於續等：</b><span class="important-tip">「神王掉至尊再升等」比「神王續等」還划算！</span>此法則適用於任何爵位。
+                2. <b>晉升勝於續等：</b><span class="important-tip">「掉下再升」比「原階續等」還划算</span>例：神王續等需1200萬讚，但掉下再升僅需1000萬讚。
             </div>
         </div>
 
         <div class="note">
-            實戰效率：一顆 9999 罐禮物 = 27,497 讚<br>
-            實戰匯率：$1 台幣 ≈ 2 罐頭 (資深玩家提供)<br>
-            <span style="color:#aaa;">我男朋友來了 | 2026.03.30</span>
-            <div class="thanks">感謝 賈高賽 分享心得</div>
+            效率：一顆 9999 罐禮物 = 27,497 讚<br>
+            匯率：$1 台幣 ≈ 2 罐頭 <br>
+            <span style="color:#aaa;">我男朋友來了 | 2026.03.31</span>
+            <div class="thanks">感謝 賈高賽 驗證</div>
         </div>
     </div>
 
@@ -130,7 +136,6 @@
 
         function setMulti(val) {
             document.getElementById('multi').value = val;
-            // 如果面板開著，切換倍數時自動重新計算結果
             if (document.getElementById('resBoard').style.display === 'block') {
                 doCalc();
             }
@@ -140,31 +145,4 @@
             const val = parseFloat(document.getElementById('currZan').value) || 0;
             let name = "一般玩家";
             for (let r of ranks) { if (val >= r.val) { name = r.name; break; } }
-            document.getElementById('rankDisplay').innerText = "目前爵位：" + name;
-        }
-
-        function doCalc() {
-            const curr = parseFloat(document.getElementById('currZan').value) || 0;
-            const target = parseFloat(document.getElementById('targetRank').value);
-            const multi = parseFloat(document.getElementById('multi').value) || 1;
-            
-            const zanPerGiftAtOne = 27497;
-            const exchangeRate = 0.5;
-
-            let diff = target - curr;
-            if (diff < 0) diff = 0;
-
-            const currentZanPerGift = zanPerGiftAtOne * multi;
-            const giftNumExact = diff / currentZanPerGift;
-            const totalCan = Math.ceil(giftNumExact * 9999);
-            const cash = Math.ceil(totalCan * exchangeRate);
-
-            document.getElementById('outDiff').innerText = diff.toLocaleString();
-            document.getElementById('outCan').innerText = totalCan.toLocaleString();
-            document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
-            
-            document.getElementById('resBoard').style.display = 'block';
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('rank

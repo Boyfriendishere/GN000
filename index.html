@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoodNight貴族爵位計算</title>
+    <title>GoodNight貴族爵位</title>
     <style>
         :root { 
             --gn-soft-pink: #ff85a1; /* 調降飽和度的柔粉色 */
@@ -100,12 +100,12 @@
 <body onload="updateRank()">
 
 <div class="card">
-    <h1>🎀GoodNight貴族爵位計算</h1>
+    <h1>🎀GoodNight<br>貴族爵位</h1>
 
     <div class="input-group">
         <label>累積讚數 (Charm Data)</label>
         <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
-        <div id="rankDisplay" class="current-rank-tag">目前爵位：玩家</div>
+        <div id="rankDisplay" class="current-rank-tag">目前爵位：</div>
     </div>
 
     <div class="input-group">
@@ -135,7 +135,7 @@
         </div>
     </div>
 
-    <button class="btn-main" onclick="doCalc()">RUN ANALYSIS</button>
+    <button class="btn-main" onclick="doCalc()">開始試算</button>
 
     <div id="resBoard" class="result-panel">
         <div class="res-header">
@@ -150,8 +150,8 @@
 
     <div class="strategy-box">
         <b>💡 不建議續等：</b> 掉下再升比原階續等划算。單數月 10-25 號綁定最優。<br>
-        如神王需兩千萬讚，續等要60%也就是一千兩百萬讚，那不如掉到至尊丟一千萬上神王<br>
-        所有爵位皆適用<br>
+        如神王需兩千萬讚，續等要 60% 換算為一千兩百萬讚，<br>掉到至尊只要一千萬上神王，
+        所有爵位皆適用。<br>
     </div>
 
     <div class="note">
@@ -181,7 +181,7 @@
         for (let i = 0; i < ranks.length; i++) {
             if (val >= ranks[i].val) return ranks[i];
         }
-        return {name: "玩家", val: 0};
+        return {name: "V0", val: 0};
     }
 
     function updateRank() {

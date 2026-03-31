@@ -14,18 +14,18 @@
             --border: rgba(255, 255, 255, 0.08);
             --t1: rgba(255,255,255,0.94);
             --t2: rgba(255,255,255,0.52);
+            --t3: rgba(255,255,255,0.24);
 
-            /* === 貴族色系定義 (修正版) === */
-            --rank-0-start: #444; --rank-0-end: #666; /* 一般玩家 */
-            --rank-1-start: #2c3e50; --rank-1-end: #bdc3c7; /* 劍客: 灰黑/灰白 */
-            --rank-2-start: #1a4d2e; --rank-2-end: #2ecc71; /* 騎士: 暗綠/亮綠 */
-            --rank-3-start: #003366; --rank-3-end: #0073cf; /* 伯爵: 暗藍/亮藍(正藍) */
-            --rank-4-start: #4b0082; --rank-4-end: #9b59b6; /* 公爵: 暗紫/亮紫 */
-            --rank-5-start: #8b0000; --rank-5-end: #e74c3c; /* 教皇: 暗紅/亮紅 */
-            --rank-6-start: #0a0a0a; --rank-6-end: #f0b942; /* 至尊: 黑/黑金 */
-            --rank-7-start: #00f2ff; --rank-7-end: #00aaff; /* 神王: 超亮藍/亮藍 */
+            /* 貴族漸層色定義 */
+            --rank-0-start: #444; --rank-0-end: #666;
+            --rank-1-start: #2c3e50; --rank-1-end: #bdc3c7; /* 劍客 */
+            --rank-2-start: #1a4d2e; --rank-2-end: #2ecc71; /* 騎士 */
+            --rank-3-start: #003366; --rank-3-end: #0073cf; /* 伯爵 */
+            --rank-4-start: #4b0082; --rank-4-end: #9b59b6; /* 公爵 */
+            --rank-5-start: #8b0000; --rank-5-end: #e74c3c; /* 教皇 */
+            --rank-6-start: #0a0a0a; --rank-6-end: #f0b942; /* 至尊 */
+            --rank-7-start: #00f2ff; --rank-7-end: #00aaff; /* 神王 */
 
-            /* 動態控制變數 */
             --current-rank-start: var(--rank-0-start);
             --current-rank-end: var(--rank-0-end);
             --target-rank-start: var(--rank-7-start);
@@ -54,10 +54,11 @@
             background: var(--card-bg); border: 1px solid var(--border); border-radius: 36px;
             padding: 48px 34px 44px; backdrop-filter: blur(48px) saturate(180%);
             box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset, 0 50px 100px rgba(0,0,0,0.6);
-            overflow: hidden;
+            overflow: hidden; animation: card-in 0.75s cubic-bezier(0.22,1,0.36,1) both;
         }
 
-        /* 頂部動態漸層線 */
+        @keyframes card-in { from { opacity: 0; transform: translateY(32px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
         .rank-status-bar {
             position: absolute; top: 0; left: 0; right: 0; height: 4px;
             background: linear-gradient(90deg, transparent, var(--current-rank-start), var(--current-rank-end), transparent);
@@ -89,13 +90,11 @@
 
         select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 22px center; cursor: pointer; }
 
-        /* 動態變色標籤 */
         .current-rank-tag {
             display: inline-block; margin-top: 15px; padding: 8px 20px;
             background: linear-gradient(135deg, var(--current-rank-start), var(--current-rank-end));
             border-radius: 50px; font-size: 0.85rem; color: white; font-weight: 800;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.6s ease;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
         .quick-btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
@@ -119,7 +118,7 @@
             width: 100%; background: linear-gradient(135deg, var(--brand-pink), #c0446e);
             color: #fff; border: none; padding: 18px; border-radius: 50px; font-family: 'Sora', sans-serif;
             font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 36px;
-            transition: all 0.3s; letter-spacing: 2px; box-shadow: 0 8px 30px rgba(232,101,154,0.3);
+            transition: all 0.3s; letter-spacing: 2px; box-shadow: 0 8px 30px rgba(232, 101, 154, 0.3);
         }
 
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(232, 101, 154, 0.45); filter: brightness(1.1); }
@@ -129,7 +128,7 @@
             background: rgba(0,0,0,0.2); backdrop-filter: blur(24px); display: none;
         }
 
-        .res-header { padding: 32px 24px 24px; text-align: center; position: relative; }
+        .res-header { padding: 32px 24px 24px; text-align: center; }
         .res-label { font-family: 'Sora', sans-serif; font-size: 0.68rem; color: var(--t2); letter-spacing: 3px; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
         
         .res-money {
@@ -140,10 +139,11 @@
             display: block; line-height: 1;
         }
 
-        .details { padding: 22px 24px 8px; }
+        .details { padding: 22px 24px 18px; }
         .row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.88rem; color: var(--t2); }
         .row:last-child { border-bottom: none; }
         .val-white { color: rgba(255,255,255,0.9); font-weight: 600; font-family: 'Sora', sans-serif; }
+        .gift-tag { color: var(--brand-gold); font-weight: 800; }
 
         .strategy-box {
             background: rgba(0,0,0,0.2); border: 1px dashed rgba(255,255,255,0.1);
@@ -164,7 +164,7 @@
         <h1>🎲Goodnight貴族</h1>
 
         <div class="input-group">
-            <label>累積讚數(主頁>貴族等級>左下黃色數字)</label>
+            <label>累積讚數 (主頁>貴族等級>左下黃色數字)</label>
             <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
             <div id="rankDisplay" class="current-rank-tag">目前爵位：V0</div>
         </div>
@@ -206,21 +206,22 @@
             <div class="details">
                 <div class="row"><span>尚差讚數</span><span class="val-white" id="outDiff">0</span></div>
                 <div class="row"><span>總需罐頭</span><span class="val-white" id="outCan">0</span></div>
+                <div class="row" style="border:none; padding-top:15px; flex-direction:column; align-items:center;">
+                    <span id="outGiftText" style="color:var(--t1); font-weight:600; text-align:center;"></span>
+                </div>
             </div>
         </div>
 
         <div class="strategy-box">
-            <b>💡不建議續等:</b><br>
+            <b>💡不建議續等</b><br>
             掉下再升比原階續等划算。單數月 10-25 號綁定最優。<br>
-            例神王需 2,000萬讚，續等要 60% (1,200萬)，<br>
-            掉回至尊再升只要 1,000萬讚，所有爵位皆適用。
+            例神王需 2000萬讚，續等要 60% (1200萬)，<br>
+            掉回至尊再升只要 1000萬讚。
         </div>
 
         <div class="note">
-            基準：1 顆 9999 罐 = 27,497 讚<br>
-            匯率：NT$1 ≈ 2 罐頭<br>
             我男朋友來了 | 2026.03.31
-            <div class="thanks">感謝 賈高賽 分享心得</div>
+            <div class="thanks">感謝 賈高賽 數據提供</div>
         </div>
     </div>
 
@@ -284,12 +285,34 @@
             const multi = parseFloat(document.getElementById('multi').value) || 1;
             const zanPerGiftAtOne = 27497;
             const exchangeRate = 0.5;
+            
             let diff = Math.max(targetVal - curr, 0);
-            const totalCan = Math.ceil((diff / (zanPerGiftAtOne * multi)) * 9999);
-            const cash = Math.ceil(totalCan * exchangeRate);
+            
+            // 讚數換算罐頭
+            const zanPerOneCan = zanPerGiftAtOne / 9999; 
+            let neededCans = Math.ceil(diff / (zanPerOneCan * multi));
+            const cash = Math.ceil(neededCans * exchangeRate);
+
+            // 禮物組合邏輯
+            let tempCans = neededCans;
+            let count9999 = Math.floor(tempCans / 9999);
+            tempCans %= 9999;
+            let count3000 = Math.floor(tempCans / 3000);
+            tempCans %= 3000;
+            let count300 = Math.ceil(tempCans / 300);
+
+            let parts = [];
+            if (count9999 > 0) parts.push(`<span class="gift-tag">${count9999}</span> 個 9999`);
+            if (count3000 > 0) parts.push(`<span class="gift-tag">${count3000}</span> 個 3000`);
+            if (count300 > 0)  parts.push(`<span class="gift-tag">${count300}</span> 個 300`);
+            
+            let giftResult = parts.length > 0 ? "建議補齊：" + parts.join(' + ') : "讚數已達標 🥳";
+
             document.getElementById('outDiff').innerText = diff.toLocaleString();
-            document.getElementById('outCan').innerText = totalCan.toLocaleString();
+            document.getElementById('outCan').innerText = neededCans.toLocaleString();
             document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
+            document.getElementById('outGiftText').innerHTML = giftResult;
+            
             updateTargetGradients();
             document.getElementById('resBoard').style.display = 'block';
         }

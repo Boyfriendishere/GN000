@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎲Goodnight貴族</title>
+    <title>🎲Goodnight貴族精算</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -11,6 +11,7 @@
             --brand-pink: #e8659a; --brand-gold: #f0b942;
             --card-bg: rgba(23, 28, 36, 0.9); --border: rgba(255, 255, 255, 0.08);
             --t1: rgba(255,255,255,0.94); --t2: rgba(255,255,255,0.52); --t3: rgba(255,255,255,0.24);
+            /* 貴族漸層色定義 */
             --rank-0-start: #444; --rank-0-end: #666;
             --rank-1-start: #2c3e50; --rank-1-end: #bdc3c7;
             --rank-2-start: #1a4d2e; --rank-2-end: #2ecc71;
@@ -106,16 +107,16 @@
                 <div class="row"><span>總需罐頭</span><span class="val-white" id="outCan">0</span></div>
                 <div class="row" style="border:none; padding-top:15px; flex-direction:column; align-items:center;">
                     <span id="outGiftText" style="color:var(--t1); font-weight:600; text-align:center; line-height:1.8;"></span>
-                    <span style="font-size:0.65rem; color:var(--t3); margin-top:8px;">* 建議補齊僅用 9999、1000 為參考建議方案</span>
+                    <span style="font-size:0.65rem; color:var(--t3); margin-top:8px;">* 建議補齊僅用 9999、3000、1000、300、100 為參考方案</span>
                 </div>
             </div>
         </div>
         <div class="strategy-box">
-            <b>不建議續等</b><br>
+            <b>不建議續等</b><br><br>
             掉下再升比原階續等划算。<br>單數月 10-25 號綁定最優。<br>
             例：神王需 2000萬讚，續等要 60% (1200萬)，<br>但掉回至尊再升神王只要 1000萬讚。
         </div>
-        <div class="note">高罐頭禮物讚數會越高非線性<br>約2.75 至 2.2<br>匯率：NT$1 ≈ 2 罐頭<br>我男朋友來了 | 2026.03.31<div class="thanks">感謝 賈高賽 數據提供及驗證</div></div>
+        <div class="note">基準<br>匯率：NT$1 ≈ 2 罐頭<br>我男朋友來了 | 2026.03.31<div class="thanks">感謝 賈高賽 數據提供</div></div>
     </div>
 
     <script>
@@ -123,15 +124,15 @@
         const rankGradients = { 0: ['#444', '#666'], 1: ['#2c3e50', '#bdc3c7'], 2: ['#1a4d2e', '#2ecc71'], 3: ['#003366', '#0073cf'], 4: ['#4b0082', '#9b59b6'], 5: ['#8b0000', '#e74c3c'], 6: ['#0a0a0a', '#f0b942'], 7: ['#00f2ff', '#00aaff'], 'v': ['#333', '#555'] };
         const ranks = [ {name: "神王", val: 20000000, code: 7}, {name: "至尊", val: 10000000, code: 6}, {name: "教皇", val: 5000000, code: 5}, {name: "公爵", val: 2425500, code: 4}, {name: "伯爵", val: 425500, code: 3}, {name: "騎士", val: 175500, code: 2}, {name: "劍客", val: 25500, code: 1}, {name: "V4", val: 13000, code: 'v'}, {name: "V3", val: 5500, code: 'v'}, {name: "V2", val: 1800, code: 'v'}, {name: "V1", val: 500, code: 'v'} ];
         
-        // 核心聖經數據
+        // 核心聖經數據還原
         const bibleData = {
-            30: { g9999: 824910, g1000: 66000 },
-            25: { g9999: 687425, g1000: 55000 },
-            20: { g9999: 549940, g1000: 44000 },
-            15: { g9999: 412455, g1000: 33000 },
-            10: { g9999: 274970, g1000: 22000 },
-            5:  { g9999: 137485, g1000: 11000 },
-            1:  { g9999: 27497,  g1000: 2200  }
+            30: { g9999: 824910, g3000: 225000, g1000: 66000, g300: 19800, g100: 6600 },
+            25: { g9999: 687425, g3000: 187500, g1000: 55000, g300: 16500, g100: 5500 },
+            20: { g9999: 549940, g3000: 150000, g1000: 44000, g300: 13200, g100: 4400 },
+            15: { g9999: 412455, g3000: 112500, g1000: 33000, g300: 9900,  g100: 3300 },
+            10: { g9999: 274970, g3000: 75000,  g1000: 22000, g300: 6600,  g100: 2200 },
+            5:  { g9999: 137485, g3000: 37500,  g1000: 11000, g300: 3300,  g100: 1100 },
+            1:  { g9999: 27497,  g3000: 7500,   g1000: 2200,  g300: 660,   g100: 220  }
         };
 
         function setMulti(val, el) { document.getElementById('multi').value = val; document.querySelectorAll('.btn-small').forEach(b => b.classList.remove('active')); el.classList.add('active'); if (document.getElementById('resBoard').style.display === 'block') doCalc(); }
@@ -147,35 +148,63 @@
             let diff = Math.max(targetVal - curr, 0);
             const data = bibleData[multi] || bibleData[1];
 
-            let count9999 = 0, count1000 = 0;
-            
-            // 1. 先用 9999 填滿（無條件捨去）
-            count9999 = Math.floor(diff / data.g9999);
-            let currentZan = count9999 * data.g9999;
+            let count9999 = 0, count3000 = 0, count1000 = 0, count300 = 0, count100 = 0;
+            let currentAccumulatedZan = 0;
 
-            // 2. 補齊邏輯：如果還沒到門檻，就補 1000 的
-            if (currentZan < (diff - 10)) {
-                let remaining = diff - currentZan;
-                
-                // 如果補 1000 補到快超過 9999，直接進位成 9999
+            // 1. 先用效率最高的 9999 填滿
+            count9999 = Math.floor(diff / data.g9999);
+            currentAccumulatedZan = count9999 * data.g9999;
+
+            // 2. 核心邏輯：如果還沒達標，開始從大到小補
+            if (currentAccumulatedZan < (diff - 10)) {
+                let remaining = diff - currentAccumulatedZan;
+
+                // 如果補 9999 補到快超過 9999 本身效益，直接進位
                 if (remaining > (data.g9999 * 0.9)) {
                     count9999++;
+                    currentAccumulatedZan += data.g9999;
                 } else {
-                    count1000 = Math.ceil(remaining / data.g1000);
-                    // 再次進位檢查：如果 1000 補太多，不如買一個 9999 便宜
-                    if (count1000 * 1000 >= 9999) {
-                        count9999++;
-                        count1000 = 0;
+                    // 依照面額逐層補齊
+                    const giftConfigs = [
+                        { key: '3000', zan: data.g3000, can: 3000 },
+                        { key: '1000', zan: data.g1000, can: 1000 },
+                        { key: '300',  zan: data.g300,  can: 300 },
+                        { key: '100',  zan: data.g100,  can: 100 }
+                    ];
+
+                    for (let config of giftConfigs) {
+                        if (currentAccumulatedZan < (diff - 10)) {
+                            let needThis = Math.ceil((diff - currentAccumulatedZan) / config.zan);
+                            
+                            // 進位優化：如果買 4 個 300 不如買 1 個 1000 便宜
+                            if (config.key === '3000') count3000 = needThis;
+                            else if (config.key === '1000') count1000 = needThis;
+                            else if (config.key === '300') count300 = needThis;
+                            else if (config.key === '100') count100 = needThis;
+                            
+                            // 補完就停止 (因為是用 Math.ceil)
+                            currentAccumulatedZan += (needThis * config.zan);
+                            break; 
+                        }
                     }
                 }
             }
 
-            const totalCan = (count9999 * 9999) + (count1000 * 1000);
+            // 3. 再次進位清理邏輯 (確保顯示最簡潔)
+            if (count100 * 100 >= 300) { count300 += Math.floor(count100*100/300); count100 = (count100*100)%300/100; }
+            if (count300 * 300 >= 1000) { count1000 += Math.floor(count300*300/1000); count300 = (count300*300)%1000/300; }
+            if (count1000 * 1000 >= 3000) { count3000 += Math.floor(count1000*1000/3000); count1000 = (count1000*1000)%3000/1000; }
+            if (count3000 * 3000 >= 9999) { count9999 += Math.floor(count3000*3000/9999); count3000 = (count3000*3000)%9999/3000; }
+
+            const totalCan = (count9999 * 9999) + (count3000 * 3000) + (count1000 * 1000) + (count300 * 300) + (count100 * 100);
             const cash = Math.ceil(totalCan * exchangeRate);
 
             let parts = [];
             if (count9999 > 0) parts.push(`<span class="gift-tag">${count9999}</span> 個 9999`);
+            if (count3000 > 0) parts.push(`<span class="gift-tag">${count3000}</span> 個 3000`);
             if (count1000 > 0) parts.push(`<span class="gift-tag">${count1000}</span> 個 1000`);
+            if (count300 > 0)  parts.push(`<span class="gift-tag">${count300}</span> 個 300`);
+            if (count100 > 0)  parts.push(`<span class="gift-tag">${count100}</span> 個 100`);
             
             let giftResult = parts.length > 0 ? "建議補齊<br>" + parts.join(' + ') : "讚數已達標 🥳";
 

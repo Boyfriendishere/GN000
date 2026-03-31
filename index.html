@@ -123,8 +123,14 @@
 
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(232, 101, 154, 0.45); filter: brightness(1.1); }
 
+        /* 輔助備註樣式 */
+        .btn-hint {
+            display: block; text-align: center; font-size: 0.72rem; color: var(--t3);
+            margin-top: 12px; font-weight: 400; letter-spacing: 0.5px;
+        }
+
         .result-panel {
-            margin-top: 10px; border-radius: 26px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
+            margin-top: 20px; border-radius: 26px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
             background: rgba(0,0,0,0.2); backdrop-filter: blur(24px); display: none;
         }
 
@@ -196,7 +202,8 @@
             </div>
         </div>
 
-        <button class="btn-main" onclick="doCalc()">進行試算</button>
+        <button class="btn-main" onclick="doCalc()">開始試算</button>
+        <span class="btn-hint">*更改現在讚數及選擇目標，請重新按開始試算</span>
 
         <div id="resBoard" class="result-panel">
             <div class="res-header">
@@ -215,7 +222,7 @@
         <div class="strategy-box">
             <b>不建議續等</b>
             掉下再升比原階續等划算。單數月 10-25 號綁定最優。<br>
-            例神王需 2000萬讚，續等要 1200萬讚，<br>
+            例神王需 2000萬讚，續等要 60% (1200萬)，<br>
             掉回至尊再升只要 1000萬讚。
         </div>
 
@@ -223,7 +230,7 @@
             基準：1 顆 9999 罐 = 27,497 讚<br>
             匯率：NT$1 ≈ 2 罐頭<br>
             我男朋友來了 | 2026.03.31
-            <div class="thanks">感謝 賈高賽 數據提供</div>
+            <div class="thanks">感謝 賈高賽 數據提供及驗算🥳</div>
         </div>
     </div>
 
@@ -285,43 +292,30 @@
             const curr = parseFloat(document.getElementById('currZan').value) || 0;
             const targetVal = parseFloat(document.getElementById('targetRank').value);
             const multi = parseFloat(document.getElementById('multi').value) || 1;
-            
             const zanPerGiftAtOne = 27497;
             const exchangeRate = 0.5;
-            
             let diff = Math.max(targetVal - curr, 0);
-            
-            // 讚數換算罐頭邏輯
             const zanPerOneCan = (zanPerGiftAtOne * multi) / 9999; 
             let neededCans = Math.ceil(diff / zanPerOneCan);
             const cash = Math.ceil(neededCans * exchangeRate);
-
-            // 禮物組合拆解 (新增 1000 階梯)
             let tempCans = neededCans;
             let count9999 = Math.floor(tempCans / 9999);
             tempCans %= 9999;
-            
             let count3000 = Math.floor(tempCans / 3000);
             tempCans %= 3000;
-
             let count1000 = Math.floor(tempCans / 1000);
             tempCans %= 1000;
-            
             let count300 = Math.ceil(tempCans / 300);
-
             let parts = [];
-            if (count9999 > 0) parts.push(`<span class="gift-tag">${count9999}</span> 個 9,999`);
-            if (count3000 > 0) parts.push(`<span class="gift-tag">${count3000}</span> 個 3,000`);
-            if (count1000 > 0) parts.push(`<span class="gift-tag">${count1000}</span> 個 1,000`);
+            if (count9999 > 0) parts.push(`<span class="gift-tag">${count9999}</span> 個 9999`);
+            if (count3000 > 0) parts.push(`<span class="gift-tag">${count3000}</span> 個 3000`);
+            if (count1000 > 0) parts.push(`<span class="gift-tag">${count1000}</span> 個 1000`);
             if (count300 > 0)  parts.push(`<span class="gift-tag">${count300}</span> 個 300`);
-            
-            let giftResult = parts.length > 0 ? "建議補齊方案：<br>" + parts.join(' + ') : "讚數已達標 🥳";
-
+            let giftResult = parts.length > 0 ? "補齊方案<br>" + parts.join(' + ') : "讚數已達標 🥳";
             document.getElementById('outDiff').innerText = diff.toLocaleString();
             document.getElementById('outCan').innerText = neededCans.toLocaleString();
             document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
             document.getElementById('outGiftText').innerHTML = giftResult;
-            
             updateTargetGradients();
             document.getElementById('resBoard').style.display = 'block';
         }

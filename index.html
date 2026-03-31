@@ -16,15 +16,15 @@
             --t2: rgba(255,255,255,0.52);
             --t3: rgba(255,255,255,0.24);
 
-            /* 貴族漸層色定義 */
+            /* 貴族專屬漸層定義 */
             --rank-0-start: #444; --rank-0-end: #666;
-            --rank-1-start: #2c3e50; --rank-1-end: #bdc3c7; /* 劍客 */
-            --rank-2-start: #1a4d2e; --rank-2-end: #2ecc71; /* 騎士 */
-            --rank-3-start: #003366; --rank-3-end: #0073cf; /* 伯爵 */
-            --rank-4-start: #4b0082; --rank-4-end: #9b59b6; /* 公爵 */
-            --rank-5-start: #8b0000; --rank-5-end: #e74c3c; /* 教皇 */
-            --rank-6-start: #0a0a0a; --rank-6-end: #f0b942; /* 至尊 */
-            --rank-7-start: #00f2ff; --rank-7-end: #00aaff; /* 神王 */
+            --rank-1-start: #2c3e50; --rank-1-end: #bdc3c7;
+            --rank-2-start: #1a4d2e; --rank-2-end: #2ecc71;
+            --rank-3-start: #003366; --rank-3-end: #0073cf;
+            --rank-4-start: #4b0082; --rank-4-end: #9b59b6;
+            --rank-5-start: #8b0000; --rank-5-end: #e74c3c;
+            --rank-6-start: #0a0a0a; --rank-6-end: #f0b942;
+            --rank-7-start: #00f2ff; --rank-7-end: #00aaff;
 
             --current-rank-start: var(--rank-0-start);
             --current-rank-end: var(--rank-0-end);
@@ -70,7 +70,7 @@
             font-family: 'Sora', sans-serif;
             background: linear-gradient(135deg, #ffffff 10%, var(--brand-pink) 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-align: center; font-size: 1.75rem; margin-bottom: 44px; font-weight: 800; letter-spacing: 2px;
+            background-clip: text; text-align: center; font-size: 1.75rem; margin-bottom: 44px; font-weight: 800; letter-spacing: 2px;
         }
 
         h1::after { content: ''; display: block; width: 36px; height: 2px; background: linear-gradient(90deg, var(--brand-pink), transparent); margin: 14px auto 0; border-radius: 2px; }
@@ -164,7 +164,7 @@
         <h1>🎲Goodnight貴族</h1>
 
         <div class="input-group">
-            <label>累積讚數 (主頁>貴族等級>左下黃色數字)</label>
+            <label>現在讚數 (主頁>貴族等級>左下黃色數字)</label>
             <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
             <div id="rankDisplay" class="current-rank-tag">目前爵位：V0</div>
         </div>
@@ -196,7 +196,7 @@
             </div>
         </div>
 
-        <button class="btn-main" onclick="doCalc()">開始試算</button>
+        <button class="btn-main" onclick="doCalc()">進行試算</button>
 
         <div id="resBoard" class="result-panel">
             <div class="res-header">
@@ -207,19 +207,21 @@
                 <div class="row"><span>尚差讚數</span><span class="val-white" id="outDiff">0</span></div>
                 <div class="row"><span>總需罐頭</span><span class="val-white" id="outCan">0</span></div>
                 <div class="row" style="border:none; padding-top:15px; flex-direction:column; align-items:center;">
-                    <span id="outGiftText" style="color:var(--t1); font-weight:600; text-align:center;"></span>
+                    <span id="outGiftText" style="color:var(--t1); font-weight:600; text-align:center; line-height:1.8;"></span>
                 </div>
             </div>
         </div>
 
         <div class="strategy-box">
-            <b>💡不建議續等</b><br>
+            <b>不建議續等</b>
             掉下再升比原階續等划算。單數月 10-25 號綁定最優。<br>
-            例神王需 2000萬讚，續等要 60% (1200萬)，<br>
+            例神王需 2000萬讚，續等要 1200萬讚，<br>
             掉回至尊再升只要 1000萬讚。
         </div>
 
         <div class="note">
+            基準：1 顆 9999 罐 = 27,497 讚<br>
+            匯率：NT$1 ≈ 2 罐頭<br>
             我男朋友來了 | 2026.03.31
             <div class="thanks">感謝 賈高賽 數據提供</div>
         </div>
@@ -283,30 +285,37 @@
             const curr = parseFloat(document.getElementById('currZan').value) || 0;
             const targetVal = parseFloat(document.getElementById('targetRank').value);
             const multi = parseFloat(document.getElementById('multi').value) || 1;
+            
             const zanPerGiftAtOne = 27497;
             const exchangeRate = 0.5;
             
             let diff = Math.max(targetVal - curr, 0);
             
-            // 讚數換算罐頭
-            const zanPerOneCan = zanPerGiftAtOne / 9999; 
-            let neededCans = Math.ceil(diff / (zanPerOneCan * multi));
+            // 讚數換算罐頭邏輯
+            const zanPerOneCan = (zanPerGiftAtOne * multi) / 9999; 
+            let neededCans = Math.ceil(diff / zanPerOneCan);
             const cash = Math.ceil(neededCans * exchangeRate);
 
-            // 禮物組合邏輯
+            // 禮物組合拆解 (新增 1000 階梯)
             let tempCans = neededCans;
             let count9999 = Math.floor(tempCans / 9999);
             tempCans %= 9999;
+            
             let count3000 = Math.floor(tempCans / 3000);
             tempCans %= 3000;
+
+            let count1000 = Math.floor(tempCans / 1000);
+            tempCans %= 1000;
+            
             let count300 = Math.ceil(tempCans / 300);
 
             let parts = [];
-            if (count9999 > 0) parts.push(`<span class="gift-tag">${count9999}</span> 個 9999`);
-            if (count3000 > 0) parts.push(`<span class="gift-tag">${count3000}</span> 個 3000`);
+            if (count9999 > 0) parts.push(`<span class="gift-tag">${count9999}</span> 個 9,999`);
+            if (count3000 > 0) parts.push(`<span class="gift-tag">${count3000}</span> 個 3,000`);
+            if (count1000 > 0) parts.push(`<span class="gift-tag">${count1000}</span> 個 1,000`);
             if (count300 > 0)  parts.push(`<span class="gift-tag">${count300}</span> 個 300`);
             
-            let giftResult = parts.length > 0 ? "建議補齊：" + parts.join(' + ') : "讚數已達標 🥳";
+            let giftResult = parts.length > 0 ? "建議補齊方案：<br>" + parts.join(' + ') : "讚數已達標 🥳";
 
             document.getElementById('outDiff').innerText = diff.toLocaleString();
             document.getElementById('outCan').innerText = neededCans.toLocaleString();

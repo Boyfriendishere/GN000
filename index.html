@@ -3,156 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goodnight 貴族爵位計算</title>
+    <title>GoodNight貴族爵位計算</title>
     <style>
-        :root { --gn-pink: #ff4d6d; --gn-dark: #121212; }
-        body { font-family: sans-serif; background: var(--gn-dark); color: white; display: flex; justify-content: center; padding: 20px; }
-        .card { background: #1e1e1e; width: 100%; max-width: 480px; padding: 25px; border-radius: 20px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1 { color: var(--gn-pink); text-align: center; font-size: 1.5rem; margin-bottom: 25px; }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #888; font-size: 0.9rem; }
-        select, input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #444; background: #2a2a2a; color: white; font-size: 1.1rem; box-sizing: border-box; }
-        .current-rank-tag { margin-top: 8px; font-size: 1rem; color: #ffd700; font-weight: bold; padding: 5px; background: rgba(255, 215, 0, 0.1); border-radius: 8px; display: inline-block; }
+        :root { 
+            --gn-pink: #ff4d6d; 
+            --gn-gold: #ffd700; 
+            --bg-deep: #05070a; 
+            --card-bg: rgba(30, 30, 30, 0.85);
+            --border-color: rgba(255, 77, 109, 0.2);
+        }
         
-        .quick-btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
-        .btn-small { background: #333; color: #ccc; border: 1px solid #444; padding: 10px 5px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-weight: bold; }
-        .btn-small:hover { background: #444; color: white; border-color: var(--gn-pink); }
+        body { 
+            font-family: "PingFang TC", "Inter", sans-serif; 
+            background: radial-gradient(circle at top right, #2a0a14, #05070a); 
+            color: #e6edf3; 
+            display: flex; 
+            justify-content: center; 
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .card { 
+            background: var(--card-bg); 
+            width: 100%; 
+            max-width: 460px; 
+            padding: 40px 30px; 
+            border-radius: 32px; 
+            border: 1px solid var(--border-color); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            backdrop-filter: blur(20px);
+            position: relative;
+        }
+
+        /* 裝飾性粉紅微光 */
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--gn-pink), transparent, var(--gn-gold));
+            z-index: -1;
+            border-radius: 33px;
+            opacity: 0.15;
+        }
+
+        h1 { 
+            background: linear-gradient(135deg, #fff 0%, var(--gn-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center; 
+            font-size: 1.6rem; 
+            margin-bottom: 35px; 
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+        
+        label { color: #8b949e; font-size: 0.8rem; font-weight: 600; margin-left: 10px; margin-bottom: 10px; display: block; text-transform: uppercase; letter-spacing: 1px; }
+
+        input, select { 
+            width: 100%; padding: 18px; border-radius: 18px; 
+            border: 1px solid rgba(255,255,255,0.05); background: rgba(0, 0, 0, 0.3); 
+            color: white; font-size: 1.2rem; box-sizing: border-box; 
+            outline: none; transition: 0.4s;
+        }
+
+        input:focus, select:focus { border-color: var(--gn-pink); background: rgba(0, 0, 0, 0.5); }
+
+        .current-rank-tag { margin-top: 10px; font-size: 1rem; color: var(--gn-gold); font-weight: bold; padding: 6px 12px; background: rgba(255, 215, 0, 0.1); border-radius: 10px; display: inline-block; }
+
+        /* 快捷按鈕組 */
+        .quick-btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
+        .btn-small { 
+            background: rgba(255, 255, 255, 0.03); color: #8b949e; border: 1px solid rgba(255,255,255,0.05); 
+            padding: 12px 0; border-radius: 12px; font-size: 0.85rem; 
+            cursor: pointer; transition: 0.3s; font-weight: 600;
+        }
+        .btn-small:hover { border-color: var(--gn-pink); color: #fff; }
+        .btn-small.active { background: var(--gn-pink); color: white; border: none; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
         .btn-wide { grid-column: span 2; }
 
-        .btn-main { width: 100%; background: var(--gn-pink); color: white; border: none; padding: 18px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
+        .btn-main { 
+            width: 100%; background: linear-gradient(90deg, #ff4d6d, #ff758c); 
+            color: white; border: none; padding: 20px; border-radius: 50px; 
+            font-size: 1.25rem; font-weight: 800; cursor: pointer; 
+            margin-top: 25px; transition: 0.4s; letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.2);
+        }
+        .btn-main:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 15px 30px rgba(255, 77, 109, 0.3); }
+
+        /* 結果面板 */
+        .result-panel { margin-top: 40px; border-radius: 28px; overflow: hidden; background: linear-gradient(180deg, rgba(255,77,109,0.05) 0%, rgba(0,0,0,0.2) 100%); border: 1px solid rgba(255,77,109,0.1); display: none; }
+        .res-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .res-label { font-size: 0.85rem; color: #8b949e; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+        .res-money { font-size: 3.2rem; font-weight: 800; color: var(--gn-gold); text-shadow: 0 0 30px rgba(255, 215, 0, 0.3); }
         
-        .result-box { margin-top: 25px; display: none; }
-        .res-card { background: rgba(255, 77, 109, 0.1); border: 1px dashed var(--gn-pink); padding: 20px; border-radius: 15px; }
-        .res-title { font-size: 1.1rem; color: #aaa; margin-bottom: 15px; text-align: center; font-weight: bold; }
-        .big-num { color: #ffd700; font-size: 2.5rem; font-weight: bold; display: block; text-align: center; margin-bottom: 15px; }
-        .res-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 1rem; color: #ccc; border-bottom: 1px solid #333; padding-bottom: 5px; }
-        .res-val { color: white; font-weight: bold; }
+        .details { padding: 25px; font-size: 0.95rem; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 15px; color: #c9d1d9; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 10px; }
+        .row:last-child { border: none; }
         
-        .strategy-box { background: rgba(255, 215, 0, 0.1); border-left: 4px solid #ffd700; padding: 15px; margin-top: 20px; border-radius: 4px; }
-        .strategy-title { color: #ffd700; font-weight: bold; font-size: 0.95rem; margin-bottom: 8px; }
-        .strategy-text { font-size: 0.85rem; color: #ddd; line-height: 1.6; }
-        .important-tip { color: #ff4d6d; font-weight: bold; display: block; margin-top: 5px; }
-        
-        .note { font-size: 0.75rem; color: #666; margin-top: 25px; line-height: 1.6; text-align: center; }
-        .thanks { color: var(--gn-pink); font-weight: bold; margin-top: 10px; border-top: 1px solid #333; padding-top: 10px; font-size: 0.8rem; }
+        .strategy-box { background: rgba(255, 215, 0, 0.03); border-left: 4px solid var(--gn-gold); padding: 20px; margin-top: 40px; border-radius: 12px; font-size: 0.85rem; color: #8b949e; line-height: 1.7; }
+        .important { color: var(--gn-pink); font-weight: bold; }
+
+        .note { font-size: 0.75rem; color: #484f58; margin-top: 50px; text-align: center; line-height: 1.6; }
+        .thanks { color: var(--gn-pink); font-weight: bold; margin-top: 15px; font-size: 0.85rem; letter-spacing: 0.5px; opacity: 0.9; border-top: 1px solid #30363d; padding-top: 20px; }
     </style>
 </head>
 <body onload="updateRank()">
 
-    <div class="card">
-        <h1>Goodnight 貴族爵位計算</h1>
+<div class="card">
+    <h1>⚓GoodNight貴族爵位計算</h1>
 
-        <div class="input-group">
-            <label>1. 本月累積讚數 (主頁>貴族等級>左下角黃色數字)</label>
-            <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
-            <div id="rankDisplay" class="current-rank-tag">目前爵位：一般玩家</div>
-        </div>
+    <div class="input-group">
+        <label>1. 目前累積讚數 (Charm Data)</label>
+        <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
+        <div id="rankDisplay" class="current-rank-tag">目前爵位：玩家</div>
+    </div>
 
-        <div class="input-group">
-            <label>2. 目標爵位</label>
-            <select id="targetRank">
-                <option value="25500">劍客 (25,500)</option>
-                <option value="175500">騎士 (175,500)</option>
-                <option value="425500">伯爵 (425,500)</option>
-                <option value="2425500">公爵 (2,425,500)</option>
-                <option value="5000000">教皇 (5,000,000)</option>
-                <option value="10000000">至尊 (10,000,000)</option>
-                <option value="20000000" selected>神王 (20,000,000)</option>
-            </select>
-        </div>
+    <div class="input-group">
+        <label>2. 目標晉升爵位</label>
+        <select id="targetRank">
+            <option value="25500">劍客 (25,500)</option>
+            <option value="175500">騎士 (175,500)</option>
+            <option value="425500">伯爵 (425,500)</option>
+            <option value="2425500">公爵 (2,425,500)</option>
+            <option value="5000000">教皇 (5,000,000)</option>
+            <option value="10000000">至尊 (10,000,000)</option>
+            <option value="20000000" selected>神王 (20,000,000)</option>
+        </select>
+    </div>
 
-        <div class="input-group">
-            <label>3. 加倍讚倍數</label>
-            <input type="number" id="multi" value="30">
-            <div class="quick-btn-grid">
-                <button class="btn-small" onclick="setMulti(30)">30x</button>
-                <button class="btn-small" onclick="setMulti(25)">25x</button>
-                <button class="btn-small" onclick="setMulti(20)">20x</button>
-                <button class="btn-small" onclick="setMulti(15)">15x</button>
-                <button class="btn-small" onclick="setMulti(10)">10x</button>
-                <button class="btn-small" onclick="setMulti(5)">5x</button>
-                <button class="btn-small btn-wide" onclick="setMulti(1)">無加倍</button>
-            </div>
-        </div>
-
-        <button class="btn-main" onclick="doCalc()">立即試算</button>
-
-        <div id="resBoard" class="result-box">
-            <div class="res-card">
-                <div class="res-title" id="upTitle">🚀 晉升至目標</div>
-                <span class="big-num" id="outCash">$0</span>
-                <div class="res-item"><span>尚差讚數：</span><span class="res-val" id="outDiff">0</span></div>
-                <div class="res-item"><span>總需罐頭：</span><span class="res-val" id="outCan">0</span></div>
-            </div>
-        </div>
-
-        <div class="strategy-box">
-            <div class="strategy-title">💡 建議策略</div>
-            <div class="strategy-text">
-                1. <b>單數月晉升：</b>單月 (1,3,5...) 10-25號綁定最划算，享有當月+下月等級。<br>
-                2. <b>不建議續等：</b><span class="important-tip">「掉下再升」比「原階續等」還划算！</span>例如神王續等需1200萬讚，但掉下再升僅需1000萬讚。
-            </div>
-        </div>
-
-        <div class="note">
-            比例：一顆 9999 罐禮物 = 27,497 讚<br>
-            匯率：$1 台幣 ≈ 2 罐頭 (資深玩家提供)<br>
-            <span style="color:#aaa;">我男朋友來了 | 2026.03.31</span>
-            <div class="thanks">感謝 賈高賽 分享心得</div>
+    <div class="input-group">
+        <label>3. 加倍讚倍數</label>
+        <input type="number" id="multi" value="30">
+        <div class="quick-btn-grid">
+            <button class="btn-small" onclick="setMulti(30)">30x</button>
+            <button class="btn-small" onclick="setMulti(25)">25x</button>
+            <button class="btn-small" onclick="setMulti(20)">20x</button>
+            <button class="btn-small" onclick="setMulti(15)">15x</button>
+            <button class="btn-small" onclick="setMulti(10)">10x</button>
+            <button class="btn-small" onclick="setMulti(5)">5x</button>
+            <button class="btn-small btn-wide" onclick="setMulti(1)">無加倍</button>
         </div>
     </div>
 
-    <script>
-        const ranks = [
-            {name: "神王", val: 20000000}, {name: "至尊", val: 10000000},
-            {name: "教皇", val: 5000000}, {name: "公爵", val: 2425500},
-            {name: "伯爵", val: 425500}, {name: "騎士", val: 175500},
-            {name: "劍客", val: 25500}, {name: "V4", val: 13000},
-            {name: "V3", val: 5500}, {name: "V2", val: 1800},
-            {name: "V1", val: 500}
-        ];
+    <button class="btn-main" onclick="doCalc()"開始試算</button>
 
-        function setMulti(val) {
-            document.getElementById('multi').value = val;
-            if (document.getElementById('resBoard').style.display === 'block') { doCalc(); }
+    <div id="resBoard" class="result-panel">
+        <div class="res-header">
+            <div class="res-label" id="upTitle">預計晉升成本 (NTD)</div>
+            <span class="res-money" id="outCash">$0</span>
+        </div>
+        <div class="details">
+            <div class="row"><span>尚差讚數</span><span id="outDiff" style="color:#fff; font-weight:bold;">0</span></div>
+            <div class="row"><span>總需罐頭</span><span id="outCan" style="color:#fff; font-weight:bold;">0</span></div>
+        </div>
+    </div>
+
+    <div class="strategy-box">
+        <b style="color:var(--gn-gold); display:block; margin-bottom:8px;">💡 策略建議：</b>
+        1. <b>單數月晉升：</b>單月 10-25 號綁定享有雙月效益。<br>
+        2. <b>晉升勝於續等：</b><span class="important">「掉下再升」比「原階續等」還划算</span>
+    </div>
+
+    <div class="note">
+        一顆 9999 罐禮物 = 27,497 讚<br>
+        匯率：$1 台幣 ≈ 2 罐頭<br>
+        我男朋友來了 | 2026.03.31
+        <div class="thanks">感謝 賈高賽 數據提供</div>
+    </div>
+</div>
+
+<script>
+    const ranks = [
+        {name: "神王", val: 20000000}, {name: "至尊", val: 10000000},
+        {name: "教皇", val: 5000000}, {name: "公爵", val: 2425500},
+        {name: "伯爵", val: 425500}, {name: "騎士", val: 175500},
+        {name: "劍客", val: 25500}, {name: "V4", val: 13000},
+        {name: "V3", val: 5500}, {name: "V2", val: 1800},
+        {name: "V1", val: 500}
+    ];
+
+    function setMulti(val) {
+        document.getElementById('multi').value = val;
+        if (document.getElementById('resBoard').style.display === 'block') { doCalc(); }
+    }
+
+    function getCurrentRankInfo(val) {
+        for (let i = 0; i < ranks.length; i++) {
+            if (val >= ranks[i].val) return ranks[i];
         }
+        return {name: "玩家", val: 0};
+    }
 
-        function getCurrentRankInfo(val) {
-            for (let i = 0; i < ranks.length; i++) {
-                if (val >= ranks[i].val) return ranks[i];
-            }
-            return {name: "一般玩家", val: 0};
-        }
+    function updateRank() {
+        const val = parseFloat(document.getElementById('currZan').value) || 0;
+        const currentRank = getCurrentRankInfo(val);
+        document.getElementById('rankDisplay').innerText = "目前爵位：" + currentRank.name;
+    }
 
-        function updateRank() {
-            const val = parseFloat(document.getElementById('currZan').value) || 0;
-            const currentRank = getCurrentRankInfo(val);
-            document.getElementById('rankDisplay').innerText = "目前爵位：" + currentRank.name;
-        }
+    function doCalc() {
+        const curr = parseFloat(document.getElementById('currZan').value) || 0;
+        const targetSelect = document.getElementById('targetRank');
+        const targetVal = parseFloat(targetSelect.value);
+        const targetName = targetSelect.options[targetSelect.selectedIndex].text.split(' ')[0];
+        const multi = parseFloat(document.getElementById('multi').value) || 1;
+        
+        const zanPerGiftAtOne = 27497;
+        const exchangeRate = 0.5;
 
-        function doCalc() {
-            const curr = parseFloat(document.getElementById('currZan').value) || 0;
-            const targetSelect = document.getElementById('targetRank');
-            const targetVal = parseFloat(targetSelect.value);
-            const targetName = targetSelect.options[targetSelect.selectedIndex].text.split(' ')[0];
-            const multi = parseFloat(document.getElementById('multi').value) || 1;
-            
-            const zanPerGiftAtOne = 27497;
-            const exchangeRate = 0.5;
+        let diff = targetVal - curr;
+        if (diff < 0) diff = 0;
+        const giftNumExact = diff / (zanPerGiftAtOne * multi);
+        const totalCan = Math.ceil(giftNumExact * 9999);
+        const cash = Math.ceil(totalCan * exchangeRate);
 
-            let diff = targetVal - curr;
-            if (diff < 0) diff = 0;
-            const giftNumExact = diff / (zanPerGiftAtOne * multi);
-            const totalCan = Math.ceil(giftNumExact * 9999);
-            const cash = Math.ceil(totalCan * exchangeRate);
+        document.getElementById('upTitle').innerText = `🚀 預計晉升至 ${targetName} 成本`;
+        document.getElementById('outDiff').innerText = diff.toLocaleString();
+        document.getElementById('outCan').innerText = totalCan.toLocaleString();
+        document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
+        
+        document.getElementById('resBoard').style.display = 'block';
+    }
+</script>
 
-            document.getElementById('upTitle').innerText = `🚀 晉升至 ${targetName}`;
-            document.getElementById('outDiff').innerText = diff.toLocaleString();
-            document.getElementById('outCan').innerText = totalCan.toLocaleString();
-            document.getElementById('outCash').innerText = '$' + cash.toLocaleString();
-            
-            document.getElementById('resBoard').style.display = 'block';
-        }
-    </script>
 </body>
 </html>

@@ -11,7 +11,6 @@
             --brand-pink: #e8659a; --brand-gold: #f0b942;
             --card-bg: rgba(23, 28, 36, 0.9); --border: rgba(255, 255, 255, 0.08);
             --t1: rgba(255,255,255,0.94); --t2: rgba(255,255,255,0.52); --t3: rgba(255,255,255,0.24);
-            /* 貴族漸層色定義 */
             --rank-0-start: #444; --rank-0-end: #666;
             --rank-1-start: #2c3e50; --rank-1-end: #bdc3c7;
             --rank-2-start: #1a4d2e; --rank-2-end: #2ecc71;
@@ -44,11 +43,9 @@
         .btn-small { background: rgba(255,255,255,0.03); color: var(--t2); border: 1px solid rgba(255,255,255,0.07); padding: 15px 0; border-radius: 15px; font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.25s cubic-bezier(0.4,0,0.2,1); }
         .btn-small:hover { background: rgba(232, 101, 154, 0.08); color: #fff; transform: translateY(-1px); }
         .btn-small.active { background: linear-gradient(135deg, var(--brand-pink), var(--brand-gold)); color: white; border: none; box-shadow: 0 10px 28px rgba(232,101,154,0.35); transform: translateY(-3px); }
-        .btn-wide { grid-column: span 2; }
-        .btn-main { width: 100%; background: linear-gradient(135deg, var(--brand-pink), #c0446e); color: #fff; border: none; padding: 18px; border-radius: 50px; font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 36px; transition: all 0.3s; letter-spacing: 2px; box-shadow: 0 8px 30px rgba(232, 101, 154, 0.3); }
+        .btn-main { width: 100%; background: linear-gradient(135deg, var(--brand-pink), #c0446e); color: #fff; border: none; padding: 18px; border-radius: 50px; font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 36px; transition: all 0.3s; letter-spacing: 2px; box-shadow: 0 8px 30px rgba(232, 101, 154, 0.3); }
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(232, 101, 154, 0.45); filter: brightness(1.1); }
-        .btn-hint { display: block; text-align: center; font-size: 0.72rem; color: var(--t3); margin-top: 12px; font-weight: 400; letter-spacing: 0.5px; }
-        .result-panel { margin-top: 20px; border-radius: 26px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); backdrop-filter: blur(24px); display: none; }
+        .result-panel { margin-top: 30px; border-radius: 26px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); backdrop-filter: blur(24px); display: none; }
         .res-header { padding: 32px 24px 24px; text-align: center; }
         .res-label { font-family: 'Sora', sans-serif; font-size: 0.68rem; color: var(--t2); letter-spacing: 3px; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
         .res-money { font-family: 'Sora', sans-serif; font-size: 3.4rem; font-weight: 800; background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 0 40px rgba(255,255,255,0.1); display: block; line-height: 1; }
@@ -95,11 +92,10 @@
                 <button class="btn-small" onclick="setMulti(15, this)">15x</button>
                 <button class="btn-small" onclick="setMulti(10, this)">10x</button>
                 <button class="btn-small" onclick="setMulti(5, this)">5x</button>
-                <button class="btn-small btn-wide" onclick="setMulti(1, this)">無加倍</button>
+                <button class="btn-small" onclick="setMulti(1, this)" style="grid-column: span 2;">無加倍</button>
             </div>
         </div>
         <button class="btn-main" onclick="doCalc()">開始試算</button>
-        <span class="btn-hint">*更改現在讚數及選擇目標，請重新按開始試算</span>
         <div id="resBoard" class="result-panel">
             <div class="res-header">
                 <div class="res-label">預計晉升成本</div>
@@ -119,14 +115,14 @@
             例：神王需 2000萬讚，續等要 60% (1200萬)，<br>
             但掉回至尊再升神王只要 1000萬讚。
         </div>
-        <div class="note">讚與罐頭基準非線性<br>匯率：NT$1 ≈ 2 罐頭<br>我男朋友來了 | 2026.03.31<div class="thanks">感謝 賈高賽 數據提供</div></div>
+        <div class="note">讚與罐頭基準非線性<br>匯率：NT$1 ≈ 2 罐頭<br>我男朋友來了 | 2026.03.31<div class="thanks">感謝 賈高賽 數據提供及驗證</div></div>
     </div>
+
     <script>
         const root = document.documentElement;
         const rankGradients = { 0: ['#444', '#666'], 1: ['#2c3e50', '#bdc3c7'], 2: ['#1a4d2e', '#2ecc71'], 3: ['#003366', '#0073cf'], 4: ['#4b0082', '#9b59b6'], 5: ['#8b0000', '#e74c3c'], 6: ['#0a0a0a', '#f0b942'], 7: ['#00f2ff', '#00aaff'], 'v': ['#333', '#555'] };
         const ranks = [ {name: "神王", val: 20000000, code: 7}, {name: "至尊", val: 10000000, code: 6}, {name: "教皇", val: 5000000, code: 5}, {name: "公爵", val: 2425500, code: 4}, {name: "伯爵", val: 425500, code: 3}, {name: "騎士", val: 175500, code: 2}, {name: "劍客", val: 25500, code: 1}, {name: "V4", val: 13000, code: 'v'}, {name: "V3", val: 5500, code: 'v'}, {name: "V2", val: 1800, code: 'v'}, {name: "V1", val: 500, code: 'v'} ];
         
-        // --- 賈高賽全倍數數據定義 (100% 準確對照表) ---
         const bibleData = {
             30: { g9999: 824910, g3000: 225000, g1000: 66000, g300: 19800 },
             25: { g9999: 687425, g3000: 187500, g1000: 55000, g300: 16500 },
@@ -148,39 +144,32 @@
             let multi = parseInt(document.getElementById('multi').value) || 1;
             const exchangeRate = 0.5;
             let diff = Math.max(targetVal - curr, 0);
-            
             const data = bibleData[multi] || bibleData[1];
+
             let count9999 = 0, count3000 = 0, count1000 = 0, count300 = 0;
-            let currentZan = 0;
+            let tempDiff = diff;
 
-            // 1. 優先計算效率最高的 9999
-            count9999 = Math.floor(diff / data.g9999);
-            currentZan = count9999 * data.g9999;
+            count9999 = Math.floor(tempDiff / data.g9999);
+            tempDiff -= count9999 * data.g9999;
 
-            // 2. 判斷補齊 (只要還沒過門檻且差額大於 1 就繼續)
-            if (currentZan < (diff - 1)) {
-                let remainingDiff = diff - currentZan;
-                
-                // 如果補一顆 9999 比補一堆小面額更便宜/效率更好
-                if (remainingDiff > (data.g9999 * 0.8)) {
-                    count9999++; currentZan += data.g9999;
-                } else {
-                    // 依序嘗試 3000 -> 1000 -> 300
-                    count3000 = Math.ceil(remainingDiff / data.g3000);
-                    let zanAfter3000 = currentZan + (count3000 * data.g3000);
-                    
-                    if (zanAfter3000 < (diff - 1)) {
-                        count1000 = Math.ceil((diff - zanAfter3000) / data.g1000);
-                        let zanAfter1000 = zanAfter3000 + (count1000 * data.g1000);
-                        
-                        if (zanAfter1000 < (diff - 1)) {
-                            count300 = Math.ceil((diff - zanAfter1000) / data.g300);
-                        }
-                    }
+            if (tempDiff >= 1) {
+                if (tempDiff >= 1) {
+                    let needed3000 = Math.floor(tempDiff / data.g3000);
+                    count3000 += needed3000;
+                    tempDiff -= needed3000 * data.g3000;
+                }
+                if (tempDiff >= 1) {
+                    let needed1000 = Math.floor(tempDiff / data.g1000);
+                    count1000 += needed1000;
+                    tempDiff -= needed1000 * data.g1000;
+                }
+                if (tempDiff >= 1) {
+                    let needed300 = Math.ceil(tempDiff / data.g300);
+                    count300 += needed300;
+                    tempDiff -= needed300 * data.g300;
                 }
             }
 
-            // 進位清理 (例如 3 顆 1000 換 1 顆 3000)
             if (count300 * data.g300 >= data.g1000) { count1000++; count300 = 0; }
             if (count1000 * data.g1000 >= data.g3000) { count3000++; count1000 = 0; }
             if (count3000 * data.g3000 >= data.g9999) { count9999++; count3000 = 0; }
@@ -194,7 +183,7 @@
             if (count1000 > 0) parts.push(`<span class="gift-tag">${count1000}</span> 個 1000`);
             if (count300 > 0)  parts.push(`<span class="gift-tag">${count300}</span> 個 300`);
             
-            let giftResult = parts.length > 0 ? "建議補齊：<br>" + parts.join(' + ') : "讚數已達標 🥳";
+            let giftResult = parts.length > 0 ? "建議補齊<br>" + parts.join(' + ') : "讚數已達標 🥳";
 
             document.getElementById('outDiff').innerText = Math.ceil(diff).toLocaleString();
             document.getElementById('outCan').innerText = totalCan.toLocaleString();

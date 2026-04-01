@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨Goodnight貴族精算</title>
+    <title>✨Goodnight貴族</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -170,7 +170,7 @@
 
         .btn-main {
             width: 100%;
-            background: linear-gradient(135deg, var(--brand-pink), #c0446e);
+            background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
             color: #fff;
             border: none;
             padding: 18px;
@@ -180,15 +180,15 @@
             font-size: 1.1rem;
             cursor: pointer;
             margin-top: 36px;
-            transition: all 0.3s;
+            transition: background 0.5s ease, box-shadow 0.3s, transform 0.2s;
             letter-spacing: 2px;
-            box-shadow: 0 8px 25px rgba(232,101,154,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.35);
         }
 
         .btn-main:hover {
-            filter: brightness(1.1);
+            filter: brightness(1.15);
             transform: translateY(-2px);
-            box-shadow: 0 14px 35px rgba(232,101,154,0.45);
+            box-shadow: 0 14px 35px rgba(0,0,0,0.4);
         }
 
         .result-panel {
@@ -371,11 +371,14 @@
             </div>
         </div>
 
-        <button class="btn-main" onclick="doCalc()">開始試算</button>
+        <button class="btn-main" id="btnMain" onclick="doCalc()">開始試算</button>
+        <div style="text-align:center; margin-top:10px; font-size:0.7rem; color:var(--t3); letter-spacing:0.3px;">
+            * 調整現在讚數 (本頁 › 貴族等級 › 左下黃色數字) 或選擇目標請重按
+        </div>
 
         <div id="resBoard" class="result-panel">
             <div class="res-header">
-                <div class="res-label">所需新台幣</div>
+                <div class="res-label">預計晉升成本</div>
                 <span class="res-money" id="outCash">$0</span>
             </div>
             <div class="details">
@@ -389,7 +392,7 @@
                 </div>
                 <div class="row gift-row">
                     <div class="gift-display" id="outGiftText"></div>
-                    <div class="gift-hint">* 建議補齊以 9999 罐頭禮物為主，餘數請自行分配</div>
+                    <div class="gift-hint">* 建議補齊以 9999 罐頭禮物為主，餘數請自行判斷分配</div>
                 </div>
             </div>
         </div>
@@ -398,20 +401,13 @@
             <b>不建議續等</b>
             掉下再升比原階續等划算<br>
             單數月 10-25 號綁定最優<br>
-            神王續等為 2,000萬 60%（即1,200萬）<br>
+            例：神王續等為 2,000萬 60%（1,200萬）<br>
             掉到至尊再升上神王只需 1,000萬<br>
             所有爵位全部適用<br>
-            有跟官方反應，反正他們說就是這樣🙂
-        </div>
-
-        <div class="april-fool" onclick="aprilFool()">
-            <span class="april-fool-emoji">🧧</span>
-            <span class="april-fool-text">Goodnight 自動搶紅包外掛</span>
         </div>
 
         <div class="note">
             高罐頭禮物讚數更高<br>
-            1 罐頭落在 2.75 - 2.2 讚區間<br>
             匯率：NT$1 ≈ 2 罐頭<br>
             我男朋友來了 | 2026.03.31
             <div class="thanks">感謝 賈高賽 數據提供</div>
@@ -491,6 +487,10 @@
             const sel = document.getElementById('targetRank');
             const code = parseInt(sel.options[sel.selectedIndex].getAttribute('data-rank'));
             setRankColors(code, 'target');
+            const colors = rankGradients[code] || rankGradients[7];
+            const btn = document.getElementById('btnMain');
+            btn.style.background = `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
+            btn.style.boxShadow = `0 8px 25px ${colors[1]}55`;
         }
 
         function adjustMoneyFontSize(text) {
@@ -539,16 +539,12 @@
             } else {
                 giftHTML = `建議補齊<br>
                     <span class="gift-tag">${count9999}</span> 顆 9999 罐頭禮物
-                    ＋ <span class="gift-tag">${remainingCan.toLocaleString()}</span> 罐頭禮物`;
+                    ＋  <span class="gift-tag">${remainingCan.toLocaleString()}</span> 罐頭`;
             }
 
             document.getElementById('outGiftText').innerHTML = giftHTML;
             updateTargetColor();
             document.getElementById('resBoard').style.display = 'block';
-        }
-
-        function aprilFool() {
-            alert('最好有這東西，愚人節快樂🤪');
         }
 
         // 初始化目標色

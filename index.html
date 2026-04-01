@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎲Goodnight貴族精算</title>
+    <title>✨Goodnight貴族精算</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -336,7 +336,7 @@
 
     <div class="card">
         <div class="rank-status-bar" id="statusBar"></div>
-        <h1 id="mainTitle">🎲Goodnight貴族</h1>
+        <h1 id="mainTitle">✨Goodnight貴族</h1>
 
         <div class="input-group">
             <label>現在讚數 (本頁 › 貴族等級 › 左下黃色數字)</label>
@@ -375,7 +375,7 @@
 
         <div id="resBoard" class="result-panel">
             <div class="res-header">
-                <div class="res-label">預計晉升成本</div>
+                <div class="res-label">所需新台幣</div>
                 <span class="res-money" id="outCash">$0</span>
             </div>
             <div class="details">
@@ -389,19 +389,19 @@
                 </div>
                 <div class="row gift-row">
                     <div class="gift-display" id="outGiftText"></div>
-                    <div class="gift-hint">* 建議補齊以 9999 罐頭為主，餘數以實際罐頭數顯示</div>
+                    <div class="gift-hint">* 建議補齊以 9999 罐頭禮物為主，餘數請自行分配</div>
                 </div>
             </div>
         </div>
 
         <div class="strategy-box">
-            <b>不建議續等：</b>
-            掉下再升比原階續等划算。<br>
-            單數月 10-25 號綁定最優。<br>
-            例：神王續等為 2,000萬 60%（即 1,200萬）<br>
-            掉到至尊再升上神王只需 1,000萬，<br>
-            所有爵位全部適用。<br>
-            有跟官方反應此事，反正他們說就是這樣沒錯。🙂
+            <b>不建議續等</b>
+            掉下再升比原階續等划算<br>
+            單數月 10-25 號綁定最優<br>
+            神王續等為 2,000萬 60%（即1,200萬）<br>
+            掉到至尊再升上神王只需 1,000萬<br>
+            所有爵位全部適用<br>
+            有跟官方反應，反正他們說就是這樣🙂
         </div>
 
         <div class="april-fool" onclick="aprilFool()">
@@ -411,6 +411,7 @@
 
         <div class="note">
             高罐頭禮物讚數更高<br>
+            1 罐頭落在 2.75 - 2.2 讚區間<br>
             匯率：NT$1 ≈ 2 罐頭<br>
             我男朋友來了 | 2026.03.31
             <div class="thanks">感謝 賈高賽 數據提供</div>
@@ -534,11 +535,11 @@
             if (diff === 0) {
                 giftHTML = `<span style="color:var(--brand-gold)">已達目標爵位！🎉</span>`;
             } else if (remainingCan === 0) {
-                giftHTML = `建議補齊：<br><span class="gift-tag">${count9999}</span> 顆 9999 罐頭`;
+                giftHTML = `建議補齊<br><span class="gift-tag">${count9999}</span> 顆 9999 罐頭禮物`;
             } else {
-                giftHTML = `建議補齊：<br>
-                    <span class="gift-tag">${count9999}</span> 顆 9999 罐頭
-                    ＋ 還差 <span class="gift-tag">${remainingCan.toLocaleString()}</span> 罐頭`;
+                giftHTML = `建議補齊<br>
+                    <span class="gift-tag">${count9999}</span> 顆 9999 罐頭禮物
+                    ＋ <span class="gift-tag">${remainingCan.toLocaleString()}</span> 罐頭禮物`;
             }
 
             document.getElementById('outGiftText').innerHTML = giftHTML;

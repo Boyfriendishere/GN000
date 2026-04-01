@@ -8,78 +8,355 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --brand-pink: #e8659a; --brand-gold: #f0b942;
-            --card-bg: rgba(23, 28, 36, 0.9); --border: rgba(255, 255, 255, 0.08);
-            --t1: rgba(255,255,255,0.94); --t2: rgba(255,255,255,0.52); --t3: rgba(255,255,255,0.24);
-            --rank-0-start: #444; --rank-0-end: #666;
-            --rank-1-start: #2c3e50; --rank-1-end: #bdc3c7;
-            --rank-2-start: #1a4d2e; --rank-2-end: #2ecc71;
-            --rank-3-start: #003366; --rank-3-end: #0073cf;
-            --rank-4-start: #4b0082; --rank-4-end: #9b59b6;
-            --rank-5-start: #8b0000; --rank-5-end: #e74c3c;
-            --rank-6-start: #0a0a0a; --rank-6-end: #f0b942;
-            --rank-7-start: #00f2ff; --rank-7-end: #00aaff;
-            --current-rank-start: var(--rank-0-start); --current-rank-end: var(--rank-0-end);
-            --target-rank-start: var(--rank-7-start); --target-rank-end: var(--rank-7-end);
+            --brand-pink: #e8659a;
+            --brand-gold: #f0b942;
+            --card-bg: rgba(23, 28, 36, 0.9);
+            --border: rgba(255, 255, 255, 0.08);
+            --t1: rgba(255,255,255,0.94);
+            --t2: rgba(255,255,255,0.52);
+            --t3: rgba(255,255,255,0.24);
+            --current-rank-start: #444;
+            --current-rank-end: #666;
+            --target-rank-start: #00f2ff;
+            --target-rank-end: #00aaff;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans TC', sans-serif; min-height: 100vh; background: linear-gradient(135deg, #1a0a14 0%, #071018 45%, #030608 100%); color: var(--t1); display: flex; justify-content: center; align-items: flex-start; padding: 52px 20px 88px; overflow-x: hidden; position: relative; }
-        .orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(80px); }
-        .orb-1 { width: 650px; height: 520px; background: radial-gradient(circle, rgba(232,101,154,0.1) 0%, transparent 70%); top: -150px; right: -160px; animation: orb-drift 14s ease-in-out infinite alternate; }
-        .orb-2 { width: 420px; height: 380px; background: radial-gradient(circle, rgba(0,242,255,0.08) 0%, transparent 70%); bottom: 5%; left: -80px; animation: orb-drift 18s ease-in-out infinite alternate-reverse; }
-        @keyframes orb-drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(-25px, 35px) scale(1.07); } }
-        .card { position: relative; z-index: 1; width: 100%; max-width: 480px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 36px; padding: 48px 24px 44px; backdrop-filter: blur(48px) saturate(180%); box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset, 0 50px 100px rgba(0,0,0,0.6); overflow: hidden; animation: card-in 0.75s cubic-bezier(0.22,1,0.36,1) both; }
-        @keyframes card-in { from { opacity: 0; transform: translateY(32px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .rank-status-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, var(--current-rank-start), var(--current-rank-end), transparent); box-shadow: 0 2px 12px var(--current-rank-end); transition: all 0.6s ease; }
-        h1 { font-family: 'Sora', sans-serif; background: linear-gradient(135deg, #ffffff 10%, var(--brand-pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center; font-size: 1.75rem; margin-bottom: 44px; font-weight: 800; letter-spacing: 2px; }
-        label { font-family: 'Sora', sans-serif; color: var(--t2); font-size: 0.7rem; font-weight: 600; margin-bottom: 10px; display: block; text-transform: uppercase; letter-spacing: 1.5px; }
-        .input-group { margin-bottom: 30px; }
-        input[type="number"], select { width: 100%; padding: 17px 22px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.07); background: rgba(0,0,0,0.28); color: white; font-family: 'Sora', sans-serif; font-size: 1.25rem; box-sizing: border-box; outline: none; transition: all 0.3s; backdrop-filter: blur(12px); -webkit-appearance: none; }
-        .quick-btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
-        .btn-small { background: rgba(255,255,255,0.03); color: var(--t2); border: 1px solid rgba(255,255,255,0.07); padding: 15px 0; border-radius: 15px; font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.25s cubic-bezier(0.4,0,0.2,1); }
-        .btn-small.active { background: linear-gradient(135deg, var(--brand-pink), var(--brand-gold)); color: white; border: none; box-shadow: 0 10px 28px rgba(232,101,154,0.35); transform: translateY(-3px); }
-        .btn-main { width: 100%; background: linear-gradient(135deg, var(--brand-pink), #c0446e); color: #fff; border: none; padding: 18px; border-radius: 50px; font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 36px; transition: all 0.3s; letter-spacing: 2px; }
-        
-        /* 修正顯示區域 */
-        .result-panel { margin-top: 30px; border-radius: 26px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); display: none; }
-        .res-header { padding: 32px 15px 24px; text-align: center; }
-        .res-label { font-family: 'Sora', sans-serif; font-size: 0.68rem; color: var(--t2); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
-        .res-money { 
-            font-family: 'Sora', sans-serif; font-size: 2.8rem; font-weight: 800; 
-            background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end)); 
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            display: block; line-height: 1.2; word-break: break-all;
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0a14 0%, #071018 45%, #030608 100%);
+            color: var(--t1);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 52px 20px 88px;
+            overflow-x: hidden;
+            position: relative;
         }
+
+        .orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(80px); }
+        .orb-1 { width: 650px; height: 520px; background: radial-gradient(circle, rgba(232,101,154,0.12) 0%, transparent 70%); top: -150px; right: -160px; animation: orb-drift 14s ease-in-out infinite alternate; }
+        .orb-2 { width: 420px; height: 380px; background: radial-gradient(circle, rgba(0,242,255,0.08) 0%, transparent 70%); bottom: 5%; left: -80px; animation: orb-drift 18s ease-in-out infinite alternate-reverse; }
+        @keyframes orb-drift { from { transform: translate(0,0) scale(1); } to { transform: translate(-25px,35px) scale(1.07); } }
+
+        .card {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 36px;
+            padding: 48px 24px 44px;
+            backdrop-filter: blur(48px) saturate(180%);
+            -webkit-backdrop-filter: blur(48px) saturate(180%);
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset, 0 50px 100px rgba(0,0,0,0.6);
+            overflow: hidden;
+            animation: card-in 0.75s cubic-bezier(0.22,1,0.36,1) both;
+        }
+        @keyframes card-in { from { opacity: 0; transform: translateY(32px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+        .rank-status-bar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--current-rank-start), var(--current-rank-end), transparent);
+            box-shadow: 0 2px 12px var(--current-rank-end);
+            transition: all 0.6s ease;
+        }
+
+        h1 {
+            font-family: 'Sora', sans-serif;
+            background: linear-gradient(135deg, var(--current-rank-start) 0%, var(--current-rank-end) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            font-size: 1.75rem;
+            margin-bottom: 44px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            transition: all 0.6s ease;
+        }
+
+        label {
+            font-family: 'Sora', sans-serif;
+            color: var(--t2);
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .input-group { margin-bottom: 30px; }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 17px 22px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.07);
+            background: rgba(0,0,0,0.28);
+            color: white;
+            font-family: 'Sora', sans-serif;
+            font-size: 1.25rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s;
+            backdrop-filter: blur(12px);
+            -webkit-appearance: none;
+        }
+
+        input[type="number"]:focus, select:focus {
+            border-color: rgba(232,101,154,0.4);
+            box-shadow: 0 0 0 3px rgba(232,101,154,0.08);
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(232,101,154,0.8)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            padding-right: 48px;
+            cursor: pointer;
+        }
+        select option { background: #0f1218; color: #e6edf3; }
+
+        .current-rank-tag {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, var(--current-rank-start), var(--current-rank-end));
+            border-radius: 50px;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.85rem;
+            color: white;
+            font-weight: 800;
+            transition: all 0.6s ease;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+
+        .quick-btn-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .btn-small {
+            background: rgba(255,255,255,0.03);
+            color: var(--t2);
+            border: 1px solid rgba(255,255,255,0.07);
+            padding: 15px 0;
+            border-radius: 15px;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .btn-small:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+        .btn-small.active {
+            background: linear-gradient(135deg, var(--brand-pink), var(--brand-gold));
+            color: white;
+            border: none;
+            box-shadow: 0 10px 28px rgba(232,101,154,0.35);
+            transform: translateY(-3px);
+        }
+
+        .btn-main {
+            width: 100%;
+            background: linear-gradient(135deg, var(--brand-pink), #c0446e);
+            color: #fff;
+            border: none;
+            padding: 18px;
+            border-radius: 50px;
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 36px;
+            transition: all 0.3s;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 25px rgba(232,101,154,0.3);
+        }
+
+        .btn-main:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 35px rgba(232,101,154,0.45);
+        }
+
+        .result-panel {
+            margin-top: 30px;
+            border-radius: 26px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.2);
+            display: none;
+            backdrop-filter: blur(16px);
+        }
+
+        .res-header {
+            padding: 32px 20px 24px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .res-label {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.68rem;
+            color: var(--t2);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .res-money {
+            font-family: 'Sora', sans-serif;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            line-height: 1.15;
+            word-break: break-all;
+            transition: font-size 0.3s;
+        }
+
         .details { padding: 22px 24px 18px; }
-        .row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.88rem; color: var(--t2); }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 0.88rem;
+            color: var(--t2);
+        }
+
         .val-white { color: rgba(255,255,255,0.9); font-weight: 600; font-family: 'Sora', sans-serif; }
-        .gift-tag { color: var(--brand-gold); font-weight: 800; }
-        .strategy-box { background: rgba(0,0,0,0.2); border: 1px dashed rgba(255,255,255,0.1); padding: 22px 24px; border-radius: 20px; font-size: 0.82rem; color: var(--t2); line-height: 1.9; margin-top: 36px; }
-        .note { font-size: 0.7rem; color: rgba(255,255,255,0.2); margin-top: 48px; text-align: center; line-height: 2.2; }
+
+        .gift-row {
+            border: none;
+            padding-top: 18px;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .gift-display {
+            color: var(--t1);
+            font-weight: 600;
+            text-align: center;
+            line-height: 2;
+            font-size: 0.95rem;
+        }
+
+        .gift-tag {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--brand-gold);
+            text-shadow: 0 0 20px rgba(240,185,66,0.4);
+        }
+
+        .gift-hint {
+            font-size: 0.72rem;
+            color: var(--t3);
+            text-align: center;
+            letter-spacing: 0.3px;
+            line-height: 1.6;
+        }
+
+        .strategy-box {
+            background: rgba(0,0,0,0.2);
+            border: 1px dashed rgba(255,255,255,0.1);
+            padding: 22px 24px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            color: var(--t2);
+            line-height: 2;
+            margin-top: 36px;
+        }
+
+        .strategy-box b { color: var(--brand-gold); display: block; margin-bottom: 4px; }
+
+        .april-fool {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 40px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s, transform 0.2s;
+            user-select: none;
+        }
+
+        .april-fool:hover { opacity: 1; transform: scale(1.04); }
+
+        .april-fool-emoji { font-size: 1.4rem; }
+
+        .april-fool-text {
+            font-size: 0.78rem;
+            color: var(--brand-gold);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-decoration: underline dotted;
+            text-underline-offset: 3px;
+        }
+
+        .note {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.2);
+            margin-top: 28px;
+            text-align: center;
+            line-height: 2.4;
+        }
+
+        .thanks {
+            color: var(--brand-pink);
+            font-weight: 700;
+            font-size: 0.72rem;
+            opacity: 0.7;
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body onload="updateRank()">
-    <div class="orb orb-1"></div><div class="orb orb-2"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
     <div class="card">
         <div class="rank-status-bar" id="statusBar"></div>
-        <h1>🎲Goodnight貴族</h1>
+        <h1 id="mainTitle">🎲Goodnight貴族</h1>
+
         <div class="input-group">
-            <label>現在讚數</label>
+            <label>現在讚數 (本頁 › 貴族等級 › 左下黃色數字)</label>
             <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
-            <div id="rankDisplay" style="display: inline-block; margin-top: 15px; padding: 8px 20px; background: linear-gradient(135deg, var(--current-rank-start), var(--current-rank-end)); border-radius: 50px; font-size: 0.85rem; color: white; font-weight: 800;">目前爵位：V0</div>
+            <div id="rankDisplay" class="current-rank-tag">目前爵位：V0</div>
         </div>
+
         <div class="input-group">
             <label>選擇目標</label>
-            <select id="targetRank" onchange="updateTargetGradients()">
-                <option value="25500" data-rank="1">劍客 (25,500)</option>
-                <option value="175500" data-rank="2">騎士 (175,500)</option>
-                <option value="425500" data-rank="3">伯爵 (425,500)</option>
+            <select id="targetRank" onchange="updateTargetColor()">
+                <option value="25500"   data-rank="1">劍客 (25,500)</option>
+                <option value="175500"  data-rank="2">騎士 (175,500)</option>
+                <option value="425500"  data-rank="3">伯爵 (425,500)</option>
                 <option value="2425500" data-rank="4">公爵 (2,425,500)</option>
                 <option value="5000000" data-rank="5">教皇 (5,000,000)</option>
                 <option value="10000000" data-rank="6">至尊 (10,000,000)</option>
                 <option value="20000000" data-rank="7" selected>神王 (20,000,000)</option>
             </select>
         </div>
+
         <div class="input-group">
             <label>加倍讚倍數</label>
             <input type="number" id="multi" value="30">
@@ -93,63 +370,188 @@
                 <button class="btn-small" onclick="setMulti(1, this)" style="grid-column: span 2;">無加倍</button>
             </div>
         </div>
+
         <button class="btn-main" onclick="doCalc()">開始試算</button>
+
         <div id="resBoard" class="result-panel">
             <div class="res-header">
                 <div class="res-label">預計晉升成本</div>
                 <span class="res-money" id="outCash">$0</span>
             </div>
             <div class="details">
-                <div class="row"><span>尚差讚數</span><span class="val-white" id="outDiff">0</span></div>
-                <div class="row"><span>總需罐頭</span><span class="val-white" id="outCan">0</span></div>
-                <div class="row" style="border:none; padding-top:15px; flex-direction:column; align-items:center;">
-                    <span id="outGiftText" style="color:var(--t1); font-weight:600; text-align:center; line-height:1.8;"></span>
-                    <span style="font-size:0.65rem; color:var(--t3); margin-top:8px;">* 建議補齊僅用 9999、1000 為參考建議方案</span>
+                <div class="row">
+                    <span>尚差讚數</span>
+                    <span class="val-white" id="outDiff">0</span>
+                </div>
+                <div class="row">
+                    <span>總需罐頭</span>
+                    <span class="val-white" id="outCan">0</span>
+                </div>
+                <div class="row gift-row">
+                    <div class="gift-display" id="outGiftText"></div>
+                    <div class="gift-hint">* 建議補齊以 9999 罐頭為主，餘數以實際罐頭數顯示</div>
                 </div>
             </div>
         </div>
-        <div class="strategy-box"><b>不建議續等:</b> 掉下再升比原階續等划算。<br>單數月 10-25 號綁定最優。</div><br>
-        <div class="note">高罐頭禮物讚數更高<br>匯率：NT$1 ≈ 2 罐頭<br>我男朋友來了 | 2026.03.31</div>
+
+        <div class="strategy-box">
+            <b>不建議續等：</b>
+            掉下再升比原階續等划算。<br>
+            單數月 10-25 號綁定最優。<br>
+            例：神王續等為 2,000萬 60%（即 1,200萬）<br>
+            掉到至尊再升上神王只需 1,000萬，<br>
+            所有爵位全部適用。<br>
+            有跟官方反應此事，反正他們說就是這樣沒錯。🙂
+        </div>
+
+        <div class="april-fool" onclick="aprilFool()">
+            <span class="april-fool-emoji">🧧</span>
+            <span class="april-fool-text">Goodnight 自動搶紅包外掛</span>
+        </div>
+
+        <div class="note">
+            高罐頭禮物讚數更高<br>
+            匯率：NT$1 ≈ 2 罐頭<br>
+            我男朋友來了 | 2026.03.31
+            <div class="thanks">感謝 賈高賽 數據提供</div>
+        </div>
     </div>
 
     <script>
         const root = document.documentElement;
-        const rankGradients = { 0: ['#444', '#666'], 1: ['#2c3e50', '#bdc3c7'], 2: ['#1a4d2e', '#2ecc71'], 3: ['#003366', '#0073cf'], 4: ['#4b0082', '#9b59b6'], 5: ['#8b0000', '#e74c3c'], 6: ['#0a0a0a', '#f0b942'], 7: ['#00f2ff', '#00aaff'], 'v': ['#333', '#555'] };
-        const ranks = [ {name: "神王", val: 20000000, code: 7}, {name: "至尊", val: 10000000, code: 6}, {name: "教皇", val: 5000000, code: 5}, {name: "公爵", val: 2425500, code: 4}, {name: "伯爵", val: 425500, code: 3}, {name: "騎士", val: 175500, code: 2}, {name: "劍客", val: 25500, code: 1}, {name: "V4", val: 13000, code: 'v'}, {name: "V3", val: 5500, code: 'v'}, {name: "V2", val: 1800, code: 'v'}, {name: "V1", val: 500, code: 'v'} ];
-        const bibleData = { 30: { g9999: 824910, g1000: 66000 }, 25: { g9999: 687425, g1000: 55000 }, 20: { g9999: 549940, g1000: 44000 }, 15: { g9999: 412455, g1000: 33000 }, 10: { g9999: 274970, g1000: 22000 }, 5: { g9999: 137485, g1000: 11000 }, 1: { g9999: 27497, g1000: 2200 } };
 
-        function setMulti(val, el) { document.getElementById('multi').value = val; document.querySelectorAll('.btn-small').forEach(b => b.classList.remove('active')); el.classList.add('active'); if (document.getElementById('resBoard').style.display === 'block') doCalc(); }
-        function getCurrentRankInfo(val) { for (let i = 0; i < ranks.length; i++) { if (val >= ranks[i].val) return ranks[i]; } return {name: "V0", val: 0, code: 0}; }
-        function updateRank() { const val = parseFloat(document.getElementById('currZan').value) || 0; const currentRank = getCurrentRankInfo(val); document.getElementById('rankDisplay').innerText = "目前爵位：" + currentRank.name; const colors = rankGradients[currentRank.code]; root.style.setProperty('--current-rank-start', colors[0]); root.style.setProperty('--current-rank-end', colors[1]); }
-        function updateTargetGradients() { const select = document.getElementById('targetRank'); const colors = rankGradients[select.options[select.selectedIndex].getAttribute('data-rank')]; root.style.setProperty('--target-rank-start', colors[0]); root.style.setProperty('--target-rank-end', colors[1]); }
-        
-        function doCalc() {
-            const curr = parseFloat(document.getElementById('currZan').value) || 0;
-            const targetVal = parseFloat(document.getElementById('targetRank').value);
-            let multi = parseInt(document.getElementById('multi').value) || 1;
-            let diff = Math.max(targetVal - curr, 0);
-            const data = bibleData[multi] || bibleData[1];
+        const rankGradients = {
+            0: ['#555', '#888'],
+            1: ['#2c3e50', '#bdc3c7'],
+            2: ['#1a4d2e', '#2ecc71'],
+            3: ['#003366', '#0073cf'],
+            4: ['#4b0082', '#9b59b6'],
+            5: ['#8b0000', '#e74c3c'],
+            6: ['#0a0a0a', '#f0b942'],
+            7: ['#00aaff', '#00f2ff'],
+            'v': ['#333', '#666']
+        };
 
-            let count9999 = Math.floor(diff / data.g9999);
-            let currentZan = count9999 * data.g9999;
-            let count1000 = 0;
+        const ranks = [
+            {name:"神王",  val:20000000, code:7},
+            {name:"至尊",  val:10000000, code:6},
+            {name:"教皇",  val:5000000,  code:5},
+            {name:"公爵",  val:2425500,  code:4},
+            {name:"伯爵",  val:425500,   code:3},
+            {name:"騎士",  val:175500,   code:2},
+            {name:"劍客",  val:25500,    code:1},
+            {name:"V4",    val:13000,    code:'v'},
+            {name:"V3",    val:5500,     code:'v'},
+            {name:"V2",    val:1800,     code:'v'},
+            {name:"V1",    val:500,      code:'v'}
+        ];
 
-            if (currentZan < (diff - 10)) {
-                let remaining = diff - currentZan;
-                if (remaining > (data.g9999 * 0.9)) { count9999++; } 
-                else { count1000 = Math.ceil(remaining / data.g1000); if (count1000 * 1000 >= 9999) { count9999++; count1000 = 0; } }
+        // 罐頭基礎讚數（無加倍）
+        const baseZan = {
+            9999: 27497,
+            3000: 7500,
+            1000: 2200,
+            300:  660,
+            100:  220
+        };
+
+        function getZan(giftSize, multi) {
+            return baseZan[giftSize] * multi;
+        }
+
+        function setMulti(val, el) {
+            document.getElementById('multi').value = val;
+            document.querySelectorAll('.btn-small').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            if (document.getElementById('resBoard').style.display === 'block') doCalc();
+        }
+
+        function getCurrentRankInfo(val) {
+            for (let i = 0; i < ranks.length; i++) {
+                if (val >= ranks[i].val) return ranks[i];
             }
+            return {name:"V0", val:0, code:0};
+        }
 
-            const totalCan = (count9999 * 9999) + (count1000 * 1000);
+        function setRankColors(code, prefix) {
+            const colors = rankGradients[code] || rankGradients[0];
+            root.style.setProperty(`--${prefix}-rank-start`, colors[0]);
+            root.style.setProperty(`--${prefix}-rank-end`, colors[1]);
+        }
+
+        function updateRank() {
+            const val = parseFloat(document.getElementById('currZan').value) || 0;
+            const r = getCurrentRankInfo(val);
+            document.getElementById('rankDisplay').innerText = '目前爵位：' + r.name;
+            setRankColors(r.code, 'current');
+        }
+
+        function updateTargetColor() {
+            const sel = document.getElementById('targetRank');
+            const code = parseInt(sel.options[sel.selectedIndex].getAttribute('data-rank'));
+            setRankColors(code, 'target');
+        }
+
+        function adjustMoneyFontSize(text) {
+            const el = document.getElementById('outCash');
+            const len = text.length;
+            if (len <= 7)       el.style.fontSize = '3rem';
+            else if (len <= 9)  el.style.fontSize = '2.4rem';
+            else if (len <= 11) el.style.fontSize = '1.9rem';
+            else                el.style.fontSize = '1.5rem';
+        }
+
+        function doCalc() {
+            const curr   = parseFloat(document.getElementById('currZan').value) || 0;
+            const target = parseFloat(document.getElementById('targetRank').value);
+            const multi  = parseInt(document.getElementById('multi').value) || 1;
+
+            let diff = Math.max(target - curr, 0);
+
+            const zan9999 = getZan(9999, multi);
+
+            // 整顆 9999 能覆蓋多少
+            const count9999 = Math.floor(diff / zan9999);
+            const remainingZan = diff - count9999 * zan9999;
+
+            // 剩餘讚數換算成最少需要幾罐頭（無加倍基準反推）
+            // remainingZan / multi = 無加倍讚數，再除以每罐頭讚數比例
+            // 每罐頭讚數 = 27497/9999，所以罐頭數 = remainingZan / (27497/9999 * multi)
+            const canPerZan = 9999 / 27497; // 每1讚需要多少罐頭
+            const remainingCan = Math.ceil(remainingZan * canPerZan / multi);
+
+            // totalCan：9999顆的罐頭 + 餘數罐頭
+            const totalCan = count9999 * 9999 + remainingCan;
             const cash = Math.ceil(totalCan * 0.5);
+            const cashStr = '$' + cash.toLocaleString();
 
             document.getElementById('outDiff').innerText = Math.ceil(diff).toLocaleString();
-            document.getElementById('outCan').innerText = totalCan.toLocaleString();
-            document.getElementById('outCash').innerText = '$' + cash.toLocaleString(); // 這裡修正百萬顯示
-            document.getElementById('outGiftText').innerHTML = `建議補齊：<br><span class="gift-tag">${count9999}</span> 個 9999 + <span class="gift-tag">${count1000}</span> 個 1000`;
-            updateTargetGradients();
+            document.getElementById('outCan').innerText  = totalCan.toLocaleString();
+            document.getElementById('outCash').innerText = cashStr;
+            adjustMoneyFontSize(cashStr);
+
+            let giftHTML;
+            if (diff === 0) {
+                giftHTML = `<span style="color:var(--brand-gold)">已達目標爵位！🎉</span>`;
+            } else if (remainingCan === 0) {
+                giftHTML = `建議補齊：<br><span class="gift-tag">${count9999}</span> 顆 9999 罐頭`;
+            } else {
+                giftHTML = `建議補齊：<br>
+                    <span class="gift-tag">${count9999}</span> 顆 9999 罐頭
+                    ＋ 還差 <span class="gift-tag">${remainingCan.toLocaleString()}</span> 罐頭`;
+            }
+
+            document.getElementById('outGiftText').innerHTML = giftHTML;
+            updateTargetColor();
             document.getElementById('resBoard').style.display = 'block';
         }
+
+        function aprilFool() {
+            alert('最好有這東西，愚人節快樂🤪');
+        }
+
+        // 初始化目標色
+        updateTargetColor();
     </script>
 </body>
 </html>

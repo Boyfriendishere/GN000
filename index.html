@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨Goodnight貴族</title>
+    <title>🎲Goodnight貴族精算</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TSZ9L031TC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-TSZ9L031TC');
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -336,7 +343,7 @@
 
     <div class="card">
         <div class="rank-status-bar" id="statusBar"></div>
-        <h1 id="mainTitle">✨Goodnight貴族</h1>
+        <h1 id="mainTitle">🎲Goodnight貴族</h1>
 
         <div class="input-group">
             <label>現在讚數 (本頁 › 貴族等級 › 左下黃色數字)</label>
@@ -392,18 +399,19 @@
                 </div>
                 <div class="row gift-row">
                     <div class="gift-display" id="outGiftText"></div>
-                    <div class="gift-hint">* 建議補齊以 9999 罐頭禮物為主，餘數請自行判斷分配</div>
+                    <div class="gift-hint">* 建議補齊以 9999 罐頭為主，餘數以實際罐頭數顯示</div>
                 </div>
             </div>
         </div>
 
         <div class="strategy-box">
-            <b>不建議續等</b>
-            掉下再升比原階續等划算<br>
-            單數月 10-25 號綁定最優<br>
-            例：神王續等為 2,000萬 60%（1,200萬）<br>
-            掉到至尊再升上神王只需 1,000萬<br>
-            所有爵位全部適用<br>
+            <b>不建議續等：</b>
+            掉下再升比原階續等划算。<br>
+            單數月 10-25 號綁定最優。<br>
+            例：神王續等為 2,000萬 60%（即 1,200萬）<br>
+            掉到至尊再升上神王只需 1,000萬，<br>
+            所有爵位全部適用。<br>
+            有跟官方反應此事，反正他們說就是這樣沒錯。🙂
         </div>
 
         <div class="note">
@@ -443,7 +451,7 @@
             {name:"V1",    val:500,      code:'v'}
         ];
 
-        // 罐頭基礎讚數（無加倍）
+      
         const baseZan = {
             9999: 27497,
             3000: 7500,
@@ -511,17 +519,13 @@
 
             const zan9999 = getZan(9999, multi);
 
-            // 整顆 9999 能覆蓋多少
             const count9999 = Math.floor(diff / zan9999);
             const remainingZan = diff - count9999 * zan9999;
 
-            // 剩餘讚數換算成最少需要幾罐頭（無加倍基準反推）
-            // remainingZan / multi = 無加倍讚數，再除以每罐頭讚數比例
-            // 每罐頭讚數 = 27497/9999，所以罐頭數 = remainingZan / (27497/9999 * multi)
-            const canPerZan = 9999 / 27497; // 每1讚需要多少罐頭
+            const canPerZan = 9999 / 27497; 
             const remainingCan = Math.ceil(remainingZan * canPerZan / multi);
 
-            // totalCan：9999顆的罐頭 + 餘數罐頭
+
             const totalCan = count9999 * 9999 + remainingCan;
             const cash = Math.ceil(totalCan * 0.5);
             const cashStr = '$' + cash.toLocaleString();
@@ -535,19 +539,18 @@
             if (diff === 0) {
                 giftHTML = `<span style="color:var(--brand-gold)">已達目標爵位！🎉</span>`;
             } else if (remainingCan === 0) {
-                giftHTML = `建議補齊<br><span class="gift-tag">${count9999}</span> 顆 9999 罐頭禮物`;
+                giftHTML = `建議補齊：<br><span class="gift-tag">${count9999}</span> 顆 9999 罐頭`;
             } else {
-                giftHTML = `建議補齊<br>
-                    <span class="gift-tag">${count9999}</span> 顆 9999 罐頭禮物
-                    ＋  <span class="gift-tag">${remainingCan.toLocaleString()}</span> 罐頭`;
+                giftHTML = `建議補齊：<br>
+                    <span class="gift-tag">${count9999}</span> 顆 9999 罐頭
+                    ＋ 還差 <span class="gift-tag">${remainingCan.toLocaleString()}</span> 罐頭`;
             }
 
             document.getElementById('outGiftText').innerHTML = giftHTML;
             updateTargetColor();
             document.getElementById('resBoard').style.display = 'block';
         }
-
-        // 初始化目標色
+        
         updateTargetColor();
     </script>
 </body>

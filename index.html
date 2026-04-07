@@ -562,6 +562,274 @@
         if(typeof updateRank === "function") updateRank(); // 保留原本 GN000 的初始化
         initGame();
     };
+    //玩龍虎鬥
+    <!-- 遊戲外層容器 -->
+<div class="game-accordion" style="margin-top: 25px;">
+    <button class="accordion-header" onclick="toggleGame('lhGame')">
+        <span>🎮 玩．龍虎鬥</span>
+        <span id="lhToggleIcon">展开</span>
+    </button>
+    
+    <div id="lhGame" class="accordion-content" style="display: none;">
+        <div class="dt-wrapper">
+            <!-- 頂部資訊 -->
+            <div class="dt-header">
+                <span class="no-text" id="dtNo">NO.3271832</span>
+                <span class="no-text" id="dtDate">2026.04.07</span>
+            </div>
+
+            <!-- 貓咪頭像對戰區 -->
+            <div class="cat-vs">
+                <div class="cat-box">
+                    <img src="https://i.imgur.com/8vW9R9I.png" class="cat-img" alt="邱湘小仙女">
+                    <div class="cat-name">邱湘小仙女</div>
+                </div>
+                <div class="timer-wrap">
+                    <div class="timer-num" id="dtTimer">15</div>
+                </div>
+                <div class="cat-box">
+                    <img src="https://i.imgur.com/Y3vB9zU.png" class="cat-img" alt="Stelle">
+                    <div class="cat-name">Stelle</div>
+                </div>
+            </div>
+
+            <!-- 下注區域 -->
+            <div class="bet-grid">
+                <div class="bet-box" id="box-L" onclick="placeGameBet('L')">
+                    <div class="bet-name">龍</div>
+                    <div class="odds">x2</div>
+                    <div class="bet-val-box">
+                        <div class="my-val" id="my-L">0</div>
+                        <div class="total-val" id="total-L">0</div>
+                    </div>
+                </div>
+                <div class="bet-box" id="box-Tie" onclick="placeGameBet('Tie')">
+                    <div class="bet-name">和</div>
+                    <div class="odds">x22</div>
+                    <div class="bet-val-box">
+                        <div class="my-val" id="my-Tie">0</div>
+                        <div class="total-val" id="total-Tie">0</div>
+                    </div>
+                </div>
+                <div class="bet-box" id="box-T" onclick="placeGameBet('T')">
+                    <div class="bet-name">虎</div>
+                    <div class="odds">x2</div>
+                    <div class="bet-val-box">
+                        <div class="my-val" id="my-T">0</div>
+                        <div class="total-val" id="total-T">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 籌碼區 -->
+            <div class="chip-bar">
+                <div class="chip-btn c10 active" onclick="pickChip(10, this)">10</div>
+                <div class="chip-btn c50" onclick="pickChip(50, this)">50</div>
+                <div class="chip-btn c100" onclick="pickChip(100, this)">100</div>
+                <div class="chip-btn c1k" onclick="pickChip(1000, this)">1K</div>
+                <div class="chip-btn c10k" onclick="pickChip(10000, this)">10K</div>
+            </div>
+
+            <!-- 路單紀錄 -->
+            <div class="history-road" id="roadMap"></div>
+
+            <!-- 玩家資訊 -->
+            <div class="stat-row">
+                <div>🥫 <span id="gameWallet">100,000</span></div>
+                <div>勝率 <b id="gameWinRate">0%</b></div>
+            </div>
+            
+            <div id="gameNotice" class="game-notice">🎰 準備下注...</div>
+            <div id="upgradeHint" class="upgrade-popup">恭喜！您的罐頭已足夠完成爵位升級！🚀</div>
+            
+            <!-- 排行榜 -->
+            <div class="rank-list">
+                <div style="font-size: 0.7rem; color: #f0b942; margin-bottom: 8px;">🏆 今日淨利排行 (Top 50)</div>
+                <div id="leaderboardContent" class="rank-content"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 摺疊樣式 */
+    .accordion-header {
+        width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+        padding: 15px 20px; border-radius: 15px; color: var(--t1); cursor: pointer;
+        display: flex; justify-content: space-between; align-items: center; font-weight: 700;
+    }
+    /* 遊戲實感樣式 */
+    .dt-wrapper { background: #000; border: 1px solid #444; border-radius: 20px; padding: 15px; margin-top: 10px; }
+    .cat-vs { display: flex; justify-content: space-around; align-items: center; margin: 15px 0; }
+    .cat-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #f0b942; }
+    .cat-name { font-size: 0.65rem; color: #fff; margin-top: 5px; }
+    .timer-wrap { width: 50px; height: 50px; border-radius: 50%; border: 3px solid #f0b942; display: flex; align-items: center; justify-content: center; }
+    .timer-num { font-size: 1.5rem; font-weight: 800; color: #ff4757; font-family: 'Sora'; }
+    .bet-grid { display: grid; grid-template-columns: 1fr 0.7fr 1fr; gap: 8px; margin-bottom: 15px; }
+    .bet-box { background: rgba(30,30,30,0.8); border: 1px solid #333; border-radius: 8px; padding: 10px 2px; text-align: center; }
+    .bet-box.win-anim { border-color: #f0b942; background: rgba(240,185,66,0.1); }
+    .bet-name { font-weight: 900; font-size: 1.1rem; color: #fff; }
+    .odds { font-size: 0.6rem; color: #f0b942; }
+    .bet-val-box { font-size: 0.7rem; font-family: 'Sora'; margin-top: 5px; background: #000; border-radius: 4px; padding: 3px; }
+    .my-val { color: #00f2ff; border-bottom: 1px solid #222; }
+    .game-notice { text-align: center; font-size: 0.75rem; color: #f0b942; margin-top: 10px; height: 20px; }
+    .road-dot { width: 18px; height: 18px; border-radius: 50%; font-size: 0.55rem; display: inline-flex; align-items: center; justify-content: center; margin-right: 4px; font-weight: 800; }
+    .dot-L { background: #ff4757; color: #fff; }
+    .dot-T { background: #1e90ff; color: #fff; }
+    .dot-Tie { background: #2ed573; color: #fff; }
+    .upgrade-popup { display: none; background: linear-gradient(90deg, #e8659a, #f0b942); color: white; padding: 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; margin-top: 10px; text-align: center; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+    .rank-list { margin-top: 15px; border-top: 1px solid #222; padding-top: 10px; text-align: left; }
+    .rank-content { height: 80px; overflow-y: auto; font-size: 0.65rem; color: #888; line-height: 1.5; }
+</style>
+
+<script>
+    let gWallet = 100000;
+    let gInitialBalance = 100000;
+    let gPick = 10;
+    let gTimer = 15;
+    let gCanBet = true;
+    let gMyBets = { L: 0, Tie: 0, T: 0 };
+    let gTotalBets = { L: 0, Tie: 0, T: 0 };
+    let gStats = { total: 0, win: 0 };
+    let gNo = 3271832;
+    let gRoad = [];
+    let leaderboard = [];
+
+    function toggleGame(id) {
+        const content = document.getElementById(id);
+        const isHidden = content.style.display === "none";
+        document.querySelectorAll('.accordion-content').forEach(c => c.style.display = "none");
+        content.style.display = isHidden ? "block" : "none";
+        document.getElementById('lhToggleIcon').innerText = isHidden ? "折疊" : "展開";
+        if (isHidden && gStats.total === 0) initDT();
+    }
+
+    function initDT() {
+        document.getElementById('dtDate').innerText = new Date().toLocaleDateString();
+        runTimer();
+    }
+
+    function pickChip(v, el) {
+        gPick = v;
+        document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    function placeGameBet(type) {
+        if (!gCanBet) return;
+        if (gWallet < gPick) { alert("🥫 罐頭不夠啦！"); return; }
+        gWallet -= gPick;
+        gMyBets[type] += gPick;
+        gTotalBets[type] += gPick;
+        updateUI();
+    }
+
+    function runTimer() {
+        let clock = setInterval(() => {
+            if (gCanBet) {
+                gTimer--;
+                document.getElementById('dtTimer').innerText = gTimer;
+                // 電腦隨機下注 (10的倍數)
+                gTotalBets.L += Math.floor(Math.random() * 50) * 10;
+                gTotalBets.T += Math.floor(Math.random() * 50) * 10;
+                gTotalBets.Tie += Math.floor(Math.random() * 10) * 10;
+                updateUI();
+            }
+            if (gTimer <= 0) { clearInterval(clock); showResult(); }
+        }, 1000);
+    }
+
+    function showResult() {
+        gCanBet = false;
+        document.getElementById('gameNotice').innerText = "🛑 停止下注，開牌中...";
+        setTimeout(() => {
+            const cards = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+            const vals = {'A':1,'J':11,'Q':12,'K':13};
+            const LCard = cards[Math.floor(Math.random()*13)];
+            const TCard = cards[Math.floor(Math.random()*13)];
+            const LVal = vals[LCard] || parseInt(LCard);
+            const TVal = vals[TCard] || parseInt(TCard);
+
+            let winner = LVal > TVal ? "L" : (TVal > LVal ? "T" : "Tie");
+            let earn = (winner === 'L' ? gMyBets.L * 2 : (winner === 'T' ? gMyBets.T * 2 : gMyBets.Tie * 22));
+            
+            gWallet += earn;
+            if (earn > 0) gStats.win++;
+            gStats.total++;
+            gRoad.push(winner);
+            if (gRoad.length > 20) gRoad.shift();
+
+            // 損血/獲利 提示
+            const winName = winner === 'L' ? '龍贏' : (winner === 'T' ? '虎贏' : '平局');
+            const notice = document.getElementById('gameNotice');
+            notice.innerText = `${winName} (${LCard} vs ${TCard})`;
+            
+            // 酸言酸語系統
+            const rate = (gStats.win / gStats.total * 100);
+            if (gStats.total > 5 && rate < 20) notice.innerText += " | 這麼爛的勝率，你是反指標吧？🙄";
+
+            document.getElementById(`box-${winner}`).classList.add('win-anim');
+            updateUI();
+            updateLeaderboard(earn - (gMyBets.L + gMyBets.T + gMyBets.Tie));
+
+            setTimeout(() => resetRound(), 3500);
+        }, 1200);
+    }
+
+    function updateUI() {
+        document.getElementById('gameWallet').innerText = gWallet.toLocaleString();
+        document.getElementById('my-L').innerText = gMyBets.L.toLocaleString();
+        document.getElementById('my-T').innerText = gMyBets.T.toLocaleString();
+        document.getElementById('my-Tie').innerText = gMyBets.Tie.toLocaleString();
+        document.getElementById('total-L').innerText = gTotalBets.L.toLocaleString();
+        document.getElementById('total-T').innerText = gTotalBets.T.toLocaleString();
+        document.getElementById('total-Tie').innerText = gTotalBets.Tie.toLocaleString();
+        
+        const rate = gStats.total === 0 ? 0 : ((gStats.win / gStats.total) * 100).toFixed(1);
+        document.getElementById('gameWinRate').innerText = rate + "%";
+        
+        renderRoad();
+        checkUpgrade();
+    }
+
+    function renderRoad() {
+        const roadBox = document.getElementById('roadMap');
+        roadBox.innerHTML = gRoad.map(r => {
+            let cls = r === 'L' ? 'dot-L' : (r === 'T' ? 'dot-T' : 'dot-Tie');
+            return `<div class="road-dot ${cls}">${r==='Tie'?'和':(r==='L'?'龍':'虎')}</div>`;
+        }).join('');
+    }
+
+    function checkUpgrade() {
+        // 連動貴族精算的差額
+        const outCanStr = document.getElementById('outCan')?.innerText.replace(/,/g, '') || "0";
+        const need = parseInt(outCanStr);
+        const profit = gWallet - gInitialBalance;
+        if (need > 0 && profit >= need) {
+            document.getElementById('upgradeHint').style.display = "block";
+        }
+    }
+
+    function updateLeaderboard(net) {
+        leaderboard.push({ name: "GN玩家", profit: gWallet - gInitialBalance });
+        leaderboard.sort((a, b) => b.profit - a.profit);
+        const top50 = leaderboard.slice(0, 50);
+        document.getElementById('leaderboardContent').innerHTML = top50.map((u, i) => 
+            `<div>No.${i+1} ${u.name} - 淨利: ${u.profit.toLocaleString()}</div>`
+        ).join('');
+    }
+
+    function resetRound() {
+        gNo++; gTimer = 15; gCanBet = true;
+        gMyBets = { L: 0, Tie: 0, T: 0 };
+        gTotalBets = { L: 0, Tie: 0, T: 0 };
+        document.getElementById('dtNo').innerText = "NO." + gNo;
+        document.getElementById('gameNotice').innerText = "🎰 準備下注...";
+        document.querySelectorAll('.bet-box').forEach(b => b.classList.remove('win-anim'));
+        updateUI();
+        runTimer();
+    }
 </script>
 
     <script>

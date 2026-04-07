@@ -88,15 +88,6 @@
             transition: all 0.6s ease;
         }
 
-        h1::after {
-            content: '';
-            display: block;
-            width: 36px; height: 2px;
-            background: linear-gradient(90deg, var(--brand-gold), transparent);
-            margin: 14px auto 0;
-            border-radius: 2px;
-        }
-
         label {
             font-family: 'Sora', sans-serif;
             color: var(--t2);
@@ -131,36 +122,6 @@
             box-shadow: 0 0 0 3px rgba(232,101,154,0.08);
         }
 
-        select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(232,101,154,0.8)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 20px center;
-            padding-right: 48px;
-            cursor: pointer;
-        }
-        select option { background: #0f1218; color: #e6edf3; }
-
-        .current-rank-tag {
-            display: inline-block;
-            margin-top: 14px;
-            padding: 8px 20px;
-            background: linear-gradient(135deg, var(--current-rank-start), var(--current-rank-end));
-            border-radius: 50px;
-            font-family: 'Sora', sans-serif;
-            font-size: 0.85rem;
-            color: white;
-            font-weight: 800;
-            transition: all 0.6s ease;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-        }
-
-        .quick-btn-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 12px;
-        }
-
         .btn-small {
             background: rgba(255,255,255,0.03);
             color: var(--t2);
@@ -173,8 +134,6 @@
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
         }
-
-        .btn-small:hover { background: rgba(255,255,255,0.08); color: #fff; }
 
         .btn-small.active {
             background: linear-gradient(135deg, var(--brand-pink), var(--brand-gold));
@@ -196,15 +155,8 @@
             font-size: 1.1rem;
             cursor: pointer;
             margin-top: 36px;
-            transition: background 0.5s ease, box-shadow 0.3s, transform 0.2s;
+            transition: 0.3s;
             letter-spacing: 2px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.35);
-        }
-
-        .btn-main:hover {
-            filter: brightness(1.15);
-            transform: translateY(-2px);
-            box-shadow: 0 14px 35px rgba(0,0,0,0.4);
         }
 
         .result-panel {
@@ -217,167 +169,68 @@
             backdrop-filter: blur(16px);
         }
 
-        .res-header {
-            padding: 32px 20px 24px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .res-label {
-            font-family: 'Sora', sans-serif;
-            font-size: 0.68rem;
-            color: var(--t2);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
+        .res-header { padding: 32px 20px 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
         .res-money {
-            font-family: 'Sora', sans-serif;
-            font-weight: 800;
+            font-family: 'Sora', sans-serif; font-weight: 800;
             background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: block;
-            line-height: 1.15;
-            word-break: break-all;
-            transition: font-size 0.3s;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: block; line-height: 1.15; word-break: break-all;
         }
 
         .details { padding: 22px 24px 18px; }
-
-        .row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            font-size: 0.88rem;
-            color: var(--t2);
-        }
-
+        .row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.88rem; color: var(--t2); }
         .val-white { color: rgba(255,255,255,0.9); font-weight: 600; font-family: 'Sora', sans-serif; }
-
-        .gift-row {
-            border: none;
-            padding-top: 18px;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .gift-display {
-            color: var(--t1);
-            font-weight: 600;
-            text-align: center;
-            line-height: 2;
-            font-size: 0.95rem;
-        }
-
-        .gift-tag {
-            font-family: 'Sora', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--brand-gold);
-            text-shadow: 0 0 20px rgba(240,185,66,0.4);
-        }
-
-        .gift-hint {
-            font-size: 0.72rem;
-            color: var(--t3);
-            text-align: center;
-            letter-spacing: 0.3px;
-            line-height: 1.6;
-        }
+        .gift-tag { font-family: 'Sora', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--brand-gold); }
 
         .strategy-box {
-            background: rgba(0,0,0,0.2);
-            border: 1px dashed rgba(255,255,255,0.1);
-            padding: 22px 24px;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            color: var(--t2);
-            line-height: 2;
-            margin-top: 36px;
+            background: rgba(0,0,0,0.2); border: 1px dashed rgba(255,255,255,0.1);
+            padding: 22px 24px; border-radius: 20px; font-size: 0.82rem; color: var(--t2); line-height: 2; margin-top: 36px;
         }
 
-        .strategy-box b { color: var(--brand-gold); display: block; margin-bottom: 4px; }
-
-        .april-fool {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 40px;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s, transform 0.2s;
-            user-select: none;
-        }
-
-        .april-fool:hover { opacity: 1; transform: scale(1.04); }
-
-        .april-fool-emoji { font-size: 1.4rem; }
-
-        .april-fool-text {
-            font-size: 0.78rem;
-            color: var(--brand-gold);
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-decoration: underline dotted;
-            text-underline-offset: 3px;
-        }
-
-        .note {
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.2);
-            margin-top: 28px;
-            text-align: center;
-            line-height: 2.4;
-        }
-
-        .thanks {
-            color: var(--brand-pink);
-            font-weight: 700;
-            font-size: 0.72rem;
-            opacity: 0.7;
-            margin-top: 8px;
-        }
-
-        /* --- 龍虎鬥專屬模組 CSS --- */
+        /* --- 遊戲專用樣式 (整合質感) --- */
         .game-accordion { margin-top: 25px; }
         .accordion-header {
             width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
             padding: 15px 20px; border-radius: 15px; color: var(--t1); cursor: pointer;
             display: flex; justify-content: space-between; align-items: center; font-weight: 700;
         }
-        .dt-wrapper { background: #000; border: 1px solid #444; border-radius: 20px; padding: 15px; margin-top: 10px; }
+        .dt-wrapper { background: #080808; border: 1px solid #333; border-radius: 20px; padding: 15px; margin-top: 10px; }
         .cat-vs { display: flex; justify-content: space-around; align-items: center; margin: 15px 0; }
         .cat-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #f0b942; object-fit: cover; }
-        .cat-name { font-size: 0.65rem; color: #fff; margin-top: 5px; text-align: center; }
+        .cat-name { font-size: 0.7rem; color: #fff; margin-top: 5px; text-align: center; }
         .timer-wrap { width: 50px; height: 50px; border-radius: 50%; border: 3px solid #f0b942; display: flex; align-items: center; justify-content: center; }
         .timer-num { font-size: 1.5rem; font-weight: 800; color: #ff4757; font-family: 'Sora'; }
         .bet-grid { display: grid; grid-template-columns: 1fr 0.7fr 1fr; gap: 8px; margin-bottom: 15px; }
         .bet-box { background: rgba(30,30,30,0.8); border: 1px solid #333; border-radius: 8px; padding: 10px 2px; text-align: center; cursor: pointer; transition: 0.1s; }
-        .bet-box:active { transform: scale(0.95); }
-        .bet-box.win-anim { border-color: #f0b942; background: rgba(240,185,66,0.1); box-shadow: 0 0 15px rgba(240,185,66,0.3); }
-        .bet-name { font-weight: 900; font-size: 1.1rem; color: #fff; }
+        .bet-box.win-anim { border-color: #f0b942; background: rgba(240,185,66,0.15); box-shadow: 0 0 15px rgba(240,185,66,0.3); }
+        .bet-name { font-weight: 900; font-size: 1.1rem; }
         .odds { font-size: 0.6rem; color: #f0b942; }
         .bet-val-box { font-size: 0.7rem; font-family: 'Sora'; margin-top: 5px; background: #000; border-radius: 4px; padding: 3px; }
         .my-val { color: #00f2ff; border-bottom: 1px solid #222; }
+
         .chip-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 15px; }
-        .chip-btn { width: 40px; height: 40px; border-radius: 50%; border: 2px dashed rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 800; cursor: pointer; }
-        .chip-btn.active { border-style: solid; border-color: #fff; transform: translateY(-5px); }
-        .c10 { background: #6c5ce7; } .c50 { background: #0984e3; } .c100 { background: #d63031; } .c1k { background: #00b894; } .c10k { background: #e17055; }
+        .chip-btn {
+            width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; font-weight: 800; cursor: pointer; color: #fff;
+            transition: 0.3s; background: rgba(255,255,255,0.03);
+        }
+        .chip-btn.active {
+            background: linear-gradient(135deg, #e8659a, #f0b942);
+            border: none; box-shadow: 0 5px 15px rgba(232,101,154,0.4);
+            transform: translateY(-5px);
+        }
+
         .history-road { background: rgba(255,255,255,0.05); border-radius: 8px; padding: 8px; display: flex; gap: 4px; overflow-x: auto; margin-top: 10px; min-height: 34px; }
         .road-dot { width: 18px; height: 18px; border-radius: 50%; font-size: 0.55rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 800; }
         .dot-L { background: #ff4757; color: #fff; } .dot-T { background: #1e90ff; color: #fff; } .dot-Tie { background: #2ed573; color: #fff; }
         .game-notice { text-align: center; font-size: 0.75rem; color: #f0b942; margin-top: 10px; height: 20px; }
+        .stat-row { display: flex; justify-content: space-around; padding: 10px; font-size: 0.8rem; color: #aaa; border-top: 1px solid #222; }
         .upgrade-popup { display: none; background: linear-gradient(90deg, #e8659a, #f0b942); color: white; padding: 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; margin-top: 10px; text-align: center; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
-        .rank-list { margin-top: 15px; border-top: 1px solid #222; padding-top: 10px; text-align: left; }
-        .rank-content { height: 80px; overflow-y: auto; font-size: 0.65rem; color: #888; line-height: 1.5; }
+
+        .note { font-size: 0.7rem; color: rgba(255,255,255,0.2); margin-top: 28px; text-align: center; line-height: 2.4; }
     </style>
 </head>
 <body onload="updateRank()">
@@ -388,6 +241,7 @@
         <div class="rank-status-bar" id="statusBar"></div>
         <h1 id="mainTitle">✨Goodnight<br>貴族計算</h1>
 
+        <!-- 計算區域 -->
         <div class="input-group">
             <label>現在讚數 (本頁 › 貴族等級 › 左下黃色數字)</label>
             <input type="number" id="currZan" value="0" oninput="updateRank()" onclick="this.select()">
@@ -423,7 +277,7 @@
 
         <button class="btn-main" id="btnMain" onclick="doCalc()">開始試算</button>
         <div style="text-align:center; margin-top:10px; font-size:0.7rem; color:var(--t3); letter-spacing:0.3px;">
-            * 調整現在讚數 (本頁 › 貴族等級 › 左下黃色數字) 或選擇目標請重按
+            * 調整現在讚數或選擇目標請重按
         </div>
 
         <div id="resBoard" class="result-panel">
@@ -432,14 +286,8 @@
                 <span class="res-money" id="outCash">$0</span>
             </div>
             <div class="details">
-                <div class="row">
-                    <span>尚差讚數</span>
-                    <span class="val-white" id="outDiff">0</span>
-                </div>
-                <div class="row">
-                    <span>總需罐頭</span>
-                    <span class="val-white" id="outCan">0</span>
-                </div>
+                <div class="row"><span>尚差讚數</span><span class="val-white" id="outDiff">0</span></div>
+                <div class="row"><span>總需罐頭</span><span class="val-white" id="outCan">0</span></div>
                 <div class="row gift-row">
                     <div class="gift-display" id="outGiftText"></div>
                     <div class="gift-hint">* 建議補齊以 9999 罐頭為主，餘數以實際罐頭數顯示</div>
@@ -449,13 +297,10 @@
 
         <div class="strategy-box">
             <b>不建議續等</b>
-            掉下再升比原階續等划算<br>
-            單數月 10-25 號綁定最優<br>
-            例：神王續等為 2,000萬 60%（即 1,200萬）<br>
-            掉到至尊再升上神王只需 1,000萬<br>
-            所有爵位全部適用<br>
+            掉下再升比原階續等划算，所有爵位全部適用。
         </div>
 
+        <!-- 龍虎鬥遊戲 HTML -->
         <div class="game-accordion">
             <button class="accordion-header" onclick="toggleGame('lhGame')">
                 <span>🎮 玩．龍虎鬥</span>
@@ -464,7 +309,7 @@
             
             <div id="lhGame" class="accordion-content" style="display: none;">
                 <div class="dt-wrapper">
-                    <div class="dt-header" style="display:flex; justify-content:space-between; font-size:0.6rem; color:#666; margin-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:#666; margin-bottom:10px;">
                         <span id="dtNo">NO.3271832</span>
                         <span id="dtDate">2026.04.07</span>
                     </div>
@@ -472,26 +317,26 @@
                     <div class="cat-vs">
                         <div class="cat-box">
                             <img src="https://i.imgur.com/8vW9R9I.png" class="cat-img" alt="邱湘小仙女">
-                            <div class="cat-name">邱湘小仙女</div>
+                            <div class="cat-name">邱湘小仙女 🐱</div>
                         </div>
                         <div class="timer-wrap"><div class="timer-num" id="dtTimer">15</div></div>
                         <div class="cat-box">
                             <img src="https://i.imgur.com/Y3vB9zU.png" class="cat-img" alt="Stelle">
-                            <div class="cat-name">Stelle</div>
+                            <div class="cat-name">Stelle 🐈</div>
                         </div>
                     </div>
 
                     <div class="bet-grid">
                         <div class="bet-box" id="box-L" onclick="placeGameBet('L')">
-                            <div class="bet-name">龍</div><div class="odds">x2</div>
+                            <div class="bet-name" style="color:#ff4757">龍</div><div class="odds">x2</div>
                             <div class="bet-val-box"><div class="my-val" id="my-L">0</div><div class="total-val" id="total-L">0</div></div>
                         </div>
                         <div class="bet-box" id="box-Tie" onclick="placeGameBet('Tie')">
-                            <div class="bet-name">和</div><div class="odds">x22</div>
+                            <div class="bet-name" style="color:#2ed573">平局</div><div class="odds">x22</div>
                             <div class="bet-val-box"><div class="my-val" id="my-Tie">0</div><div class="total-val" id="total-Tie">0</div></div>
                         </div>
                         <div class="bet-box" id="box-T" onclick="placeGameBet('T')">
-                            <div class="bet-name">虎</div><div class="odds">x2</div>
+                            <div class="bet-name" style="color:#1e90ff">虎</div><div class="odds">x2</div>
                             <div class="bet-val-box"><div class="my-val" id="my-T">0</div><div class="total-val" id="total-T">0</div></div>
                         </div>
                     </div>
@@ -506,25 +351,18 @@
 
                     <div class="history-road" id="roadMap"></div>
 
-                    <div style="display:flex; justify-content:space-around; padding:10px; font-size:0.8rem;">
+                    <div class="stat-row">
                         <div>🥫 <span id="gameWallet">100,000</span></div>
                         <div>勝率 <b id="gameWinRate" style="color:#f0b942">0%</b></div>
                     </div>
                     
                     <div id="gameNotice" class="game-notice">🎰 準備下注...</div>
-                    <div id="upgradeHint" class="upgrade-popup">恭喜！贏得的罐頭已足夠完成爵位升級！🚀</div>
-                    
-                    <div class="rank-list">
-                        <div style="font-size: 0.65rem; color: #f0b942; margin-bottom: 5px;">🏆 今日淨利排行 (Top 50)</div>
-                        <div id="leaderboardContent" class="rank-content"></div>
-                    </div>
+                    <div id="upgradeHint" class="upgrade-popup">恭喜！您的罐頭已足夠完成爵位升級！🚀</div>
                 </div>
             </div>
         </div>
 
         <div class="note">
-            高罐頭禮物讚數更高<br>
-            匯率：NT$1 ≈ 2 罐頭<br>
             我男朋友來了 | 2026.03.31
             <div class="thanks">感謝 賈高賽 數據提供</div>
         </div>
@@ -532,233 +370,87 @@
 
     <script>
         const root = document.documentElement;
+        const rankGradients = { 0: ['#555', '#888'], 1: ['#2c3e50', '#bdc3c7'], 2: ['#1a4d2e', '#2ecc71'], 3: ['#003366', '#0073cf'], 4: ['#4b0082', '#9b59b6'], 5: ['#8b0000', '#e74c3c'], 6: ['#0a0a0a', '#f0b942'], 7: ['#00aaff', '#00f2ff'], 'v': ['#333', '#666'] };
+        const ranks = [ {name:"神王", val:20000000, code:7}, {name:"至尊", val:10000000, code:6}, {name:"教皇", val:5000000, code:5}, {name:"公爵", val:2425500, code:4}, {name:"伯爵", val:425500, code:3}, {name:"騎士", val:175500, code:2}, {name:"劍客", val:25500, code:1}, {name:"V4", val:13000, code:'v'}, {name:"V3", val:5500, code:'v'}, {name:"V2", val:1800, code:'v'}, {name:"V1", val:500, code:'v'} ];
+        const baseZan = { 9999: 27497, 3000: 7500, 1000: 2200, 300: 660, 100: 220 };
 
-        const rankGradients = {
-            0: ['#555', '#888'],
-            1: ['#2c3e50', '#bdc3c7'],
-            2: ['#1a4d2e', '#2ecc71'],
-            3: ['#003366', '#0073cf'],
-            4: ['#4b0082', '#9b59b6'],
-            5: ['#8b0000', '#e74c3c'],
-            6: ['#0a0a0a', '#f0b942'],
-            7: ['#00aaff', '#00f2ff'],
-            'v': ['#333', '#666']
-        };
-
-        const ranks = [
-            {name:"神王",  val:20000000, code:7},
-            {name:"至尊",  val:10000000, code:6},
-            {name:"教皇",  val:5000000,  code:5},
-            {name:"公爵",  val:2425500,  code:4},
-            {name:"伯爵",  val:425500,   code:3},
-            {name:"騎士",  val:175500,   code:2},
-            {name:"劍客",  val:25500,    code:1},
-            {name:"V4",    val:13000,    code:'v'},
-            {name:"V3",    val:5500,     code:'v'},
-            {name:"V2",    val:1800,     code:'v'},
-            {name:"V1",    val:500,      code:'v'}
-        ];
-
-        const baseZan = {
-            9999: 27497,
-            3000: 7500,
-            1000: 2200,
-            300:  660,
-            100:  220
-        };
-
-        function getZan(giftSize, multi) {
-            return baseZan[giftSize] * multi;
-        }
-
-        function setMulti(val, el) {
-            document.getElementById('multi').value = val;
-            document.querySelectorAll('.btn-small').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-            if (document.getElementById('resBoard').style.display === 'block') doCalc();
-        }
-
-        function getCurrentRankInfo(val) {
-            for (let i = 0; i < ranks.length; i++) {
-                if (val >= ranks[i].val) return ranks[i];
-            }
-            return {name:"V0", val:0, code:0};
-        }
-
-        function setRankColors(code, prefix) {
-            const colors = rankGradients[code] || rankGradients[0];
-            root.style.setProperty(`--${prefix}-rank-start`, colors[0]);
-            root.style.setProperty(`--${prefix}-rank-end`, colors[1]);
-        }
-
-        function updateRank() {
-            const val = parseFloat(document.getElementById('currZan').value) || 0;
-            const r = getCurrentRankInfo(val);
-            document.getElementById('rankDisplay').innerText = '目前爵位：' + r.name;
-            setRankColors(r.code, 'current');
-        }
-
+        // --- 核心計算邏輯 ---
+        function setMulti(val, el) { document.getElementById('multi').value = val; document.querySelectorAll('.btn-small').forEach(b => b.classList.remove('active')); el.classList.add('active'); if (document.getElementById('resBoard').style.display === 'block') doCalc(); }
+        function getCurrentRankInfo(val) { for (let i = 0; i < ranks.length; i++) { if (val >= ranks[i].val) return ranks[i]; } return {name:"V0", val:0, code:0}; }
+        function setRankColors(code, prefix) { const colors = rankGradients[code] || rankGradients[0]; root.style.setProperty(`--${prefix}-rank-start`, colors[0]); root.style.setProperty(`--${prefix}-rank-end`, colors[1]); }
+        function updateRank() { const val = parseFloat(document.getElementById('currZan').value) || 0; const r = getCurrentRankInfo(val); document.getElementById('rankDisplay').innerText = '目前爵位：' + r.name; setRankColors(r.code, 'current'); }
         function updateTargetColor() {
-            const sel = document.getElementById('targetRank');
-            const code = parseInt(sel.options[sel.selectedIndex].getAttribute('data-rank'));
-            setRankColors(code, 'target');
-            const colors = rankGradients[code] || rankGradients[7];
-            const btn = document.getElementById('btnMain');
-            btn.style.background = `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
-            btn.style.boxShadow = `0 8px 25px ${colors[1]}55`;
+            const sel = document.getElementById('targetRank'); const code = parseInt(sel.options[sel.selectedIndex].getAttribute('data-rank'));
+            setRankColors(code, 'target'); const colors = rankGradients[code] || rankGradients[7];
+            document.getElementById('btnMain').style.background = `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
         }
-
-        function adjustMoneyFontSize(text) {
-            const el = document.getElementById('outCash');
-            const len = text.length;
-            if (len <= 7)       el.style.fontSize = '3.4rem';
-            else if (len <= 9)  el.style.fontSize = '2.8rem';
-            else if (len <= 11) el.style.fontSize = '2.4rem';
-            else                el.style.fontSize = '1.8rem';
-        }
-
         function doCalc() {
-            const curr   = parseFloat(document.getElementById('currZan').value) || 0;
+            const curr = parseFloat(document.getElementById('currZan').value) || 0;
             const target = parseFloat(document.getElementById('targetRank').value);
-            const multi  = parseInt(document.getElementById('multi').value) || 1;
-
+            const multi = parseInt(document.getElementById('multi').value) || 1;
             let diff = Math.max(target - curr, 0);
-
-            const zan9999 = getZan(9999, multi);
-
-            const count9999 = Math.floor(diff / zan9999);
-            const remainingZan = diff - count9999 * zan9999;
-
-            const canPerZan = 9999 / 27497; 
-            const remainingCan = Math.ceil(remainingZan * canPerZan / multi);
-
+            const count9999 = Math.floor(diff / (27497 * multi));
+            const remainingCan = Math.ceil((diff - count9999 * (27497 * multi)) * (9999/27497) / multi);
             const totalCan = count9999 * 9999 + remainingCan;
-            const cash = Math.ceil(totalCan * 0.5);
-            const cashStr = '$' + cash.toLocaleString();
-
+            const cashStr = '$' + Math.ceil(totalCan * 0.5).toLocaleString();
             document.getElementById('outDiff').innerText = Math.ceil(diff).toLocaleString();
-            document.getElementById('outCan').innerText  = totalCan.toLocaleString();
-            document.getElementById('outCash').innerText = cashStr;
-            adjustMoneyFontSize(cashStr);
-
-            let giftHTML;
-            if (diff === 0) {
-                giftHTML = `<span style="color:var(--brand-gold)">已達目標爵位！🎉</span>`;
-            } else if (remainingCan === 0) {
-                giftHTML = `建議補齊：<br><span class="gift-tag">${count9999}</span> 顆 9999 罐頭`;
-            } else {
-                giftHTML = `建議補齊：<br>
-                    <span class="gift-tag">${count9999}</span> 顆 9999 罐頭
-                    ＋ 還差 <span class="gift-tag">${remainingCan.toLocaleString()}</span> 罐頭`;
-            }
-
-            document.getElementById('outGiftText').innerHTML = giftHTML;
-            updateTargetColor();
+            document.getElementById('outCan').innerText = totalCan.toLocaleString();
+            const moneyEl = document.getElementById('outCash'); moneyEl.innerText = cashStr;
+            moneyEl.style.fontSize = cashStr.length > 9 ? '2.4rem' : '3.4rem';
+            document.getElementById('outGiftText').innerHTML = diff === 0 ? "已達標！🎉" : `建議補齊：<br><span class="gift-tag">${count9999}</span> 顆 9999 罐頭 ＋ <span class="gift-tag">${remainingCan.toLocaleString()}</span> 罐頭`;
             document.getElementById('resBoard').style.display = 'block';
         }
 
-        // --- 龍虎鬥遊戲邏輯區 ---
+        // --- 龍虎鬥邏輯區 ---
         let gWallet = 100000, gInitialBalance = 100000, gPick = 10, gTimer = 15, gCanBet = true;
-        let gMyBets = { L: 0, Tie: 0, T: 0 }, gTotalBets = { L: 0, Tie: 0, T: 0 };
-        let gStats = { total: 0, win: 0 }, gNo = 3271832, gRoad = [], leaderboard = [];
+        let gMyBets = { L: 0, Tie: 0, T: 0 }, gTotalBets = { L: 0, Tie: 0, T: 0 }, gStats = { total: 0, win: 0 }, gNo = 3271832, gRoad = [];
 
         function toggleGame(id) {
-            const content = document.getElementById(id); 
-            const isHidden = content.style.display === "none";
+            const content = document.getElementById(id); const isHidden = content.style.display === "none";
             document.querySelectorAll('.accordion-content').forEach(c => c.style.display = "none");
             content.style.display = isHidden ? "block" : "none";
             document.getElementById('lhToggleIcon').innerText = isHidden ? "折疊" : "展開";
-            if (isHidden && gStats.total === 0) {
-                document.getElementById('dtDate').innerText = new Date().toLocaleDateString();
-                runTimer();
-            }
+            if (isHidden && gStats.total === 0) { document.getElementById('dtDate').innerText = new Date().toLocaleDateString(); runTimer(); }
         }
-
-        function pickChip(v, el) {
-            gPick = v;
-            document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-        }
-
-        function placeGameBet(type) {
-            if (!gCanBet) return;
-            if (gWallet < gPick) { alert("🥫 罐頭不夠啦！"); return; }
-            gWallet -= gPick;
-            gMyBets[type] += gPick;
-            gTotalBets[type] += gPick;
-            updateGameUI();
-        }
-
+        function pickChip(v, el) { gPick = v; document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
+        function placeGameBet(type) { if (!gCanBet || gWallet < gPick) return; gWallet -= gPick; gMyBets[type] += gPick; gTotalBets[type] += gPick; updateGameUI(); }
         function runTimer() {
             let clock = setInterval(() => {
                 if (gCanBet) {
-                    gTimer--;
-                    document.getElementById('dtTimer').innerText = gTimer;
-                    gTotalBets.L += Math.floor(Math.random() * 50) * 10;
-                    gTotalBets.T += Math.floor(Math.random() * 50) * 10;
-                    gTotalBets.Tie += Math.floor(Math.random() * 10) * 10;
+                    gTimer--; document.getElementById('dtTimer').innerText = gTimer;
+                    gTotalBets.L += Math.floor(Math.random()*50)*10; gTotalBets.T += Math.floor(Math.random()*50)*10; gTotalBets.Tie += Math.floor(Math.random()*10)*10;
                     updateGameUI();
                 }
                 if (gTimer <= 0) { clearInterval(clock); showGameResult(); }
             }, 1000);
         }
-
         function showGameResult() {
-            gCanBet = false;
-            document.getElementById('gameNotice').innerText = "🛑 停止下注，開牌中...";
+            gCanBet = false; document.getElementById('gameNotice').innerText = "🛑 停止下注，開牌中...";
             setTimeout(() => {
                 const cards = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
-                const LVal = Math.floor(Math.random()*13)+1;
-                const TVal = Math.floor(Math.random()*13)+1;
+                const LVal = Math.floor(Math.random()*13)+1; const TVal = Math.floor(Math.random()*13)+1;
                 const winner = LVal > TVal ? "L" : (TVal > LVal ? "T" : "Tie");
-                const earn = (winner === 'L' ? gMyBets.L * 2 : (winner === 'T' ? gMyBets.T * 2 : gMyBets.Tie * 22));
-                
-                gWallet += earn;
-                if (earn > 0) gStats.win++;
-                gStats.total++;
-                gRoad.push(winner);
-                if (gRoad.length > 20) gRoad.shift();
-
-                const notice = document.getElementById('gameNotice');
-                notice.innerText = `${winner==='L'?'龍贏':(winner==='T'?'虎贏':'平局')} (${cards[LVal-1]} vs ${cards[TVal-1]})`;
-                if (gStats.total > 5 && (gStats.win/gStats.total) < 0.2) notice.innerText += " | 手氣真背，今天先別玩吧？💩";
-
+                const earn = (winner==='L'?gMyBets.L*2:(winner==='T'?gMyBets.T*2:gMyBets.Tie*22));
+                gWallet += earn; if(earn>0) gStats.win++; gStats.total++; gRoad.push(winner); if(gRoad.length>20) gRoad.shift();
+                document.getElementById('gameNotice').innerText = `${winner==='L'?'龍贏':(winner==='T'?'虎贏':'平局')} (${cards[LVal-1]} vs ${cards[TVal-1]})`;
                 document.getElementById(`box-${winner}`).classList.add('win-anim');
                 updateGameUI();
-                updateLeaderboard();
-
                 setTimeout(() => {
-                    gNo++; gTimer = 15; gCanBet = true;
-                    gMyBets = { L: 0, Tie: 0, T: 0 };
-                    gTotalBets = { L: 0, Tie: 0, T: 0 };
-                    document.getElementById('dtNo').innerText = "NO." + gNo;
-                    document.querySelectorAll('.bet-box').forEach(b => b.classList.remove('win-anim'));
-                    updateGameUI();
-                    runTimer();
+                    gNo++; gTimer=15; gCanBet=true; gMyBets={L:0,Tie:0,T:0}; gTotalBets={L:0,Tie:0,T:0};
+                    document.getElementById('dtNo').innerText = "NO." + gNo; document.querySelectorAll('.bet-box').forEach(b => b.classList.remove('win-anim'));
+                    updateGameUI(); runTimer();
                 }, 3500);
             }, 1200);
         }
-
         function updateGameUI() {
             document.getElementById('gameWallet').innerText = gWallet.toLocaleString();
-            document.getElementById('my-L').innerText = gMyBets.L.toLocaleString();
-            document.getElementById('my-T').innerText = gMyBets.T.toLocaleString();
-            document.getElementById('my-Tie').innerText = gMyBets.Tie.toLocaleString();
-            document.getElementById('total-L').innerText = gTotalBets.L.toLocaleString();
-            document.getElementById('total-T').innerText = gTotalBets.T.toLocaleString();
-            document.getElementById('total-Tie').innerText = gTotalBets.Tie.toLocaleString();
-            document.getElementById('gameWinRate').innerText = gStats.total === 0 ? "0%" : ((gStats.win/gStats.total)*100).toFixed(1) + "%";
-            document.getElementById('roadMap').innerHTML = gRoad.map(r => `<div class="road-dot dot-${r}">${r==='Tie'?'和':(r==='L'?'龍':'虎')}</div>`).join('');
+            document.getElementById('my-L').innerText = gMyBets.L.toLocaleString(); document.getElementById('my-T').innerText = gMyBets.T.toLocaleString(); document.getElementById('my-Tie').innerText = gMyBets.Tie.toLocaleString();
+            document.getElementById('total-L').innerText = gTotalBets.L.toLocaleString(); document.getElementById('total-T').innerText = gTotalBets.T.toLocaleString(); document.getElementById('total-Tie').innerText = gTotalBets.Tie.toLocaleString();
+            document.getElementById('gameWinRate').innerText = gStats.total===0?"0%":((gStats.win/gStats.total)*100).toFixed(1)+"%";
+            document.getElementById('roadMap').innerHTML = gRoad.map(r => `<div class="road-dot dot-${r}">${r==='Tie'?'平':(r==='L'?'龍':'虎')}</div>`).join('');
             const need = parseInt(document.getElementById('outCan')?.innerText.replace(/,/g, '') || "0");
             if (need > 0 && (gWallet - gInitialBalance) >= need) document.getElementById('upgradeHint').style.display = "block";
         }
-
-        function updateLeaderboard() {
-            leaderboard.push({ name: "GN玩家", profit: gWallet - gInitialBalance });
-            leaderboard.sort((a, b) => b.profit - a.profit);
-            document.getElementById('leaderboardContent').innerHTML = leaderboard.slice(0, 50).map((u, i) => `<div>${i+1}. ${u.name} 淨利: ${u.profit.toLocaleString()}</div>`).join('');
-        }
-        
         updateTargetColor();
     </script>
 </body>

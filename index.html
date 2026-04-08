@@ -14,9 +14,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ════════════════════════════════
-           GN000 原始樣式（完整保留）
-        ════════════════════════════════ */
         :root {
             --brand-pink: #e8659a;
             --brand-gold: #f0b942;
@@ -742,7 +739,7 @@
         <div class="note">
             高罐頭禮物讚數更高<br>
             匯率：NT$1 ≈ 2 罐頭<br>
-            我男朋友來了 | 2026.4.8
+            我男朋友來了 | 2026.3.31
             <div class="thanks">感謝 賈高賽 數據提供</div>
         </div>
     </div>
@@ -759,7 +756,7 @@
                  alt="龍虎鬥">
             <div class="dt-toggle-text">
                 <div class="dt-toggle-title">玩．龍虎鬥</div>
-                <div class="dt-toggle-sub">點擊展開 · 虛擬模擬 · 試試手氣</div>
+                <div class="dt-toggle-sub">點擊展開·玩玩就好</div>
             </div>
             <div class="dt-toggle-arrow" id="dtArrow">▼</div>
         </button>
@@ -798,7 +795,7 @@
             <div class="dt-result-panel" id="dtResultPanel">
                 <div class="dt-cards-row">
                     <div class="dt-card-wrap">
-                        <div class="dt-card-label">🐉 龍</div>
+                        <div class="dt-card-label">🐲 龍</div>
                         <div class="playing-card">
                             <div class="c-rank" id="dtDragonRank">—</div>
                             <div class="c-suit" id="dtDragonSuit"></div>
@@ -820,7 +817,7 @@
             <!-- 下注三區 -->
             <div class="dt-table">
                 <div class="dt-zone dt-zone-dragon" id="dtZoneDragon" onclick="placeBetDT('dragon')">
-                    <div class="dt-zone-icon">🐉</div>
+                    <div class="dt-zone-icon">🐲</div>
                     <div class="dt-zone-name">龍</div>
                     <div class="dt-zone-mult">贏 × 2</div>
                     <div class="dt-cpu-label">電腦下注</div>
@@ -914,9 +911,6 @@
          Scripts
     ══════════════════════════════════ -->
     <script>
-    /* ─────────────────────────
-       GN000 原始邏輯（完整保留）
-    ───────────────────────── */
     const root = document.documentElement;
 
     const rankGradients = {
@@ -1182,7 +1176,7 @@
         document.getElementById('dtTigerSuit').textContent=tc.suit;
         document.getElementById('dtTigerSuit').className='c-suit '+(tiRed?'red':'black');
 
-        const wText=winner==='dragon'?'🐉 龍贏！':winner==='tiger'?'🐯 虎贏！':'⚖️ 平局！';
+        const wText=winner==='dragon'?'🐲 龍！':winner==='tiger'?'🐯 虎！':'⚖️ 平局！';
         const wColor=winner==='dragon'?'var(--dragon)':winner==='tiger'?'var(--tiger)':'var(--tie)';
         document.getElementById('dtWinner').textContent=wText;
         document.getElementById('dtWinner').style.color=wColor;
@@ -1227,7 +1221,7 @@
         setTimeout(()=>{
             dtDealing=false;
             document.getElementById('dtBtnDeal').disabled=false;
-            document.getElementById('dtStatus').textContent='先選籌碼，再點龍、平局或虎下注';
+            document.getElementById('dtStatus').textContent='先選籌碼，再下注';
             dtGenCpu();
             dtStartTimer();
         },2800);
@@ -1276,7 +1270,7 @@
         document.getElementById('dtWrNum').textContent='—';
         document.getElementById('dtWrAdvice').textContent='尚未開始，手氣未知 🎲';
         dtUpdateChips(); dtUpdateBets(); dtRenderHistory(); dtGenCpu();
-        document.getElementById('dtStatus').textContent='先選籌碼，再點龍、平局或虎下注';
+        document.getElementById('dtStatus').textContent='先選籌碼，再下注';
         dtStartTimer();
     }
     </script>

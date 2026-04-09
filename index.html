@@ -474,22 +474,24 @@
         .dt-zone.has-bet.dt-zone-tie    { background:rgba(168,85,247,0.22); border-color:rgba(168,85,247,0.7); box-shadow:0 0 18px rgba(168,85,247,0.25); }
         .dt-zone.has-bet.dt-zone-tiger  { background:rgba(74,158,255,0.22); border-color:rgba(74,158,255,0.7); box-shadow:0 0 18px rgba(74,158,255,0.25); }
 
-        /* 龍贏→螢光綠閃爍，平局→黃色閃爍，虎不變（紅色）*/
-        @keyframes win-flash-dragon {
-            0%,100% { filter:brightness(1); box-shadow:none; }
-            50% { filter:brightness(1.8) saturate(2) hue-rotate(100deg); box-shadow:0 0 30px #39ff14; }
+        @keyframes win-glow-dragon {
+            0%   { background:rgba(232,85,85,0.12);  border-color:rgba(232,85,85,0.32);  box-shadow:none; transform:scale(1); }
+            40%  { background:rgba(232,85,85,0.38);  border-color:rgba(255,120,120,0.9); box-shadow:0 0 0 4px rgba(232,85,85,0.25), 0 0 28px rgba(232,85,85,0.5); transform:scale(1.04); }
+            100% { background:rgba(232,85,85,0.12);  border-color:rgba(232,85,85,0.32);  box-shadow:none; transform:scale(1); }
         }
-        @keyframes win-flash-tie {
-            0%,100% { filter:brightness(1); box-shadow:none; }
-            50% { filter:brightness(2) saturate(2); box-shadow:0 0 30px #ffd700; }
+        @keyframes win-glow-tie {
+            0%   { background:rgba(168,85,247,0.12); border-color:rgba(168,85,247,0.32); box-shadow:none; transform:scale(1); }
+            40%  { background:rgba(168,85,247,0.38); border-color:rgba(200,130,255,0.9); box-shadow:0 0 0 4px rgba(168,85,247,0.25), 0 0 28px rgba(168,85,247,0.55); transform:scale(1.04); }
+            100% { background:rgba(168,85,247,0.12); border-color:rgba(168,85,247,0.32); box-shadow:none; transform:scale(1); }
         }
-        @keyframes win-flash-tiger {
-            0%,100% { filter:brightness(1); box-shadow:none; }
-            50% { filter:brightness(1.6) saturate(1.8); box-shadow:0 0 30px rgba(232,85,85,0.8); }
+        @keyframes win-glow-tiger {
+            0%   { background:rgba(74,158,255,0.12); border-color:rgba(74,158,255,0.32); box-shadow:none; transform:scale(1); }
+            40%  { background:rgba(74,158,255,0.38); border-color:rgba(120,190,255,0.9); box-shadow:0 0 0 4px rgba(74,158,255,0.25), 0 0 28px rgba(74,158,255,0.55); transform:scale(1.04); }
+            100% { background:rgba(74,158,255,0.12); border-color:rgba(74,158,255,0.32); box-shadow:none; transform:scale(1); }
         }
-        .dt-zone.winner-dragon { animation:win-flash-dragon 0.4s ease-in-out 4; }
-        .dt-zone.winner-tie    { animation:win-flash-tie    0.4s ease-in-out 4; }
-        .dt-zone.winner-tiger  { animation:win-flash-tiger  0.4s ease-in-out 4; }
+        .dt-zone.winner-dragon { animation:win-glow-dragon 0.55s ease-in-out 5; }
+        .dt-zone.winner-tie    { animation:win-glow-tie    0.55s ease-in-out 5; }
+        .dt-zone.winner-tiger  { animation:win-glow-tiger  0.55s ease-in-out 5; }
 
         .dt-zone-icon { font-size:1.3rem; margin-bottom:2px; }
         .dt-zone-name { font-family:'Sora',sans-serif; font-size:0.9rem; font-weight:800; letter-spacing:1px; margin-bottom:1px; }
@@ -772,7 +774,7 @@
             <b>不建議續等</b>
             掉下再升比原階續等划算<br>
             單數月 10-25 號綁定最優<br>
-            例：神王續等為 2,000萬 60%（即 1,200萬）<br>
+            例：神王續等為 2,000萬的60%（即 1,200萬）<br>
             掉到至尊再升上神王只需 1,000萬<br>
             所有爵位全部適用<br>
         </div>
@@ -780,7 +782,7 @@
         <div class="note">
             高罐頭禮物讚數更高<br>
             匯率：NT$1 ≈ 2 罐頭<br>
-            我男朋友來了 | 2026.4.8
+            我男朋友來了 | 2026.3.31
             <div class="thanks">感謝 賈高賽 數據提供</div>
         </div>
     </div>
@@ -791,7 +793,7 @@
             <img class="dt-toggle-img" src="https://boyfriendishere.github.io/GN000/dragon-tiger-banner.png" alt="龍虎鬥">
             <div class="dt-toggle-text">
                 <div class="dt-toggle-title">玩．龍虎鬥</div>
-                <div class="dt-toggle-sub">純屬娛樂，好玩就好</div>
+                <div class="dt-toggle-sub">純屬娛樂·好玩就好</div>
             </div>
             <div class="dt-toggle-arrow" id="dtArrow">▼</div>
         </button>
@@ -808,7 +810,7 @@
                     <input class="dt-input" id="dtName" type="text" placeholder="User" maxlength="12" value="User">
                 </div>
                 <div class="dt-setup-col">
-                    <div class="dt-setup-label">🪐 罐頭自訂</div>
+                    <div class="dt-setup-label">🪐 自訂罐頭</div>
                     <input class="dt-input" id="dtChipsInput" type="text" placeholder="100,000" value="100,000">
                 </div>
             </div>
@@ -823,6 +825,9 @@
                     <button class="dt-upload-btn" onclick="uploadScore()">上榜</button>
                 </div>
             </div>
+
+            <!-- 貴族升級連動提示 -->
+            <div id="dtNobleHint" style="display:none;margin-bottom:12px;padding:10px 16px;background:rgba(240,185,66,0.07);border:1px solid rgba(240,185,66,0.22);border-radius:12px;font-size:0.78rem;color:var(--t2);text-align:center;line-height:1.7;"></div>
 
             <div class="dt-result-panel" id="dtResultPanel">
                 <div class="dt-cards-row">
@@ -899,7 +904,7 @@
                 </div>
             </div>
 
-            <div class="dt-status" id="dtStatus">先選籌碼，再下注</div>
+            <div class="dt-status" id="dtStatus">先選籌碼再下注</div>
 
             <div class="dt-action-row">
                 <button class="dt-btn-lb" onclick="openLb()">今日榜單</button>
@@ -931,7 +936,7 @@
     <div class="dt-modal-overlay" id="dtModalOverlay" onclick="closeLbOutside(event)">
         <div class="dt-modal">
             <div class="dt-modal-header">
-                <div class="dt-modal-title">🏆 今日贏家</div>
+                <div class="dt-modal-title">🏆 今日贏家榜</div>
                 <button class="dt-modal-close" onclick="closeLb()">✕</button>
             </div>
             <div class="dt-modal-body" id="dtModalBody"></div>
@@ -1015,7 +1020,7 @@
         document.getElementById('outGiftText').innerHTML=giftHTML;
         updateTargetColor();
         document.getElementById('resBoard').style.display='block';
-        dtNobleDiff=diff;
+        dtNobleDiff = totalCan > 0 ? totalCan : null;
     }
 
     /* ── 龍虎鬥邏輯 ── */
@@ -1090,6 +1095,19 @@
         const color=dtSession>=0?'var(--brand-pink)':'var(--dragon)';
         document.getElementById('dtSession').innerHTML=
             `累計 <span style="color:${color};font-weight:700;">${sign}${dtSession.toLocaleString()}</span>`;
+        // 貴族升級連動（需先用貴族計算器，且累計為正數才顯示）
+        const hint=document.getElementById('dtNobleHint');
+        if(dtNobleDiff && dtNobleDiff > 0 && dtSession > 0){
+            if(dtSession >= dtNobleDiff){
+                hint.style.display='block';
+                hint.innerHTML=`🎉 累計已贏 <b style="color:var(--brand-gold)">${dtSession.toLocaleString()}</b> 🪐，已超過所需 <b style="color:var(--brand-gold)">${dtNobleDiff.toLocaleString()}</b> 罐頭，可完成貴族爵位升級！`;
+            } else {
+                hint.style.display='block';
+                hint.innerHTML=`💪 累計 <b style="color:var(--brand-pink)">${dtSession.toLocaleString()}</b> 🪐，再贏 <b style="color:var(--brand-gold)">${(dtNobleDiff - dtSession).toLocaleString()}</b> 罐頭就能達標升級！`;
+            }
+        } else {
+            hint.style.display='none';
+        }
     }
 
     function dtGenCpu(){

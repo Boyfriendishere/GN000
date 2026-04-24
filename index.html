@@ -58,441 +58,236 @@
         @keyframes orb-drift { from { transform: translate(0,0) scale(1); } to { transform: translate(-25px,35px) scale(1.07); } }
 
         .card {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 480px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 36px;
+            position: relative; z-index: 1; width: 100%; max-width: 480px;
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 36px;
             padding: 48px 24px 44px;
-            backdrop-filter: blur(48px) saturate(180%);
-            -webkit-backdrop-filter: blur(48px) saturate(180%);
+            backdrop-filter: blur(48px) saturate(180%); -webkit-backdrop-filter: blur(48px) saturate(180%);
             box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset, 0 50px 100px rgba(0,0,0,0.6);
-            overflow: hidden;
-            animation: card-in 0.75s cubic-bezier(0.22,1,0.36,1) both;
+            overflow: hidden; animation: card-in 0.75s cubic-bezier(0.22,1,0.36,1) both;
         }
         @keyframes card-in { from { opacity: 0; transform: translateY(32px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
         .rank-status-bar {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
+            position: absolute; top: 0; left: 0; right: 0; height: 4px;
             background: linear-gradient(90deg, transparent, var(--current-rank-start), var(--current-rank-end), transparent);
-            box-shadow: 0 2px 12px var(--current-rank-end);
-            transition: all 0.6s ease;
+            box-shadow: 0 2px 12px var(--current-rank-end); transition: all 0.6s ease;
         }
 
         h1 {
             font-family: 'Sora', sans-serif;
             background: linear-gradient(135deg, var(--current-rank-start) 0%, var(--current-rank-end) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-align: center;
-            font-size: 1.75rem;
-            margin-bottom: 44px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            transition: all 0.6s ease;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            text-align: center; font-size: 1.75rem; margin-bottom: 44px; font-weight: 800;
+            letter-spacing: 2px; transition: all 0.6s ease;
         }
 
         label {
-            font-family: 'Sora', sans-serif;
-            color: var(--t2);
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: block;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+            font-family: 'Sora', sans-serif; color: var(--t2); font-size: 0.7rem; font-weight: 600;
+            margin-bottom: 10px; display: block; text-transform: uppercase; letter-spacing: 1.5px;
         }
 
         .input-group { margin-bottom: 30px; }
 
         input[type="number"], select {
-            width: 100%;
-            padding: 17px 22px;
-            border-radius: 18px;
-            border: 1px solid rgba(255,255,255,0.07);
-            background: rgba(0,0,0,0.28);
-            color: white;
-            font-family: 'Sora', sans-serif;
-            font-size: 1.25rem;
-            box-sizing: border-box;
-            outline: none;
-            transition: all 0.3s;
-            backdrop-filter: blur(12px);
-            -webkit-appearance: none;
+            width: 100%; padding: 17px 22px; border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.07); background: rgba(0,0,0,0.28);
+            color: white; font-family: 'Sora', sans-serif; font-size: 1.25rem;
+            box-sizing: border-box; outline: none; transition: all 0.3s;
+            backdrop-filter: blur(12px); -webkit-appearance: none;
         }
-
-        input[type="number"]:focus, select:focus {
-            border-color: rgba(232,101,154,0.4);
-            box-shadow: 0 0 0 3px rgba(232,101,154,0.08);
-        }
+        input[type="number"]:focus, select:focus { border-color: rgba(232,101,154,0.4); box-shadow: 0 0 0 3px rgba(232,101,154,0.08); }
 
         select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(232,101,154,0.8)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 20px center;
-            padding-right: 48px;
-            cursor: pointer;
+            background-repeat: no-repeat; background-position: right 20px center; padding-right: 48px; cursor: pointer;
         }
         select option { background: #0f1218; color: #e6edf3; }
 
         .current-rank-tag {
-            display: inline-block;
-            margin-top: 14px;
-            padding: 8px 20px;
+            display: inline-block; margin-top: 14px; padding: 8px 20px;
             background: linear-gradient(135deg, var(--current-rank-start), var(--current-rank-end));
-            border-radius: 50px;
-            font-family: 'Sora', sans-serif;
-            font-size: 0.85rem;
-            color: white;
-            font-weight: 800;
-            transition: all 0.6s ease;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            border-radius: 50px; font-family: 'Sora', sans-serif; font-size: 0.85rem;
+            color: white; font-weight: 800; transition: all 0.6s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
         }
 
-        .quick-btn-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 12px;
-        }
+        .quick-btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
 
         .btn-small {
-            background: rgba(255,255,255,0.03);
-            color: var(--t2);
-            border: 1px solid rgba(255,255,255,0.07);
-            padding: 15px 0;
-            border-radius: 15px;
-            font-family: 'Sora', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+            background: rgba(255,255,255,0.03); color: var(--t2); border: 1px solid rgba(255,255,255,0.07);
+            padding: 15px 0; border-radius: 15px; font-family: 'Sora', sans-serif; font-size: 0.85rem;
+            font-weight: 600; cursor: pointer; transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
         }
         .btn-small:hover { background: rgba(255,255,255,0.08); color: #fff; }
         .btn-small.active {
             background: linear-gradient(135deg, var(--brand-pink), var(--brand-gold));
-            color: white;
-            border: none;
-            box-shadow: 0 10px 28px rgba(232,101,154,0.35);
-            transform: translateY(-3px);
+            color: white; border: none; box-shadow: 0 10px 28px rgba(232,101,154,0.35); transform: translateY(-3px);
         }
 
         .btn-main {
-            width: 100%;
-            background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
-            color: #fff;
-            border: none;
-            padding: 18px;
-            border-radius: 50px;
-            font-family: 'Sora', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 36px;
-            transition: background 0.5s ease, box-shadow 0.3s, transform 0.2s;
-            letter-spacing: 2px;
+            width: 100%; background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
+            color: #fff; border: none; padding: 18px; border-radius: 50px; font-family: 'Sora', sans-serif;
+            font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 36px;
+            transition: background 0.5s ease, box-shadow 0.3s, transform 0.2s; letter-spacing: 2px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.35);
         }
         .btn-main:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 14px 35px rgba(0,0,0,0.4); }
 
         .result-panel {
-            margin-top: 30px;
-            border-radius: 26px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(0,0,0,0.2);
-            display: none;
-            backdrop-filter: blur(16px);
+            margin-top: 30px; border-radius: 26px; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2);
+            display: none; backdrop-filter: blur(16px);
         }
-
-        .res-header {
-            padding: 32px 20px 24px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .res-label {
-            font-family: 'Sora', sans-serif;
-            font-size: 0.68rem;
-            color: var(--t2);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
+        .res-header { padding: 32px 20px 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .res-label { font-family: 'Sora', sans-serif; font-size: 0.68rem; color: var(--t2); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
         .res-money {
-            font-family: 'Sora', sans-serif;
-            font-weight: 800;
+            font-family: 'Sora', sans-serif; font-weight: 800;
             background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: block;
-            line-height: 1.15;
-            word-break: break-all;
-            transition: font-size 0.3s;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            display: block; line-height: 1.15; word-break: break-all; transition: font-size 0.3s;
         }
-
         .details { padding: 22px 24px 18px; }
-
-        .row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            font-size: 0.88rem;
-            color: var(--t2);
-        }
-
+        .row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.88rem; color: var(--t2); }
         .val-white { color: rgba(255,255,255,0.9); font-weight: 600; font-family: 'Sora', sans-serif; }
-
-        .gift-row {
-            border: none;
-            padding-top: 18px;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .gift-display {
-            color: var(--t1);
-            font-weight: 600;
-            text-align: center;
-            line-height: 2;
-            font-size: 0.95rem;
-        }
-
-        .gift-tag {
-            font-family: 'Sora', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--brand-gold);
-            text-shadow: 0 0 20px rgba(240,185,66,0.4);
-        }
-
-        .gift-hint {
-            font-size: 0.72rem;
-            color: var(--t3);
-            text-align: center;
-            letter-spacing: 0.3px;
-            line-height: 1.6;
-        }
+        .gift-row { border: none; padding-top: 18px; flex-direction: column; align-items: center; gap: 10px; }
+        .gift-display { color: var(--t1); font-weight: 600; text-align: center; line-height: 2; font-size: 0.95rem; }
+        .gift-tag { font-family: 'Sora', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--brand-gold); text-shadow: 0 0 20px rgba(240,185,66,0.4); }
+        .gift-hint { font-size: 0.72rem; color: var(--t3); text-align: center; letter-spacing: 0.3px; line-height: 1.6; }
 
         .strategy-box {
-            background: rgba(0,0,0,0.2);
-            border: 1px dashed rgba(255,255,255,0.1);
-            padding: 22px 24px;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            color: var(--t2);
-            line-height: 2;
-            margin-top: 36px;
+            background: rgba(0,0,0,0.2); border: 1px dashed rgba(255,255,255,0.1);
+            padding: 22px 24px; border-radius: 20px; font-size: 0.82rem; color: var(--t2); line-height: 2; margin-top: 36px;
         }
         .strategy-box b { color: var(--brand-gold); display: block; margin-bottom: 4px; }
 
-        .note {
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.2);
-            margin-top: 28px;
-            text-align: center;
-            line-height: 2.4;
-        }
-        .thanks {
-            color: var(--brand-pink);
-            font-weight: 700;
-            font-size: 0.72rem;
-            opacity: 0.7;
-            margin-top: 8px;
-        }
+        .note { font-size: 0.7rem; color: rgba(255,255,255,0.2); margin-top: 28px; text-align: center; line-height: 2.4; }
+        .thanks { color: var(--brand-pink); font-weight: 700; font-size: 0.72rem; opacity: 0.7; margin-top: 8px; }
 
-        /* ════════════════════════════════
-           龍虎鬥 收合區塊
-        ════════════════════════════════ */
-        .dt-wrapper {
-            width: 100%;
-            max-width: 480px;
-            margin-top: 20px;
-            z-index: 1;
-            position: relative;
+        /* ════════ 共用遊戲元件樣式 ════════ */
+        .playing-card {
+            width: 60px; height: 86px; border-radius: 8px; background: #fff;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto; box-shadow: 0 6px 20px rgba(0,0,0,0.5);
         }
+        .c-rank { font-family: 'Sora', sans-serif; font-size: 1.35rem; font-weight: 900; line-height: 1; }
+        .c-suit { font-size: 0.95rem; line-height: 1; margin-top: 2px; }
+        .red { color: #dc2626; } .black { color: #1a1a1a; }
 
-        .dt-toggle {
-            width: 100%;
-            background: rgba(23,28,36,0.85);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 24px;
-            cursor: pointer;
-            transition: box-shadow 0.3s;
-            backdrop-filter: blur(48px) saturate(180%);
-            -webkit-backdrop-filter: blur(48px) saturate(180%);
+        /* 收合外框共用 */
+        .game-wrapper { width: 100%; max-width: 480px; margin-top: 14px; z-index: 1; position: relative; }
+
+        .game-toggle {
+            width: 100%; background: rgba(23,28,36,0.85); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px; cursor: pointer; transition: box-shadow 0.3s;
+            backdrop-filter: blur(48px) saturate(180%); -webkit-backdrop-filter: blur(48px) saturate(180%);
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px 20px;
-            position: relative;
+            display: flex; align-items: center; gap: 16px; padding: 16px 20px; position: relative;
         }
-        .dt-toggle::before {
-            content:'';
-            position:absolute;
-            top:0;left:10%;right:10%;
-            height:1px;
-            background:linear-gradient(90deg,transparent,rgba(232,85,85,0.4),transparent);
-        }
-        .dt-toggle:hover { box-shadow: 0 24px 70px rgba(0,0,0,0.6), 0 0 30px rgba(232,85,85,0.1); }
+        .game-toggle.opened { border-radius: 24px 24px 0 0; }
 
-        .dt-toggle-img {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.1);
-            flex-shrink: 0;
-        }
-        .dt-toggle-text { flex: 1; text-align: left; }
-        .dt-toggle-title {
-            font-family: 'Sora', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #fff 10%, var(--dragon) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .dt-toggle-sub { font-size: 0.68rem; color: var(--t3); margin-top: 3px; letter-spacing: 0.5px; }
-        .dt-toggle-arrow {
-            font-size: 1rem;
-            color: var(--t3);
-            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-            flex-shrink: 0;
-        }
-        .dt-toggle-arrow.open { transform: rotate(180deg); }
-
-        .dt-content {
-            display: none;
-            background: rgba(23,28,36,0.9);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-top: none;
-            border-radius: 0 0 28px 28px;
-            padding: 24px 20px 28px;
-            backdrop-filter: blur(48px) saturate(180%);
-            -webkit-backdrop-filter: blur(48px) saturate(180%);
+        .game-content {
+            display: none; background: rgba(23,28,36,0.9); border: 1px solid rgba(255,255,255,0.08);
+            border-top: none; border-radius: 0 0 28px 28px; padding: 24px 20px 28px;
+            backdrop-filter: blur(48px) saturate(180%); -webkit-backdrop-filter: blur(48px) saturate(180%);
             box-shadow: 0 30px 80px rgba(0,0,0,0.55);
         }
-        .dt-toggle.opened { border-radius: 24px 24px 0 0; }
 
-        .dt-meta { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
-        .dt-no { font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:700; color:var(--brand-gold); }
-        .dt-date { font-size:0.72rem; color:var(--t3); letter-spacing:0.5px; }
+        .toggle-text { flex: 1; text-align: left; }
+        .toggle-sub { font-size: 0.68rem; color: var(--t3); margin-top: 3px; letter-spacing: 0.5px; }
+        .toggle-arrow { font-size: 1rem; color: var(--t3); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); flex-shrink: 0; }
+        .toggle-arrow.open { transform: rotate(180deg); }
 
-        .dt-setup { display:flex; gap:10px; margin-bottom:14px; }
-        .dt-setup-col { flex:1; }
-        .dt-setup-label { font-size:0.62rem; color:var(--t3); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px; font-family:'Sora',sans-serif; }
-        .dt-input {
-            width:100%;
-            background:rgba(0,0,0,0.3);
-            border:1px solid rgba(255,255,255,0.08);
-            border-radius:12px;
-            padding:10px 14px;
-            color:white;
-            font-family:'Sora',sans-serif;
-            font-size:0.9rem;
-            outline:none;
-            transition:border-color 0.3s;
-            -webkit-appearance:none;
-        }
-        .dt-input:focus { border-color:rgba(232,85,85,0.4); }
+        /* 龍虎鬥 accent */
+        .dt-toggle::before { content:''; position:absolute; top:0;left:10%;right:10%;height:1px; background:linear-gradient(90deg,transparent,rgba(232,85,85,0.4),transparent); }
+        .dt-toggle:hover { box-shadow: 0 24px 70px rgba(0,0,0,0.6), 0 0 30px rgba(232,85,85,0.1); }
+        .dt-toggle-img { width:56px;height:56px;border-radius:14px;object-fit:cover;border:1px solid rgba(255,255,255,0.1);flex-shrink:0; }
+        .dt-toggle-title { font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:2px; background:linear-gradient(135deg,#fff 10%,var(--dragon) 100%); -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
 
-        .dt-chips-bar {
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:10px 16px;
-            background:rgba(240,185,66,0.06);
-            border:1px solid rgba(240,185,66,0.15);
-            border-radius:14px;
-            margin-bottom:14px;
-        }
-        .dt-chips-left { display:flex; align-items:center; gap:7px; }
-        .dt-chips-num { font-family:'Sora',sans-serif; font-size:1.3rem; font-weight:800; color:var(--brand-gold); }
+        /* 射龍門 accent */
+        .slm-toggle::before { content:''; position:absolute; top:0;left:10%;right:10%;height:1px; background:linear-gradient(90deg,transparent,rgba(124,58,237,0.5),transparent); }
+        .slm-toggle:hover { box-shadow: 0 24px 70px rgba(0,0,0,0.6), 0 0 30px rgba(124,58,237,0.15); }
+        .slm-toggle-icon { width:56px;height:56px;border-radius:14px; background:linear-gradient(135deg,#4c1d95,#7c3aed); display:flex;align-items:center;justify-content:center; font-size:1.8rem;flex-shrink:0;border:1px solid rgba(255,255,255,0.1); }
+        .slm-toggle-title { font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:2px; background:linear-gradient(135deg,#fff 10%,#a855f7 100%); -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
 
-        .dt-result-panel {
-            display:none;
-            background:rgba(0,0,0,0.25);
-            border:1px solid rgba(255,255,255,0.07);
-            border-radius:18px;
-            padding:16px;
-            margin-bottom:14px;
-            text-align:center;
-        }
-        .dt-cards-row { display:flex; justify-content:center; align-items:center; gap:20px; margin-bottom:10px; }
-        .dt-card-wrap { text-align:center; }
-        .dt-card-label { font-size:0.65rem; color:var(--t2); letter-spacing:1px; margin-bottom:6px; }
-        .playing-card {
-            width:60px; height:86px;
-            border-radius:8px;
-            background:#fff;
-            display:flex; flex-direction:column;
-            align-items:center; justify-content:center;
-            margin:0 auto;
-            box-shadow:0 6px 20px rgba(0,0,0,0.5);
-        }
-        .c-rank { font-family:'Sora',sans-serif; font-size:1.35rem; font-weight:900; line-height:1; }
-        .c-suit { font-size:0.95rem; line-height:1; margin-top:2px; }
-        .red { color:#dc2626; } .black { color:#1a1a1a; }
-        .dt-vs { font-family:'Sora',sans-serif; font-size:1.1rem; font-weight:800; color:var(--t3); }
-        .dt-result-winner { font-family:'Sora',sans-serif; font-size:1.2rem; font-weight:800; letter-spacing:2px; margin-bottom:4px; }
-        .dt-result-payout { font-size:0.82rem; color:var(--t2); }
-        .dt-result-payout span { font-family:'Sora',sans-serif; font-weight:700; color:var(--brand-gold); }
+        /* ════════ 遊戲共用內部元件 ════════ */
+        .g-meta { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+        .g-no { font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:700; color:var(--brand-gold); }
+        .g-date { font-size:0.72rem; color:var(--t3); letter-spacing:0.5px; }
 
-        .dt-table { display:flex; gap:8px; margin-bottom:14px; }
-        .dt-zone {
-            flex:1;
-            border-radius:18px;
-            padding:14px 8px 12px;
-            text-align:center;
-            cursor:pointer;
-            transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
-            position:relative;
-            user-select:none;
-            border-width:2px;
-            border-style:solid;
-        }
+        .g-setup { display:flex; gap:10px; margin-bottom:14px; }
+        .g-setup-col { flex:1; }
+        .g-setup-label { font-size:0.62rem; color:var(--t3); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px; font-family:'Sora',sans-serif; }
+        .g-input { width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:10px 14px; color:white; font-family:'Sora',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.3s; -webkit-appearance:none; }
+        .g-input:focus { border-color:rgba(232,85,85,0.4); }
+
+        .g-chips-bar { display:flex; justify-content:space-between; align-items:center; padding:10px 16px; background:rgba(240,185,66,0.06); border:1px solid rgba(240,185,66,0.15); border-radius:14px; margin-bottom:14px; }
+        .g-chips-left { display:flex; align-items:center; gap:7px; }
+        .g-chips-num { font-family:'Sora',sans-serif; font-size:1.3rem; font-weight:800; color:var(--brand-gold); }
+
+        .g-noble-hint { display:none; margin-bottom:12px; padding:10px 16px; background:rgba(240,185,66,0.07); border:1px solid rgba(240,185,66,0.22); border-radius:12px; font-size:0.78rem; color:var(--t2); text-align:center; line-height:1.7; }
+
+        .g-upload-btn { background:transparent; border:1px solid rgba(240,185,66,0.3); border-radius:8px; padding:4px 10px; color:var(--brand-gold); font-family:'Sora',sans-serif; font-size:0.7rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+        .g-upload-btn:hover { background:rgba(240,185,66,0.1); }
+
+        .g-timer { margin-bottom:12px; }
+        .g-timer-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+        .g-timer-label { font-size:0.65rem; color:var(--t3); letter-spacing:2px; text-transform:uppercase; }
+        .g-timer-num { font-family:'Sora',sans-serif; font-size:1.3rem; font-weight:800; color:var(--brand-gold); transition:color 0.3s; }
+        .g-timer-num.urgent { color:var(--dragon); animation:blink 0.5s ease-in-out infinite alternate; }
+        @keyframes blink { from{opacity:1;}to{opacity:0.45;} }
+        .g-timer-bg { height:5px; background:rgba(255,255,255,0.06); border-radius:5px; overflow:hidden; }
+        .g-timer-bar { height:100%; border-radius:5px; background:linear-gradient(90deg,var(--brand-pink),var(--brand-gold)); transition:width 1s linear; }
+
+        .g-chip-row { display:flex; gap:6px; margin-bottom:10px; }
+        .g-chip { flex:1; padding:11px 0; border-radius:50px; border:2px solid transparent; font-family:'Sora',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1); }
+        .g-chip:hover { transform:translateY(-2px) scale(1.05); }
+        .g-chip.chip-selected { border-color:#fff !important; transform:translateY(-4px) scale(1.08); box-shadow:0 8px 20px rgba(255,255,255,0.25); filter:brightness(1.3); }
+        .c10  { background:linear-gradient(135deg,#374151,#6b7280); color:#fff; }
+        .c50  { background:linear-gradient(135deg,#1e40af,#3b82f6); color:#fff; }
+        .c100 { background:linear-gradient(135deg,#dc2626,#ef4444); color:#fff; }
+        .c1k  { background:linear-gradient(135deg,#065f46,#10b981); color:#fff; }
+        .c10k { background:linear-gradient(135deg,#7c3aed,#a855f7); color:#fff; }
+
+        .g-status { text-align:center; font-size:0.78rem; color:var(--t2); margin-bottom:10px; min-height:18px; }
+
+        .g-action-row { display:flex; gap:8px; margin-bottom:16px; }
+        .g-btn-lb { flex:1; padding:13px; border-radius:50px; border:1.5px solid rgba(240,185,66,0.3); background:transparent; color:var(--brand-gold); font-family:'Sora',sans-serif; font-size:0.82rem; font-weight:700; cursor:pointer; transition:all 0.25s; }
+        .g-btn-lb:hover { background:rgba(240,185,66,0.1); }
+        .g-btn-deal { flex:2; padding:13px; border-radius:50px; border:none; color:#fff; font-family:'Sora',sans-serif; font-size:0.95rem; font-weight:800; cursor:pointer; letter-spacing:2px; transition:all 0.3s; }
+        .g-btn-deal:hover { filter:brightness(1.1); transform:translateY(-2px); }
+        .g-btn-deal:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+        .g-btn-restart { flex:1; padding:13px; border-radius:50px; border:1.5px solid rgba(255,255,255,0.12); background:transparent; color:var(--t2); font-family:'Sora',sans-serif; font-size:0.8rem; font-weight:700; cursor:pointer; transition:all 0.25s; }
+        .g-btn-restart:hover { border-color:rgba(255,255,255,0.28); color:#fff; }
+
+        .g-sep { height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.07),transparent); margin:14px 0; }
+        .g-section-label { font-size:0.65rem; color:var(--t3); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; font-family:'Sora',sans-serif; }
+
+        .g-history-grid { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:4px; }
+        .g-dot { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-size:0.58rem; font-weight:700; }
+        .g-dot.x { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); }
+
+        .g-winrate-box { background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+        .g-wr-main { text-align:center; min-width:60px; }
+        .g-wr-label { font-size:0.62rem; color:var(--t3); letter-spacing:1px; text-transform:uppercase; margin-bottom:2px; }
+        .g-wr-num { font-family:'Sora',sans-serif; font-size:1.5rem; font-weight:800; }
+        .g-wr-advice { flex:1; font-size:0.76rem; color:var(--t2); line-height:1.6; text-align:right; }
+
+        .g-subtitle { font-size:0.68rem; color:var(--t3); text-align:center; line-height:2; margin-top:18px; letter-spacing:0.3px; }
+
+        /* ════════ 龍虎鬥專用 ════════ */
+        .dt-zone { flex:1; border-radius:18px; padding:14px 8px 12px; text-align:center; cursor:pointer; transition:all 0.25s cubic-bezier(0.4,0,0.2,1); user-select:none; border-width:2px; border-style:solid; }
         .dt-zone:active { transform:scale(0.97); }
         .dt-zone-dragon { background:var(--dragon-dim); border-color:var(--dragon-border); }
         .dt-zone-tie    { background:var(--tie-dim);    border-color:var(--tie-border); }
         .dt-zone-tiger  { background:var(--tiger-dim);  border-color:var(--tiger-border); }
-
         .dt-zone.has-bet.dt-zone-dragon { background:rgba(232,85,85,0.22); border-color:rgba(232,85,85,0.7); box-shadow:0 0 18px rgba(232,85,85,0.25); }
         .dt-zone.has-bet.dt-zone-tie    { background:rgba(168,85,247,0.22); border-color:rgba(168,85,247,0.7); box-shadow:0 0 18px rgba(168,85,247,0.25); }
-        .dt-zone.has-bet.dt-zone-tiger  { background:rgba(74,158,255,0.22); border-color:rgba(74,158,255,0.7); box-shadow:0 0 18px rgba(74,158,255,0.25); }
-
-        @keyframes win-glow-dragon {
-            0%   { background:rgba(232,85,85,0.12);  border-color:rgba(232,85,85,0.32);  box-shadow:none; transform:scale(1); }
-            40%  { background:rgba(232,85,85,0.38);  border-color:rgba(255,120,120,0.9); box-shadow:0 0 0 4px rgba(232,85,85,0.25), 0 0 28px rgba(232,85,85,0.5); transform:scale(1.04); }
-            100% { background:rgba(232,85,85,0.12);  border-color:rgba(232,85,85,0.32);  box-shadow:none; transform:scale(1); }
-        }
-        @keyframes win-glow-tie {
-            0%   { background:rgba(168,85,247,0.12); border-color:rgba(168,85,247,0.32); box-shadow:none; transform:scale(1); }
-            40%  { background:rgba(168,85,247,0.38); border-color:rgba(200,130,255,0.9); box-shadow:0 0 0 4px rgba(168,85,247,0.25), 0 0 28px rgba(168,85,247,0.55); transform:scale(1.04); }
-            100% { background:rgba(168,85,247,0.12); border-color:rgba(168,85,247,0.32); box-shadow:none; transform:scale(1); }
-        }
-        @keyframes win-glow-tiger {
-            0%   { background:rgba(74,158,255,0.12); border-color:rgba(74,158,255,0.32); box-shadow:none; transform:scale(1); }
-            40%  { background:rgba(74,158,255,0.38); border-color:rgba(120,190,255,0.9); box-shadow:0 0 0 4px rgba(74,158,255,0.25), 0 0 28px rgba(74,158,255,0.55); transform:scale(1.04); }
-            100% { background:rgba(74,158,255,0.12); border-color:rgba(74,158,255,0.32); box-shadow:none; transform:scale(1); }
-        }
+        .dt-zone.has-bet.dt-zone-tiger  { background:rgba(74,158,255,0.22);  border-color:rgba(74,158,255,0.7);  box-shadow:0 0 18px rgba(74,158,255,0.25); }
+        @keyframes win-glow-dragon { 0%,100%{background:rgba(232,85,85,0.12);border-color:rgba(232,85,85,0.32);box-shadow:none;transform:scale(1);}40%{background:rgba(232,85,85,0.38);border-color:rgba(255,120,120,0.9);box-shadow:0 0 0 4px rgba(232,85,85,0.25),0 0 28px rgba(232,85,85,0.5);transform:scale(1.04);} }
+        @keyframes win-glow-tie    { 0%,100%{background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.32);box-shadow:none;transform:scale(1);}40%{background:rgba(168,85,247,0.38);border-color:rgba(200,130,255,0.9);box-shadow:0 0 0 4px rgba(168,85,247,0.25),0 0 28px rgba(168,85,247,0.55);transform:scale(1.04);} }
+        @keyframes win-glow-tiger  { 0%,100%{background:rgba(74,158,255,0.12);border-color:rgba(74,158,255,0.32);box-shadow:none;transform:scale(1);}40%{background:rgba(74,158,255,0.38);border-color:rgba(120,190,255,0.9);box-shadow:0 0 0 4px rgba(74,158,255,0.25),0 0 28px rgba(74,158,255,0.55);transform:scale(1.04);} }
         .dt-zone.winner-dragon { animation:win-glow-dragon 0.55s ease-in-out 5; }
         .dt-zone.winner-tie    { animation:win-glow-tie    0.55s ease-in-out 5; }
         .dt-zone.winner-tiger  { animation:win-glow-tiger  0.55s ease-in-out 5; }
-
         .dt-zone-icon { font-size:1.3rem; margin-bottom:2px; }
         .dt-zone-name { font-family:'Sora',sans-serif; font-size:0.9rem; font-weight:800; letter-spacing:1px; margin-bottom:1px; }
         .dt-zone-dragon .dt-zone-name { color:var(--dragon); }
@@ -507,197 +302,70 @@
         .dt-zone-divider { height:1px; background:rgba(255,255,255,0.07); margin:5px 0; }
         .dt-my-label { font-size:0.6rem; color:var(--t3); }
         .dt-my-bet { font-family:'Sora',sans-serif; font-size:0.95rem; font-weight:800; color:white; }
+        .g-dot.d { background:var(--dragon-dim); border:1px solid var(--dragon-border); color:var(--dragon); }
+        .g-dot.t { background:var(--tiger-dim);  border:1px solid var(--tiger-border);  color:var(--tiger); }
+        .g-dot.e { background:var(--tie-dim);    border:1px solid var(--tie-border);    color:var(--tie); }
 
-        .dt-timer { margin-bottom:12px; }
-        .dt-timer-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
-        .dt-timer-label { font-size:0.65rem; color:var(--t3); letter-spacing:2px; text-transform:uppercase; }
-        .dt-timer-num { font-family:'Sora',sans-serif; font-size:1.3rem; font-weight:800; color:var(--brand-gold); transition:color 0.3s; }
-        .dt-timer-num.urgent { color:var(--dragon); animation:blink 0.5s ease-in-out infinite alternate; }
-        @keyframes blink{from{opacity:1;}to{opacity:0.45;}}
-        .dt-timer-bg { height:5px; background:rgba(255,255,255,0.06); border-radius:5px; overflow:hidden; }
-        .dt-timer-bar { height:100%; border-radius:5px; background:linear-gradient(90deg,var(--brand-pink),var(--brand-gold)); transition:width 1s linear; }
+        /* ════════ 射龍門專用 ════════ */
+        .slm-cards-area { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:8px; }
+        .slm-card-wrap { text-align:center; }
+        .slm-card-label { font-size:0.62rem; color:var(--t2); letter-spacing:1px; margin-bottom:5px; }
+        .slm-width-hint { text-align:center; font-size:0.75rem; color:var(--tie); margin-bottom:12px; font-family:'Sora',sans-serif; font-weight:600; letter-spacing:0.5px; }
 
-        .dt-chip-section { margin-bottom:10px; }
-        .dt-chip-row { display:flex; gap:6px; }
-        .dt-chip {
-            flex:1;
-            padding:11px 0;
-            border-radius:50px;
-            border:2px solid transparent;
-            font-family:'Sora',sans-serif;
-            font-size:0.78rem;
-            font-weight:700;
-            cursor:pointer;
-            transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1);
-        }
-        .dt-chip:hover { transform:translateY(-2px) scale(1.05); }
-        .dt-chip.chip-selected {
-            border-color:#fff !important;
-            transform:translateY(-4px) scale(1.08);
-            box-shadow:0 8px 20px rgba(255,255,255,0.25);
-            filter:brightness(1.3);
-        }
-        .c10  { background:linear-gradient(135deg,#374151,#6b7280); color:#fff; }
-        .c50  { background:linear-gradient(135deg,#1e40af,#3b82f6); color:#fff; }
-        .c100 { background:linear-gradient(135deg,#dc2626,#ef4444); color:#fff; }
-        .c1k  { background:linear-gradient(135deg,#065f46,#10b981); color:#fff; }
-        .c10k { background:linear-gradient(135deg,#7c3aed,#a855f7); color:#fff; }
+        .slm-zone { flex:1; border-radius:16px; padding:12px 6px 10px; text-align:center; cursor:pointer; transition:all 0.25s cubic-bezier(0.4,0,0.2,1); user-select:none; border-width:2px; border-style:solid; }
+        .slm-zone:active { transform:scale(0.97); }
+        .slm-zone-hit  { background:rgba(16,185,129,0.1);  border-color:rgba(16,185,129,0.3); }
+        .slm-zone-miss { background:var(--dragon-dim);     border-color:var(--dragon-border); }
+        .slm-zone-pole { background:rgba(240,185,66,0.1);  border-color:rgba(240,185,66,0.25); }
+        .slm-zone.has-bet.slm-zone-hit  { background:rgba(16,185,129,0.25); border-color:rgba(16,185,129,0.8); box-shadow:0 0 16px rgba(16,185,129,0.25); }
+        .slm-zone.has-bet.slm-zone-miss { background:rgba(232,85,85,0.25);  border-color:rgba(232,85,85,0.8);  box-shadow:0 0 16px rgba(232,85,85,0.25); }
+        .slm-zone.has-bet.slm-zone-pole { background:rgba(240,185,66,0.25); border-color:rgba(240,185,66,0.8); box-shadow:0 0 16px rgba(240,185,66,0.25); }
+        @keyframes slm-glow-hit  { 0%,100%{background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);transform:scale(1);}50%{background:rgba(16,185,129,0.45);border-color:rgba(16,185,129,1);box-shadow:0 0 0 4px rgba(16,185,129,0.25),0 0 30px rgba(16,185,129,0.6);transform:scale(1.04);} }
+        @keyframes slm-glow-miss { 0%,100%{background:var(--dragon-dim);border-color:var(--dragon-border);transform:scale(1);}50%{background:rgba(232,85,85,0.4);border-color:rgba(255,120,120,1);box-shadow:0 0 0 4px rgba(232,85,85,0.25),0 0 30px rgba(232,85,85,0.6);transform:scale(1.04);} }
+        @keyframes slm-glow-pole { 0%,100%{background:rgba(240,185,66,0.1);border-color:rgba(240,185,66,0.25);transform:scale(1);}50%{background:rgba(240,185,66,0.4);border-color:rgba(255,210,80,1);box-shadow:0 0 0 4px rgba(240,185,66,0.25),0 0 30px rgba(240,185,66,0.6);transform:scale(1.04);} }
+        .slm-zone.win-hit  { animation:slm-glow-hit  0.5s ease-in-out 5; }
+        .slm-zone.win-miss { animation:slm-glow-miss 0.5s ease-in-out 5; }
+        .slm-zone.win-pole { animation:slm-glow-pole 0.5s ease-in-out 5; }
+        .slm-zone-icon { font-size:1.2rem; margin-bottom:2px; }
+        .slm-zone-name { font-family:'Sora',sans-serif; font-size:0.85rem; font-weight:800; letter-spacing:1px; margin-bottom:1px; }
+        .slm-zone-hit  .slm-zone-name { color:#10b981; }
+        .slm-zone-miss .slm-zone-name { color:var(--dragon); }
+        .slm-zone-pole .slm-zone-name { color:var(--brand-gold); }
+        .slm-zone-odds { font-size:0.62rem; color:var(--t3); margin-bottom:6px; }
+        .slm-cpu-label { font-size:0.58rem; color:var(--t3); }
+        .slm-cpu-total { font-family:'Sora',sans-serif; font-size:0.82rem; font-weight:700; margin-bottom:4px; }
+        .slm-zone-hit  .slm-cpu-total { color:rgba(16,185,129,0.8); }
+        .slm-zone-miss .slm-cpu-total { color:rgba(232,85,85,0.8); }
+        .slm-zone-pole .slm-cpu-total { color:rgba(240,185,66,0.8); }
+        .slm-zone-divider { height:1px; background:rgba(255,255,255,0.07); margin:4px 0; }
+        .slm-my-label { font-size:0.58rem; color:var(--t3); }
+        .slm-my-bet { font-family:'Sora',sans-serif; font-size:0.9rem; font-weight:800; color:white; }
+        .g-dot.slm-h { background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#10b981; }
+        .g-dot.slm-m { background:var(--dragon-dim); border:1px solid var(--dragon-border); color:var(--dragon); }
+        .g-dot.slm-p { background:rgba(240,185,66,0.12); border:1px solid rgba(240,185,66,0.3); color:var(--brand-gold); }
 
-        .dt-status { text-align:center; font-size:0.78rem; color:var(--t2); margin-bottom:10px; min-height:18px; }
+        .slm-result { display:none; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:14px; margin-bottom:12px; text-align:center; }
+        .slm-result-text { font-family:'Sora',sans-serif; font-size:1.2rem; font-weight:800; letter-spacing:2px; margin-bottom:4px; }
+        .slm-result-payout { font-size:0.82rem; color:var(--t2); }
 
-        .dt-action-row { display:flex; gap:8px; margin-bottom:16px; }
-        .dt-btn-lb {
-            flex:1; padding:13px;
-            border-radius:50px;
-            border:1.5px solid rgba(240,185,66,0.3);
-            background:transparent; color:var(--brand-gold);
-            font-family:'Sora',sans-serif; font-size:0.82rem; font-weight:700;
-            cursor:pointer; transition:all 0.25s;
-        }
-        .dt-btn-lb:hover { background:rgba(240,185,66,0.1); }
-        .dt-btn-deal {
-            flex:2; padding:13px;
-            border-radius:50px; border:none;
-            background:linear-gradient(135deg,var(--dragon),#a83232);
-            color:#fff;
-            font-family:'Sora',sans-serif; font-size:0.95rem; font-weight:800;
-            cursor:pointer; letter-spacing:2px;
-            transition:all 0.3s;
-            box-shadow:0 8px 25px rgba(232,85,85,0.3);
-        }
-        .dt-btn-deal:hover { filter:brightness(1.1); transform:translateY(-2px); }
-        .dt-btn-deal:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
-        .dt-btn-restart {
-            flex:1; padding:13px;
-            border-radius:50px;
-            border:1.5px solid rgba(255,255,255,0.12);
-            background:transparent; color:var(--t2);
-            font-family:'Sora',sans-serif; font-size:0.8rem; font-weight:700;
-            cursor:pointer; transition:all 0.25s;
-        }
-        .dt-btn-restart:hover { border-color:rgba(255,255,255,0.28); color:#fff; }
-
-        .dt-sep { height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.07),transparent); margin:14px 0; }
-
-        .dt-section-label { font-size:0.65rem; color:var(--t3); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; font-family:'Sora',sans-serif; }
-        .dt-history-grid { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:4px; }
-        .dt-dot {
-            width:26px; height:26px; border-radius:50%;
-            display:flex; align-items:center; justify-content:center;
-            font-family:'Sora',sans-serif; font-size:0.58rem; font-weight:700;
-        }
-        .dt-dot.d { background:var(--dragon-dim); border:1px solid var(--dragon-border); color:var(--dragon); }
-        .dt-dot.t { background:var(--tiger-dim);  border:1px solid var(--tiger-border);  color:var(--tiger); }
-        .dt-dot.e { background:var(--tie-dim);    border:1px solid var(--tie-border);    color:var(--tie); }
-        .dt-dot.x { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); }
-
-        .dt-winrate-box {
-            background:rgba(0,0,0,0.2);
-            border:1px solid rgba(255,255,255,0.06);
-            border-radius:14px;
-            padding:12px 16px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:12px;
-        }
-        .dt-wr-main { text-align:center; min-width:60px; }
-        .dt-wr-label { font-size:0.62rem; color:var(--t3); letter-spacing:1px; text-transform:uppercase; margin-bottom:2px; }
-        .dt-wr-num { font-family:'Sora',sans-serif; font-size:1.5rem; font-weight:800; }
-        .dt-wr-advice { flex:1; font-size:0.76rem; color:var(--t2); line-height:1.6; text-align:right; }
-
-        .dt-subtitle {
-            font-size:0.68rem;
-            color:var(--t3);
-            text-align:center;
-            line-height:2;
-            margin-top:18px;
-            letter-spacing:0.3px;
-        }
-
-        /* ── 上榜按鈕（籌碼列旁） ── */
-        .dt-upload-btn {
-            background:transparent;
-            border:1px solid rgba(240,185,66,0.3);
-            border-radius:8px;
-            padding:4px 10px;
-            color:var(--brand-gold);
-            font-family:'Sora',sans-serif;
-            font-size:0.7rem;
-            font-weight:700;
-            cursor:pointer;
-            transition:all 0.2s;
-        }
-        .dt-upload-btn:hover { background:rgba(240,185,66,0.1); }
-
-        /* ── 榜單彈窗 ── */
-        .dt-modal-overlay {
-            display:none;
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,0.7);
-            backdrop-filter:blur(8px);
-            z-index:999;
-            justify-content:center;
-            align-items:center;
-            padding:20px;
-        }
+        /* ════════ 榜單彈窗 ════════ */
+        .dt-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); z-index:999; justify-content:center; align-items:center; padding:20px; }
         .dt-modal-overlay.show { display:flex; }
-        .dt-modal {
-            background:rgba(23,28,36,0.97);
-            border:1px solid rgba(255,255,255,0.1);
-            border-radius:28px;
-            width:100%;
-            max-width:360px;
-            max-height:80vh;
-            overflow:hidden;
-            display:flex;
-            flex-direction:column;
-            box-shadow:0 40px 80px rgba(0,0,0,0.7);
-            animation:modal-in 0.35s cubic-bezier(0.22,1,0.36,1) both;
-        }
-        @keyframes modal-in{from{opacity:0;transform:scale(0.92) translateY(20px);}to{opacity:1;transform:scale(1) translateY(0);}}
-        .dt-modal-header {
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:20px 22px 16px;
-            border-bottom:1px solid rgba(255,255,255,0.06);
-            flex-shrink:0;
-        }
+        .dt-modal { background:rgba(23,28,36,0.97); border:1px solid rgba(255,255,255,0.1); border-radius:28px; width:100%; max-width:360px; max-height:80vh; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 40px 80px rgba(0,0,0,0.7); animation:modal-in 0.35s cubic-bezier(0.22,1,0.36,1) both; }
+        @keyframes modal-in { from{opacity:0;transform:scale(0.92) translateY(20px);}to{opacity:1;transform:scale(1) translateY(0);} }
+        .dt-modal-header { display:flex; justify-content:space-between; align-items:center; padding:20px 22px 16px; border-bottom:1px solid rgba(255,255,255,0.06); flex-shrink:0; }
         .dt-modal-title { font-family:'Sora',sans-serif; font-size:1rem; font-weight:800; color:var(--brand-gold); letter-spacing:1px; }
-        .dt-modal-close {
-            background:rgba(255,255,255,0.06);
-            border:none;
-            border-radius:50%;
-            width:30px; height:30px;
-            color:var(--t2);
-            font-size:1rem;
-            cursor:pointer;
-            display:flex; align-items:center; justify-content:center;
-            transition:all 0.2s;
-        }
+        .dt-modal-close { background:rgba(255,255,255,0.06); border:none; border-radius:50%; width:30px; height:30px; color:var(--t2); font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
         .dt-modal-close:hover { background:rgba(255,255,255,0.12); color:#fff; }
         .dt-modal-body { overflow-y:auto; padding:16px 22px 22px; flex:1; }
         .dt-modal-body::-webkit-scrollbar { width:3px; }
         .dt-modal-body::-webkit-scrollbar-thumb { background:rgba(240,185,66,0.3); border-radius:3px; }
-        .lb-item {
-            display:flex;
-            align-items:center;
-            gap:10px;
-            padding:10px 12px;
-            background:rgba(0,0,0,0.2);
-            border-radius:12px;
-            border:1px solid rgba(255,255,255,0.04);
-            margin-bottom:6px;
-        }
+        .lb-item { display:flex; align-items:center; gap:10px; padding:10px 12px; background:rgba(0,0,0,0.2); border-radius:12px; border:1px solid rgba(255,255,255,0.04); margin-bottom:6px; }
         .lb-rank { font-family:'Sora',sans-serif; font-size:0.8rem; font-weight:700; color:var(--t3); width:24px; text-align:center; flex-shrink:0; }
-        .lb-rank.gold   { color:#ffd700; }
-        .lb-rank.silver { color:#c0c0c0; }
-        .lb-rank.bronze { color:#cd7f32; }
+        .lb-rank.gold { color:#ffd700; } .lb-rank.silver { color:#c0c0c0; } .lb-rank.bronze { color:#cd7f32; }
         .lb-name { flex:1; font-size:0.85rem; color:var(--t1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .lb-stats { text-align:right; flex-shrink:0; }
-        .lb-score { font-family:'Sora',sans-serif; font-size:0.88rem; font-weight:700; color:var(--brand-gold); }
+        .lb-score { font-family:'Sora',sans-serif; font-size:0.88rem; font-weight:700; }
         .lb-wr { font-size:0.65rem; color:var(--t3); }
         .lb-empty { text-align:center; font-size:0.82rem; color:var(--t3); padding:30px 0; }
     </style>
@@ -755,14 +423,8 @@
                 <span class="res-money" id="outCash">$0</span>
             </div>
             <div class="details">
-                <div class="row">
-                    <span>尚差讚數</span>
-                    <span class="val-white" id="outDiff">0</span>
-                </div>
-                <div class="row">
-                    <span>總需罐頭</span>
-                    <span class="val-white" id="outCan">0</span>
-                </div>
+                <div class="row"><span>尚差讚數</span><span class="val-white" id="outDiff">0</span></div>
+                <div class="row"><span>總需罐頭</span><span class="val-white" id="outCan">0</span></div>
                 <div class="row gift-row">
                     <div class="gift-display" id="outGiftText"></div>
                     <div class="gift-hint">* 建議補齊以 9999 罐頭為主，餘數以實際罐頭數顯示</div>
@@ -782,161 +444,236 @@
         <div class="note">
             高罐頭禮物讚數更高<br>
             匯率：NT$1 ≈ 2 罐頭<br>
-            我男朋友來了 | 2026.3.31
+            我男朋友來了 | 2026.4.8
             <div class="thanks">感謝 賈高賽 數據提供</div>
         </div>
     </div>
 
     <!-- 玩．龍虎鬥 -->
-    <div class="dt-wrapper">
-        <button class="dt-toggle" id="dtToggle" onclick="toggleDT()">
+    <div class="game-wrapper">
+        <button class="game-toggle dt-toggle" id="dtToggle" onclick="toggleDT()">
             <img class="dt-toggle-img" src="https://boyfriendishere.github.io/GN000/dragon-tiger-banner.png" alt="龍虎鬥">
-            <div class="dt-toggle-text">
+            <div class="toggle-text">
                 <div class="dt-toggle-title">玩．龍虎鬥</div>
-                <div class="dt-toggle-sub">純屬娛樂·好玩就好</div>
+                <div class="toggle-sub">純屬娛樂·好玩就好</div>
             </div>
-            <div class="dt-toggle-arrow" id="dtArrow">▼</div>
+            <div class="toggle-arrow" id="dtArrow">▼</div>
         </button>
-
-        <div class="dt-content" id="dtContent">
-            <div class="dt-meta">
-                <div class="dt-no" id="dtNo">NO.—</div>
-                <div class="dt-date" id="dtDate"></div>
+        <div class="game-content" id="dtContent">
+            <div class="g-meta">
+                <div class="g-no" id="dtNo">NO.—</div>
+                <div class="g-date" id="dtDate"></div>
             </div>
-
-            <div class="dt-setup">
-                <div class="dt-setup-col">
-                    <div class="dt-setup-label">玩家名稱</div>
-                    <input class="dt-input" id="dtName" type="text" placeholder="User" maxlength="12" value="User">
+            <div class="g-setup">
+                <div class="g-setup-col">
+                    <div class="g-setup-label">玩家名稱</div>
+                    <input class="g-input" id="dtName" type="text" placeholder="User" maxlength="12" value="User">
                 </div>
-                <div class="dt-setup-col">
-                    <div class="dt-setup-label">🪐 自訂罐頭</div>
-                    <input class="dt-input" id="dtChipsInput" type="text" placeholder="100,000" value="100,000">
+                <div class="g-setup-col">
+                    <div class="g-setup-label">🪐 自訂罐頭</div>
+                    <input class="g-input" id="dtChipsInput" type="text" placeholder="100,000" value="100,000">
                 </div>
             </div>
-
-            <div class="dt-chips-bar">
-                <div class="dt-chips-left">
+            <div class="g-chips-bar">
+                <div class="g-chips-left">
                     <span style="font-size:1.1rem;">🪐</span>
-                    <span class="dt-chips-num" id="dtChipsNum">100,000</span>
+                    <span class="g-chips-num" id="dtChipsNum">100,000</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;">
                     <span id="dtSession" style="font-size:0.75rem;color:var(--t3);">累計 <span style="color:var(--brand-pink);font-weight:700;">+0</span></span>
-                    <button class="dt-upload-btn" onclick="uploadScore()">上榜</button>
+                    <button class="g-upload-btn" onclick="dtUploadScore()">上榜</button>
                 </div>
             </div>
-
-            <!-- 貴族升級連動提示 -->
-            <div id="dtNobleHint" style="display:none;margin-bottom:12px;padding:10px 16px;background:rgba(240,185,66,0.07);border:1px solid rgba(240,185,66,0.22);border-radius:12px;font-size:0.78rem;color:var(--t2);text-align:center;line-height:1.7;"></div>
-
-            <div class="dt-result-panel" id="dtResultPanel">
-                <div class="dt-cards-row">
-                    <div class="dt-card-wrap">
-                        <div class="dt-card-label">🐲 龍</div>
-                        <div class="playing-card">
-                            <div class="c-rank" id="dtDragonRank">—</div>
-                            <div class="c-suit" id="dtDragonSuit"></div>
-                        </div>
+            <div class="g-noble-hint" id="dtNobleHint"></div>
+            <!-- 開牌結果 -->
+            <div style="display:none;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:16px;margin-bottom:14px;text-align:center;" id="dtResultPanel">
+                <div style="display:flex;justify-content:center;align-items:center;gap:20px;margin-bottom:10px;">
+                    <div style="text-align:center;">
+                        <div style="font-size:0.65rem;color:var(--t2);letter-spacing:1px;margin-bottom:6px;">🐲 龍</div>
+                        <div class="playing-card"><div class="c-rank" id="dtDragonRank">—</div><div class="c-suit" id="dtDragonSuit"></div></div>
                     </div>
-                    <div class="dt-vs">VS</div>
-                    <div class="dt-card-wrap">
-                        <div class="dt-card-label">🐯 虎</div>
-                        <div class="playing-card">
-                            <div class="c-rank" id="dtTigerRank">—</div>
-                            <div class="c-suit" id="dtTigerSuit"></div>
-                        </div>
+                    <div style="font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:800;color:var(--t3);">VS</div>
+                    <div style="text-align:center;">
+                        <div style="font-size:0.65rem;color:var(--t2);letter-spacing:1px;margin-bottom:6px;">🐯 虎</div>
+                        <div class="playing-card"><div class="c-rank" id="dtTigerRank">—</div><div class="c-suit" id="dtTigerSuit"></div></div>
                     </div>
                 </div>
-                <div class="dt-result-winner" id="dtWinner"></div>
-                <div class="dt-result-payout" id="dtPayout"></div>
+                <div style="font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:800;letter-spacing:2px;margin-bottom:4px;" id="dtWinner"></div>
+                <div style="font-size:0.82rem;color:var(--t2);" id="dtPayout"></div>
             </div>
-
-            <div class="dt-table">
-                <div class="dt-zone dt-zone-dragon" id="dtZoneDragon" onclick="placeBetDT('dragon')">
-                    <div class="dt-zone-icon">🐲</div>
-                    <div class="dt-zone-name">龍</div>
+            <!-- 下注區 -->
+            <div style="display:flex;gap:8px;margin-bottom:14px;">
+                <div class="dt-zone dt-zone-dragon" id="dtZoneDragon" onclick="dtPlaceBet('dragon')">
+                    <div class="dt-zone-icon">🐲</div><div class="dt-zone-name">龍</div>
                     <div class="dt-zone-mult">贏 × 2</div>
-                    <div class="dt-cpu-label">電腦下注</div>
-                    <div class="dt-cpu-total" id="dtCpuDragon">0</div>
+                    <div class="dt-cpu-label">電腦下注</div><div class="dt-cpu-total" id="dtCpuDragon">0</div>
                     <div class="dt-zone-divider"></div>
-                    <div class="dt-my-label">我的下注</div>
-                    <div class="dt-my-bet" id="dtMyDragon">0</div>
+                    <div class="dt-my-label">我的下注</div><div class="dt-my-bet" id="dtMyDragon">0</div>
                 </div>
-                <div class="dt-zone dt-zone-tie" id="dtZoneTie" onclick="placeBetDT('tie')">
-                    <div class="dt-zone-icon">⚖️</div>
-                    <div class="dt-zone-name">平局</div>
+                <div class="dt-zone dt-zone-tie" id="dtZoneTie" onclick="dtPlaceBet('tie')">
+                    <div class="dt-zone-icon">⚖️</div><div class="dt-zone-name">平局</div>
                     <div class="dt-zone-mult">贏 × 22</div>
-                    <div class="dt-cpu-label">電腦下注</div>
-                    <div class="dt-cpu-total" id="dtCpuTie">0</div>
+                    <div class="dt-cpu-label">電腦下注</div><div class="dt-cpu-total" id="dtCpuTie">0</div>
                     <div class="dt-zone-divider"></div>
-                    <div class="dt-my-label">我的下注</div>
-                    <div class="dt-my-bet" id="dtMyTie">0</div>
+                    <div class="dt-my-label">我的下注</div><div class="dt-my-bet" id="dtMyTie">0</div>
                 </div>
-                <div class="dt-zone dt-zone-tiger" id="dtZoneTiger" onclick="placeBetDT('tiger')">
-                    <div class="dt-zone-icon">🐯</div>
-                    <div class="dt-zone-name">虎</div>
+                <div class="dt-zone dt-zone-tiger" id="dtZoneTiger" onclick="dtPlaceBet('tiger')">
+                    <div class="dt-zone-icon">🐯</div><div class="dt-zone-name">虎</div>
                     <div class="dt-zone-mult">贏 × 2</div>
-                    <div class="dt-cpu-label">電腦下注</div>
-                    <div class="dt-cpu-total" id="dtCpuTiger">0</div>
+                    <div class="dt-cpu-label">電腦下注</div><div class="dt-cpu-total" id="dtCpuTiger">0</div>
                     <div class="dt-zone-divider"></div>
-                    <div class="dt-my-label">我的下注</div>
-                    <div class="dt-my-bet" id="dtMyTiger">0</div>
+                    <div class="dt-my-label">我的下注</div><div class="dt-my-bet" id="dtMyTiger">0</div>
                 </div>
             </div>
-
-            <div class="dt-timer">
-                <div class="dt-timer-top">
-                    <div class="dt-timer-label">下注倒數</div>
-                    <div class="dt-timer-num" id="dtTimerNum">15</div>
-                </div>
-                <div class="dt-timer-bg">
-                    <div class="dt-timer-bar" id="dtTimerBar" style="width:100%"></div>
-                </div>
+            <div class="g-timer">
+                <div class="g-timer-top"><div class="g-timer-label">下注倒數</div><div class="g-timer-num" id="dtTimerNum">15</div></div>
+                <div class="g-timer-bg"><div class="g-timer-bar" id="dtTimerBar" style="width:100%"></div></div>
             </div>
-
-            <div class="dt-chip-section">
-                <div class="dt-chip-row">
-                    <button class="dt-chip c10"  onclick="selectChipDT(10,  this)">10</button>
-                    <button class="dt-chip c50"  onclick="selectChipDT(50,  this)">50</button>
-                    <button class="dt-chip c100" onclick="selectChipDT(100, this)">100</button>
-                    <button class="dt-chip c1k"  onclick="selectChipDT(1000,this)">1K</button>
-                    <button class="dt-chip c10k" onclick="selectChipDT(10000,this)">10K</button>
-                </div>
+            <div class="g-chip-row">
+                <button class="g-chip c10"  onclick="dtSelectChip(10,  this)">10</button>
+                <button class="g-chip c50"  onclick="dtSelectChip(50,  this)">50</button>
+                <button class="g-chip c100" onclick="dtSelectChip(100, this)">100</button>
+                <button class="g-chip c1k"  onclick="dtSelectChip(1000,this)">1K</button>
+                <button class="g-chip c10k" onclick="dtSelectChip(10000,this)">10K</button>
             </div>
-
-            <div class="dt-status" id="dtStatus">先選籌碼再下注</div>
-
-            <div class="dt-action-row">
-                <button class="dt-btn-lb" onclick="openLb()">今日榜單</button>
-                <button class="dt-btn-deal" id="dtBtnDeal" onclick="dealDT()">開牌</button>
-                <button class="dt-btn-restart" onclick="restartDT()">重新開始</button>
+            <div class="g-status" id="dtStatus">先選籌碼，再下注</div>
+            <div class="g-action-row">
+                <button class="g-btn-lb" onclick="openLb('dt')">今日榜單</button>
+                <button class="g-btn-deal" id="dtBtnDeal" onclick="dtDeal()" style="background:linear-gradient(135deg,var(--dragon),#a83232);box-shadow:0 8px 25px rgba(232,85,85,0.3);">開牌</button>
+                <button class="g-btn-restart" onclick="dtRestart()">重新開始</button>
             </div>
-
-            <div class="dt-sep"></div>
-            <div class="dt-section-label">近 20 局結果</div>
-            <div class="dt-history-grid" id="dtHistory"></div>
-            <div class="dt-sep"></div>
-
-            <div class="dt-winrate-box">
-                <div class="dt-wr-main">
-                    <div class="dt-wr-label">今日勝率</div>
-                    <div class="dt-wr-num" id="dtWrNum" style="color:var(--brand-gold);">—</div>
-                </div>
-                <div class="dt-wr-advice" id="dtWrAdvice">尚未開始，手氣未知 🎲</div>
+            <div class="g-sep"></div>
+            <div class="g-section-label">近 20 局結果</div>
+            <div class="g-history-grid" id="dtHistory"></div>
+            <div class="g-sep"></div>
+            <div class="g-winrate-box">
+                <div class="g-wr-main"><div class="g-wr-label">今日勝率</div><div class="g-wr-num" id="dtWrNum" style="color:var(--brand-gold);">—</div></div>
+                <div class="g-wr-advice" id="dtWrAdvice">尚未開始，手氣未知 🎲</div>
             </div>
-
-            <div class="dt-subtitle">
-                娛樂用途盡可能與之相同<br>
-                參考手機要不要去過爐用
-            </div>
+            <div class="g-subtitle">娛樂用途盡可能與之相同<br>參考手機要不要去過爐用</div>
         </div>
     </div>
 
-    <!-- 榜單彈窗 -->
+    <!-- 玩．射龍門 -->
+    <div class="game-wrapper">
+        <button class="game-toggle slm-toggle" id="slmToggle" onclick="toggleSLM()">
+            <div class="slm-toggle-icon">🎯</div>
+            <div class="toggle-text">
+                <div class="slm-toggle-title">玩．射龍門</div>
+                <div class="toggle-sub">純屬娛樂，好玩就好</div>
+            </div>
+            <div class="toggle-arrow" id="slmArrow">▼</div>
+        </button>
+        <div class="game-content" id="slmContent">
+            <div class="g-meta">
+                <div class="g-no" id="slmNo">NO.—</div>
+                <div class="g-date" id="slmDate"></div>
+            </div>
+            <div class="g-setup">
+                <div class="g-setup-col">
+                    <div class="g-setup-label">玩家名稱</div>
+                    <input class="g-input" id="slmName" type="text" placeholder="User" maxlength="12" value="User">
+                </div>
+                <div class="g-setup-col">
+                    <div class="g-setup-label">🪐 自訂罐頭</div>
+                    <input class="g-input" id="slmChipsInput" type="text" placeholder="100,000" value="100,000">
+                </div>
+            </div>
+            <div class="g-chips-bar">
+                <div class="g-chips-left">
+                    <span style="font-size:1.1rem;">🪐</span>
+                    <span class="g-chips-num" id="slmChipsNum">100,000</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <span id="slmSession" style="font-size:0.75rem;color:var(--t3);">累計 <span style="color:var(--brand-pink);font-weight:700;">+0</span></span>
+                    <button class="g-upload-btn" onclick="slmUploadScore()">上榜</button>
+                </div>
+            </div>
+            <div class="g-noble-hint" id="slmNobleHint"></div>
+            <!-- 三張牌 -->
+            <div class="slm-cards-area">
+                <div class="slm-card-wrap">
+                    <div class="slm-card-label">第一張</div>
+                    <div class="playing-card" id="slmC1card"><div class="c-rank" id="slmC1rank">—</div><div class="c-suit" id="slmC1suit"></div></div>
+                </div>
+                <div style="font-size:1.6rem;color:var(--t3);padding:0 2px;">🚪</div>
+                <div class="slm-card-wrap">
+                    <div class="slm-card-label">第三張</div>
+                    <div class="playing-card" id="slmC3card" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid rgba(255,255,255,0.1);">
+                        <div class="c-rank" id="slmC3rank" style="color:rgba(255,255,255,0.3);font-size:1.8rem;">?</div>
+                        <div class="c-suit" id="slmC3suit"></div>
+                    </div>
+                </div>
+                <div style="font-size:1.6rem;color:var(--t3);padding:0 2px;">🚪</div>
+                <div class="slm-card-wrap">
+                    <div class="slm-card-label">第二張</div>
+                    <div class="playing-card" id="slmC2card"><div class="c-rank" id="slmC2rank">—</div><div class="c-suit" id="slmC2suit"></div></div>
+                </div>
+            </div>
+            <div class="slm-width-hint" id="slmWidthHint">等待開局...</div>
+            <!-- 結果 -->
+            <div class="slm-result" id="slmResult">
+                <div class="slm-result-text" id="slmResultText"></div>
+                <div class="slm-result-payout" id="slmResultPayout"></div>
+            </div>
+            <!-- 下注三區：沒中（左）射中（中）撞柱（右） -->
+            <div style="display:flex;gap:8px;margin-bottom:14px;">
+                <div class="slm-zone slm-zone-miss" id="slmZoneMiss" onclick="slmPlaceBet('miss')">
+                    <div class="slm-zone-icon">❌</div><div class="slm-zone-name">沒中</div>
+                    <div class="slm-zone-odds" id="slmOddsMiss">—</div>
+                    <div class="slm-cpu-label">電腦下注</div><div class="slm-cpu-total" id="slmCpuMiss">0</div>
+                    <div class="slm-zone-divider"></div>
+                    <div class="slm-my-label">我的下注</div><div class="slm-my-bet" id="slmMyMiss">0</div>
+                </div>
+                <div class="slm-zone slm-zone-hit" id="slmZoneHit" onclick="slmPlaceBet('hit')">
+                    <div class="slm-zone-icon">🎯</div><div class="slm-zone-name">射中</div>
+                    <div class="slm-zone-odds" id="slmOddsHit">—</div>
+                    <div class="slm-cpu-label">電腦下注</div><div class="slm-cpu-total" id="slmCpuHit">0</div>
+                    <div class="slm-zone-divider"></div>
+                    <div class="slm-my-label">我的下注</div><div class="slm-my-bet" id="slmMyHit">0</div>
+                </div>
+                <div class="slm-zone slm-zone-pole" id="slmZonePole" onclick="slmPlaceBet('pole')">
+                    <div class="slm-zone-icon">💥</div><div class="slm-zone-name">撞柱</div>
+                    <div class="slm-zone-odds" id="slmOddsPole">—</div>
+                    <div class="slm-cpu-label">電腦下注</div><div class="slm-cpu-total" id="slmCpuPole">0</div>
+                    <div class="slm-zone-divider"></div>
+                    <div class="slm-my-label">我的下注</div><div class="slm-my-bet" id="slmMyPole">0</div>
+                </div>
+            </div>
+            <div class="g-timer">
+                <div class="g-timer-top"><div class="g-timer-label">下注倒數</div><div class="g-timer-num" id="slmTimerNum">15</div></div>
+                <div class="g-timer-bg"><div class="g-timer-bar" id="slmTimerBar" style="width:100%;background:linear-gradient(90deg,#7c3aed,#a855f7)"></div></div>
+            </div>
+            <div class="g-chip-row">
+                <button class="g-chip c10"  onclick="slmSelectChip(10,  this)">10</button>
+                <button class="g-chip c50"  onclick="slmSelectChip(50,  this)">50</button>
+                <button class="g-chip c100" onclick="slmSelectChip(100, this)">100</button>
+                <button class="g-chip c1k"  onclick="slmSelectChip(1000,this)">1K</button>
+                <button class="g-chip c10k" onclick="slmSelectChip(10000,this)">10K</button>
+            </div>
+            <div class="g-status" id="slmStatus">先選籌碼，再下注</div>
+            <div class="g-action-row">
+                <button class="g-btn-lb" onclick="openLb('slm')">今日榜單</button>
+                <button class="g-btn-deal" id="slmBtnDeal" onclick="slmDeal()" style="background:linear-gradient(135deg,#7c3aed,#a855f7);box-shadow:0 8px 25px rgba(124,58,237,0.35);">開牌</button>
+                <button class="g-btn-restart" onclick="slmRestart()">重新開始</button>
+            </div>
+            <div class="g-sep"></div>
+            <div class="g-section-label">近 20 局結果</div>
+            <div class="g-history-grid" id="slmHistory"></div>
+            <div class="g-sep"></div>
+            <div class="g-winrate-box">
+                <div class="g-wr-main"><div class="g-wr-label">今日勝率</div><div class="g-wr-num" id="slmWrNum" style="color:var(--brand-gold);">—</div></div>
+                <div class="g-wr-advice" id="slmWrAdvice">尚未開始，手氣未知 🎲</div>
+            </div>
+            <div class="g-subtitle">娛樂用途盡可能與之相同<br>參考手機要不要去過爐用</div>
+        </div>
+    </div>
+
+    <!-- 榜單彈窗（共用） -->
     <div class="dt-modal-overlay" id="dtModalOverlay" onclick="closeLbOutside(event)">
         <div class="dt-modal">
             <div class="dt-modal-header">
-                <div class="dt-modal-title">🏆 今日贏家榜</div>
+                <div class="dt-modal-title" id="lbModalTitle">🏆 今日贏家榜</div>
                 <button class="dt-modal-close" onclick="closeLb()">✕</button>
             </div>
             <div class="dt-modal-body" id="dtModalBody"></div>
@@ -944,7 +681,7 @@
     </div>
 
     <script>
-    /* ── GN000 邏輯 ── */
+    /* ══ GN000 邏輯 ══ */
     const root = document.documentElement;
     const rankGradients = {
         0:['#555','#888'],1:['#2c3e50','#bdc3c7'],2:['#1a4d2e','#2ecc71'],
@@ -966,37 +703,12 @@
         el.classList.add('active');
         if(document.getElementById('resBoard').style.display==='block') doCalc();
     }
-    function getCurrentRankInfo(val){
-        for(let i=0;i<ranks.length;i++){if(val>=ranks[i].val)return ranks[i];}
-        return{name:"V0",val:0,code:0};
-    }
-    function setRankColors(code,prefix){
-        const c=rankGradients[code]||rankGradients[0];
-        root.style.setProperty(`--${prefix}-rank-start`,c[0]);
-        root.style.setProperty(`--${prefix}-rank-end`,c[1]);
-    }
-    function updateRank(){
-        const val=parseFloat(document.getElementById('currZan').value)||0;
-        const r=getCurrentRankInfo(val);
-        document.getElementById('rankDisplay').innerText='目前爵位：'+r.name;
-        setRankColors(r.code,'current');
-    }
-    function updateTargetColor(){
-        const sel=document.getElementById('targetRank');
-        const code=parseInt(sel.options[sel.selectedIndex].getAttribute('data-rank'));
-        setRankColors(code,'target');
-        const c=rankGradients[code]||rankGradients[7];
-        const btn=document.getElementById('btnMain');
-        btn.style.background=`linear-gradient(135deg,${c[0]},${c[1]})`;
-        btn.style.boxShadow=`0 8px 25px ${c[1]}55`;
-    }
-    function adjustMoneyFontSize(text){
-        const el=document.getElementById('outCash'),len=text.length;
-        if(len<=7)el.style.fontSize='3rem';
-        else if(len<=9)el.style.fontSize='2.4rem';
-        else if(len<=11)el.style.fontSize='1.9rem';
-        else el.style.fontSize='1.5rem';
-    }
+    function getCurrentRankInfo(val){for(let i=0;i<ranks.length;i++){if(val>=ranks[i].val)return ranks[i];}return{name:"V0",val:0,code:0};}
+    function setRankColors(code,prefix){const c=rankGradients[code]||rankGradients[0];root.style.setProperty(`--${prefix}-rank-start`,c[0]);root.style.setProperty(`--${prefix}-rank-end`,c[1]);}
+    function updateRank(){const val=parseFloat(document.getElementById('currZan').value)||0;const r=getCurrentRankInfo(val);document.getElementById('rankDisplay').innerText='目前爵位：'+r.name;setRankColors(r.code,'current');}
+    function updateTargetColor(){const sel=document.getElementById('targetRank');const code=parseInt(sel.options[sel.selectedIndex].getAttribute('data-rank'));setRankColors(code,'target');const c=rankGradients[code]||rankGradients[7];const btn=document.getElementById('btnMain');btn.style.background=`linear-gradient(135deg,${c[0]},${c[1]})`;btn.style.boxShadow=`0 8px 25px ${c[1]}55`;}
+    function adjustMoneyFontSize(text){const el=document.getElementById('outCash'),len=text.length;if(len<=7)el.style.fontSize='3rem';else if(len<=9)el.style.fontSize='2.4rem';else if(len<=11)el.style.fontSize='1.9rem';else el.style.fontSize='1.5rem';}
+    let nobleDiff=null; // 共用：總需罐頭
     function doCalc(){
         const curr=parseFloat(document.getElementById('currZan').value)||0;
         const target=parseFloat(document.getElementById('targetRank').value);
@@ -1020,331 +732,296 @@
         document.getElementById('outGiftText').innerHTML=giftHTML;
         updateTargetColor();
         document.getElementById('resBoard').style.display='block';
-        dtNobleDiff = totalCan > 0 ? totalCan : null;
-    }
-
-    /* ── 龍虎鬥邏輯 ── */
-    const SUITS=['♠','♥','♦','♣'],SUIT_RED=['♥','♦'];
-    const RANKS_ARR=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
-    const RANK_VAL={A:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,J:11,Q:12,K:13};
-    const MAX_HIST=20;
-    const LB_KEY=()=>'gn_dt_lb_'+new Date().toLocaleDateString('zh-TW');
-    const MAX_LB=30;
-
-    let dtChips=100000,dtStartChips=100000,dtSession=0;
-    let dtMyBets={dragon:0,tie:0,tiger:0};
-    let dtSelectedChip=null;
-    let dtTimer=15,dtTimerInt=null,dtDealing=false;
-    let dtHistory=[],dtWins=0,dtBetRounds=0;
-    let dtNo=0;
-    let dtNobleDiff=null,dtOpen=false;
-    let dtUserCount=1;
-
-    function genNo(){
-        // 基底 3271831，加上隨機偏移讓每次不同
-        return 3271831+Math.floor(Math.random()*500)+dtUserCount;
+        nobleDiff = totalCan > 0 ? totalCan : null;
     }
 
     function initAll(){
-        updateRank();
-        updateTargetColor();
-        document.getElementById('dtDate').textContent=
-            new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'});
-        dtNo=genNo();
-        dtUpdateNo();
-        dtRenderHistory();
-        dtGenCpu();
-        dtUpdateChips();
+        updateRank(); updateTargetColor();
+        const today=new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'});
+        document.getElementById('dtDate').textContent=today;
+        document.getElementById('slmDate').textContent=today;
+        dtNo=dtGenNo(); dtUpdateNo(); dtRenderHistory(); dtGenCpu(); dtUpdateChips();
         document.getElementById('dtChipsInput').addEventListener('change',dtApplyChips);
+        document.getElementById('slmChipsInput').addEventListener('change',slmApplyChips);
     }
 
-    function toggleDT(){
-        dtOpen=!dtOpen;
-        const content=document.getElementById('dtContent');
-        const toggle=document.getElementById('dtToggle');
-        const arrow=document.getElementById('dtArrow');
-        if(dtOpen){
-            content.style.display='block';
-            toggle.classList.add('opened');
-            arrow.classList.add('open');
-            if(!dtTimerInt) dtStartTimer();
-        }else{
-            content.style.display='none';
-            toggle.classList.remove('opened');
-            arrow.classList.remove('open');
-            clearInterval(dtTimerInt);
-            dtTimerInt=null;
-        }
-    }
-
-    function dtApplyChips(){
-        const raw=document.getElementById('dtChipsInput').value.replace(/,/g,'');
-        let val=Math.min(100000000,Math.max(10,parseInt(raw)||100000));
-        dtChips=val;dtStartChips=val;dtSession=0;
-        document.getElementById('dtChipsInput').value=val.toLocaleString();
-        dtUpdateChips();
-    }
-
-    function dtUpdateNo(){
-        document.getElementById('dtNo').textContent='NO.'+dtNo;
-    }
-
-    function dtUpdateChips(){
-        document.getElementById('dtChipsNum').textContent=dtChips.toLocaleString();
-        const sign=dtSession>=0?'+':'';
-        const color=dtSession>=0?'var(--brand-pink)':'var(--dragon)';
-        document.getElementById('dtSession').innerHTML=
-            `累計 <span style="color:${color};font-weight:700;">${sign}${dtSession.toLocaleString()}</span>`;
-        // 貴族升級連動（需先用貴族計算器，且累計為正數才顯示）
-        const hint=document.getElementById('dtNobleHint');
-        if(dtNobleDiff && dtNobleDiff > 0 && dtSession > 0){
-            if(dtSession >= dtNobleDiff){
+    /* ══ 共用 Noble Hint ══ */
+    function updateNobleHint(hintId, session){
+        const hint=document.getElementById(hintId);
+        if(nobleDiff && nobleDiff>0 && session>0){
+            if(session>=nobleDiff){
                 hint.style.display='block';
-                hint.innerHTML=`🎉 累計已贏 <b style="color:var(--brand-gold)">${dtSession.toLocaleString()}</b> 🪐，已超過所需 <b style="color:var(--brand-gold)">${dtNobleDiff.toLocaleString()}</b> 罐頭，可完成貴族爵位升級！`;
-            } else {
-                hint.style.display='block';
-                hint.innerHTML=`💪 累計 <b style="color:var(--brand-pink)">${dtSession.toLocaleString()}</b> 🪐，再贏 <b style="color:var(--brand-gold)">${(dtNobleDiff - dtSession).toLocaleString()}</b> 罐頭就能達標升級！`;
-            }
-        } else {
-            hint.style.display='none';
-        }
-    }
-
-    function dtGenCpu(){
-        const pool=(Math.floor(Math.random()*1500)+500)*10;
-        const dr=0.35+Math.random()*0.4,ti=0.35+Math.random()*0.4,te=0.02+Math.random()*0.08;
-        const tot=dr+ti+te;
-        document.getElementById('dtCpuDragon').textContent=(Math.round(pool*dr/tot/10)*10).toLocaleString();
-        document.getElementById('dtCpuTie').textContent   =(Math.round(pool*te/tot/10)*10).toLocaleString();
-        document.getElementById('dtCpuTiger').textContent =(Math.round(pool*ti/tot/10)*10).toLocaleString();
-    }
-
-    function selectChipDT(val,el){
-        dtSelectedChip=val;
-        document.querySelectorAll('.dt-chip').forEach(c=>c.classList.remove('chip-selected'));
-        el.classList.add('chip-selected');
-        document.getElementById('dtStatus').textContent=`已選 ${val>=1000?val/1000+'K':val} 籌碼，點下注區下注`;
-    }
-
-    function placeBetDT(zone){
-        if(dtDealing)return;
-        if(!dtSelectedChip){document.getElementById('dtStatus').textContent='⚠️ 請先選擇籌碼！';return;}
-        if(dtChips<=0){document.getElementById('dtStatus').textContent='❌ 🪐不足！';return;}
-        const actual=Math.min(dtSelectedChip,dtChips);
-        dtMyBets[zone]+=actual;
-        dtChips-=actual;
-        dtUpdateChips();
-        dtUpdateBets();
-    }
-
-    function dtUpdateBets(){
-        ['dragon','tie','tiger'].forEach(z=>{
-            const id='dtMy'+z.charAt(0).toUpperCase()+z.slice(1);
-            document.getElementById(id).textContent=dtMyBets[z]>0?dtMyBets[z].toLocaleString():'0';
-            const zEl=document.getElementById('dtZone'+z.charAt(0).toUpperCase()+z.slice(1));
-            zEl.classList.toggle('has-bet',dtMyBets[z]>0);
-        });
-    }
-
-    function dtStartTimer(){
-        clearInterval(dtTimerInt);
-        dtTimer=15;
-        dtUpdateTimerUI();
-        dtTimerInt=setInterval(()=>{
-            dtTimer--;
-            dtUpdateTimerUI();
-            if(dtTimer<=0){clearInterval(dtTimerInt);dtTimerInt=null;if(!dtDealing)dealDT();}
-        },1000);
-    }
-
-    function dtUpdateTimerUI(){
-        const el=document.getElementById('dtTimerNum');
-        el.textContent=dtTimer;
-        el.classList.toggle('urgent',dtTimer<=5);
-        document.getElementById('dtTimerBar').style.width=(dtTimer/15*100)+'%';
-        const bar=document.getElementById('dtTimerBar');
-        if(dtTimer<=3)bar.style.background='var(--dragon)';
-        else if(dtTimer<=7)bar.style.background='linear-gradient(90deg,var(--dragon),var(--brand-gold))';
-        else bar.style.background='linear-gradient(90deg,var(--brand-pink),var(--brand-gold))';
-    }
-
-    function drawCardDT(){
-        return{suit:SUITS[Math.floor(Math.random()*4)],rank:RANKS_ARR[Math.floor(Math.random()*13)]};
-    }
-
-    function dealDT(){
-        if(dtDealing)return;
-        clearInterval(dtTimerInt);dtTimerInt=null;
-        dtDealing=true;
-        document.getElementById('dtBtnDeal').disabled=true;
-
-        const dc=drawCardDT(),tc=drawCardDT();
-        const dv=RANK_VAL[dc.rank],tv=RANK_VAL[tc.rank];
-        let winner=dv>tv?'dragon':tv>dv?'tiger':'tie';
-
-        const drRed=SUIT_RED.includes(dc.suit),tiRed=SUIT_RED.includes(tc.suit);
-        document.getElementById('dtDragonRank').textContent=dc.rank;
-        document.getElementById('dtDragonRank').className='c-rank '+(drRed?'red':'black');
-        document.getElementById('dtDragonSuit').textContent=dc.suit;
-        document.getElementById('dtDragonSuit').className='c-suit '+(drRed?'red':'black');
-        document.getElementById('dtTigerRank').textContent=tc.rank;
-        document.getElementById('dtTigerRank').className='c-rank '+(tiRed?'red':'black');
-        document.getElementById('dtTigerSuit').textContent=tc.suit;
-        document.getElementById('dtTigerSuit').className='c-suit '+(tiRed?'red':'black');
-
-        const wText=winner==='dragon'?'🐲 龍贏！':winner==='tiger'?'🐯 虎贏！':'⚖️ 平局！';
-        const wColor=winner==='dragon'?'var(--dragon)':winner==='tiger'?'var(--tiger)':'var(--tie)';
-        document.getElementById('dtWinner').textContent=wText;
-        document.getElementById('dtWinner').style.color=wColor;
-
-        const totalBet=dtMyBets.dragon+dtMyBets.tie+dtMyBets.tiger;
-        let payout=0;
-        if(winner==='dragon'&&dtMyBets.dragon>0)payout=dtMyBets.dragon*2;
-        if(winner==='tiger' &&dtMyBets.tiger>0) payout=dtMyBets.tiger*2;
-        if(winner==='tie'   &&dtMyBets.tie>0)   payout=dtMyBets.tie*22;
-        dtChips+=payout;
-        dtSession+=payout-totalBet;
-
-        if(totalBet>0){
-            dtBetRounds++;
-            if(payout>0)dtWins++;
-            document.getElementById('dtPayout').innerHTML=
-                payout>0?`獲得 <span>${payout.toLocaleString()}</span> 🪐 🎉`
-                        :`損失 <span style="color:var(--dragon)">${totalBet.toLocaleString()}</span> 🪐`;
-        }else{
-            document.getElementById('dtPayout').textContent='本局未下注';
-        }
-
-        document.getElementById('dtResultPanel').style.display='block';
-
-        // 各別閃爍效果
-        const zEl=document.getElementById('dtZone'+winner.charAt(0).toUpperCase()+winner.slice(1));
-        const flashClass=winner==='dragon'?'winner-dragon':winner==='tiger'?'winner-tiger':'winner-tie';
-        zEl.classList.add(flashClass);
-        setTimeout(()=>zEl.classList.remove(flashClass),1800);
-
-        dtHistory.unshift(winner);
-        if(dtHistory.length>MAX_HIST)dtHistory.pop();
-        dtRenderHistory();
-        dtUpdateWinRate();
-        dtUpdateChips();
-
-        dtMyBets={dragon:0,tie:0,tiger:0};
-        dtUpdateBets();
-        dtNo++;
-        dtUpdateNo();
-
-        setTimeout(()=>{
-            dtDealing=false;
-            document.getElementById('dtBtnDeal').disabled=false;
-            document.getElementById('dtStatus').textContent='先選籌碼，再下注';
-            dtGenCpu();
-            dtStartTimer();
-        },2800);
-    }
-
-    function dtRenderHistory(){
-        const grid=document.getElementById('dtHistory');
-        grid.innerHTML='';
-        for(let i=0;i<MAX_HIST;i++){
-            const dot=document.createElement('div');
-            if(i<dtHistory.length){
-                const h=dtHistory[i];
-                dot.className='dt-dot '+(h==='dragon'?'d':h==='tiger'?'t':'e');
-                dot.textContent=h==='dragon'?'龍':h==='tiger'?'虎':'平';
+                hint.innerHTML=`🎉 累計已贏 <b style="color:var(--brand-gold)">${session.toLocaleString()}</b> 🪐，已超過所需 <b style="color:var(--brand-gold)">${nobleDiff.toLocaleString()}</b> 罐頭，可完成貴族爵位升級！`;
             }else{
-                dot.className='dt-dot x';
+                hint.style.display='block';
+                hint.innerHTML=`💪 累計 <b style="color:var(--brand-pink)">${session.toLocaleString()}</b> 🪐，再贏 <b style="color:var(--brand-gold)">${(nobleDiff-session).toLocaleString()}</b> 罐頭就能達標升級！`;
             }
-            grid.appendChild(dot);
-        }
+        }else{hint.style.display='none';}
     }
 
-    function dtUpdateWinRate(){
-        const el=document.getElementById('dtWrNum'),adv=document.getElementById('dtWrAdvice');
-        if(dtBetRounds===0){el.textContent='—';return;}
-        const rate=Math.round(dtWins/dtBetRounds*100);
-        el.textContent=rate+'%';
-        if(rate>=70){el.style.color='var(--brand-gold)';adv.textContent=`今天手氣超旺！贏了 ${dtWins} 局，衝！🔥`;}
-        else if(rate>=50){el.style.color='#10b981';adv.textContent='手氣不錯，保持冷靜繼續 💪';}
-        else if(rate>=30){el.style.color='var(--brand-pink)';adv.textContent='手氣普通，小賭怡情就好 😅';}
-        else if(rate>=15){el.style.color='var(--dragon)';adv.textContent='今天手氣不太行，先緩緩 😬';}
-        else{el.style.color='var(--dragon)';adv.textContent=`手氣極差 ${rate}%，你今天還是不要玩好了！🙃`;}
-    }
-
-    function restartDT(){
-        clearInterval(dtTimerInt);dtTimerInt=null;
-        dtDealing=false;
-        const raw=document.getElementById('dtChipsInput').value.replace(/,/g,'');
-        dtChips=Math.min(100000000,Math.max(10,parseInt(raw)||100000));
-        dtStartChips=dtChips;dtSession=0;
-        dtMyBets={dragon:0,tie:0,tiger:0};
-        dtWins=0;dtBetRounds=0;dtHistory=[];
-        dtSelectedChip=null;
-        dtNo=genNo();
-        document.querySelectorAll('.dt-chip').forEach(c=>c.classList.remove('chip-selected'));
-        document.getElementById('dtResultPanel').style.display='none';
-        document.getElementById('dtWrNum').textContent='—';
-        document.getElementById('dtWrAdvice').textContent='尚未開始，手氣未知 🎲';
-        dtUpdateChips();dtUpdateBets();dtRenderHistory();dtGenCpu();dtUpdateNo();
-        document.getElementById('dtStatus').textContent='先選籌碼，再下注';
-        dtStartTimer();
-    }
-
-    /* ── 榜單 ── */
-    function getLb(){
-        try{return JSON.parse(localStorage.getItem(LB_KEY()))||[];}catch(e){return[];}
-    }
-    function saveLb(lb){
-        try{localStorage.setItem(LB_KEY(),JSON.stringify(lb));}catch(e){}
-    }
-
-    function uploadScore(){
-        let name=document.getElementById('dtName').value.trim();
-        if(!name){
-            dtUserCount++;
-            name='User'+dtUserCount;
-            document.getElementById('dtName').value=name;
-        }
-        const rate=dtBetRounds>0?Math.round(dtWins/dtBetRounds*100):0;
-        const entry={name,session:dtSession,rate,time:Date.now()};
-        const lb=getLb();
-        lb.push(entry);
+    /* ══ 共用榜單 ══ */
+    const LB_KEY=(game)=>`gn_${game}_lb_${new Date().toLocaleDateString('zh-TW')}`;
+    const MAX_LB=30;
+    function getLb(game){try{return JSON.parse(localStorage.getItem(LB_KEY(game)))||[];}catch(e){return[];}}
+    function saveLb(game,lb){try{localStorage.setItem(LB_KEY(game),JSON.stringify(lb));}catch(e){}}
+    function uploadScore(game,name,session,wins,betRounds){
+        const rate=betRounds>0?Math.round(wins/betRounds*100):0;
+        const lb=getLb(game);
+        lb.push({name,session,rate,time:Date.now()});
         lb.sort((a,b)=>b.session-a.session);
-        saveLb(lb.slice(0,MAX_LB));
-        openLb();
+        saveLb(game,lb.slice(0,MAX_LB));
     }
-
-    function openLb(){
-        const lb=getLb();
+    function openLb(game){
+        const lb=getLb(game);
+        document.getElementById('lbModalTitle').textContent=game==='dt'?'🏆 龍虎鬥 今日榜':'🏆 射龍門 今日榜';
         const body=document.getElementById('dtModalBody');
-        if(lb.length===0){
-            body.innerHTML='<div class="lb-empty">今天還沒有人上榜！</div>';
-        }else{
+        if(lb.length===0){body.innerHTML='<div class="lb-empty">今天還沒有人上榜！</div>';}
+        else{
             body.innerHTML=lb.slice(0,MAX_LB).map((item,i)=>{
-                const rankClass=i===0?'gold':i===1?'silver':i===2?'bronze':'';
-                const rankText=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
+                const rc=i===0?'gold':i===1?'silver':i===2?'bronze':'';
+                const rt=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
                 const sign=item.session>=0?'+':'';
                 const color=item.session>=0?'var(--brand-gold)':'var(--dragon)';
-                return `<div class="lb-item">
-                    <div class="lb-rank ${rankClass}">${rankText}</div>
-                    <div class="lb-name">${item.name}</div>
-                    <div class="lb-stats">
-                        <div class="lb-score" style="color:${color};">${sign}${item.session.toLocaleString()} 🪐</div>
-                        <div class="lb-wr">勝率 ${item.rate}%</div>
-                    </div>
-                </div>`;
+                return `<div class="lb-item"><div class="lb-rank ${rc}">${rt}</div><div class="lb-name">${item.name}</div><div class="lb-stats"><div class="lb-score" style="color:${color};">${sign}${item.session.toLocaleString()} 🪐</div><div class="lb-wr">勝率 ${item.rate}%</div></div></div>`;
             }).join('');
         }
         document.getElementById('dtModalOverlay').classList.add('show');
     }
+    function closeLb(){document.getElementById('dtModalOverlay').classList.remove('show');}
+    function closeLbOutside(e){if(e.target===document.getElementById('dtModalOverlay'))closeLb();}
 
-    function closeLb(){
-        document.getElementById('dtModalOverlay').classList.remove('show');
+    /* ══════════════════════════════
+       龍虎鬥
+    ══════════════════════════════ */
+    const DT_SUITS=['♠','♥','♦','♣'],DT_RED=['♥','♦'];
+    const DT_RANKS=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+    const DT_VAL={A:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,J:11,Q:12,K:13};
+
+    let dtChips=100000,dtStartChips=100000,dtSession=0;
+    let dtMyBets={dragon:0,tie:0,tiger:0},dtSelectedChip=null;
+    let dtTimer=15,dtTimerInt=null,dtDealing=false;
+    let dtHistory=[],dtWins=0,dtBetRounds=0,dtNo=0,dtOpen=false;
+
+    function dtGenNo(){return 3271831+Math.floor(Math.random()*500);}
+    function toggleDT(){
+        dtOpen=!dtOpen;
+        const content=document.getElementById('dtContent'),toggle=document.getElementById('dtToggle'),arrow=document.getElementById('dtArrow');
+        if(dtOpen){content.style.display='block';toggle.classList.add('opened');arrow.classList.add('open');if(!dtTimerInt)dtStartTimer();}
+        else{content.style.display='none';toggle.classList.remove('opened');arrow.classList.remove('open');clearInterval(dtTimerInt);dtTimerInt=null;}
+    }
+    function dtApplyChips(){const raw=document.getElementById('dtChipsInput').value.replace(/,/g,'');let val=Math.min(100000000,Math.max(10,parseInt(raw)||100000));dtChips=val;dtStartChips=val;dtSession=0;document.getElementById('dtChipsInput').value=val.toLocaleString();dtUpdateChips();}
+    function dtUpdateNo(){document.getElementById('dtNo').textContent='NO.'+dtNo;}
+    function dtUpdateChips(){
+        document.getElementById('dtChipsNum').textContent=dtChips.toLocaleString();
+        const sign=dtSession>=0?'+':'',color=dtSession>=0?'var(--brand-pink)':'var(--dragon)';
+        document.getElementById('dtSession').innerHTML=`累計 <span style="color:${color};font-weight:700;">${sign}${dtSession.toLocaleString()}</span>`;
+        updateNobleHint('dtNobleHint',dtSession);
+    }
+    function dtGenCpu(){const pool=(Math.floor(Math.random()*1500)+500)*10,dr=0.35+Math.random()*0.4,ti=0.35+Math.random()*0.4,te=0.02+Math.random()*0.08,tot=dr+ti+te;document.getElementById('dtCpuDragon').textContent=(Math.round(pool*dr/tot/10)*10).toLocaleString();document.getElementById('dtCpuTie').textContent=(Math.round(pool*te/tot/10)*10).toLocaleString();document.getElementById('dtCpuTiger').textContent=(Math.round(pool*ti/tot/10)*10).toLocaleString();}
+    function dtSelectChip(val,el){dtSelectedChip=val;document.querySelectorAll('#dtContent .g-chip').forEach(c=>c.classList.remove('chip-selected'));el.classList.add('chip-selected');document.getElementById('dtStatus').textContent=`已選 ${val>=1000?val/1000+'K':val} 籌碼，點下注區`;}
+    function dtPlaceBet(zone){
+        if(dtDealing)return;
+        if(!dtSelectedChip){document.getElementById('dtStatus').textContent='⚠️ 請先選擇籌碼！';return;}
+        if(dtChips<=0){document.getElementById('dtStatus').textContent='❌ 🪐不足！';return;}
+        const actual=Math.min(dtSelectedChip,dtChips);dtMyBets[zone]+=actual;dtChips-=actual;dtUpdateChips();dtUpdateBets();
+    }
+    function dtUpdateBets(){['dragon','tie','tiger'].forEach(z=>{document.getElementById('dtMy'+z.charAt(0).toUpperCase()+z.slice(1)).textContent=dtMyBets[z]>0?dtMyBets[z].toLocaleString():'0';document.getElementById('dtZone'+z.charAt(0).toUpperCase()+z.slice(1)).classList.toggle('has-bet',dtMyBets[z]>0);});}
+    function dtStartTimer(){clearInterval(dtTimerInt);dtTimer=15;dtUpdateTimerUI();dtTimerInt=setInterval(()=>{dtTimer--;dtUpdateTimerUI();if(dtTimer<=0){clearInterval(dtTimerInt);dtTimerInt=null;if(!dtDealing)dtDeal();}},1000);}
+    function dtUpdateTimerUI(){const el=document.getElementById('dtTimerNum');el.textContent=dtTimer;el.classList.toggle('urgent',dtTimer<=5);document.getElementById('dtTimerBar').style.width=(dtTimer/15*100)+'%';const bar=document.getElementById('dtTimerBar');if(dtTimer<=3)bar.style.background='var(--dragon)';else if(dtTimer<=7)bar.style.background='linear-gradient(90deg,var(--dragon),var(--brand-gold))';else bar.style.background='linear-gradient(90deg,var(--brand-pink),var(--brand-gold))';}
+    function dtDrawCard(){return{suit:DT_SUITS[Math.floor(Math.random()*4)],rank:DT_RANKS[Math.floor(Math.random()*13)]};}
+    function dtDeal(){
+        if(dtDealing)return;clearInterval(dtTimerInt);dtTimerInt=null;dtDealing=true;document.getElementById('dtBtnDeal').disabled=true;
+        const dc=dtDrawCard(),tc=dtDrawCard(),dv=DT_VAL[dc.rank],tv=DT_VAL[tc.rank];
+        let winner=dv>tv?'dragon':tv>dv?'tiger':'tie';
+        const drRed=DT_RED.includes(dc.suit),tiRed=DT_RED.includes(tc.suit);
+        document.getElementById('dtDragonRank').textContent=dc.rank;document.getElementById('dtDragonRank').className='c-rank '+(drRed?'red':'black');
+        document.getElementById('dtDragonSuit').textContent=dc.suit;document.getElementById('dtDragonSuit').className='c-suit '+(drRed?'red':'black');
+        document.getElementById('dtTigerRank').textContent=tc.rank;document.getElementById('dtTigerRank').className='c-rank '+(tiRed?'red':'black');
+        document.getElementById('dtTigerSuit').textContent=tc.suit;document.getElementById('dtTigerSuit').className='c-suit '+(tiRed?'red':'black');
+        const wText=winner==='dragon'?'🐲 龍贏！':winner==='tiger'?'🐯 虎贏！':'⚖️ 平局！';
+        const wColor=winner==='dragon'?'var(--dragon)':winner==='tiger'?'var(--tiger)':'var(--tie)';
+        document.getElementById('dtWinner').textContent=wText;document.getElementById('dtWinner').style.color=wColor;
+        const totalBet=dtMyBets.dragon+dtMyBets.tie+dtMyBets.tiger;let payout=0;
+        if(winner==='dragon'&&dtMyBets.dragon>0)payout=dtMyBets.dragon*2;
+        if(winner==='tiger' &&dtMyBets.tiger>0) payout=dtMyBets.tiger*2;
+        if(winner==='tie'   &&dtMyBets.tie>0)   payout=dtMyBets.tie*22;
+        dtChips+=payout;dtSession+=payout-totalBet;
+        if(totalBet>0){dtBetRounds++;if(payout>0)dtWins++;document.getElementById('dtPayout').innerHTML=payout>0?`獲得 <span style="color:var(--brand-gold)">${payout.toLocaleString()}</span> 🪐 🎉`:`損失 <span style="color:var(--dragon)">${totalBet.toLocaleString()}</span> 🪐`;}
+        else{document.getElementById('dtPayout').textContent='本局未下注';}
+        document.getElementById('dtResultPanel').style.display='block';
+        const zEl=document.getElementById('dtZone'+winner.charAt(0).toUpperCase()+winner.slice(1));
+        const fc=winner==='dragon'?'winner-dragon':winner==='tiger'?'winner-tiger':'winner-tie';
+        zEl.classList.add(fc);setTimeout(()=>zEl.classList.remove(fc),2800);
+        dtHistory.unshift(winner);if(dtHistory.length>20)dtHistory.pop();
+        dtRenderHistory();dtUpdateWinRate();dtUpdateChips();
+        dtMyBets={dragon:0,tie:0,tiger:0};dtUpdateBets();dtNo++;dtUpdateNo();
+        setTimeout(()=>{dtDealing=false;document.getElementById('dtBtnDeal').disabled=false;document.getElementById('dtStatus').textContent='先選籌碼，再下注';dtGenCpu();dtStartTimer();},2800);
+    }
+    function dtRenderHistory(){const grid=document.getElementById('dtHistory');grid.innerHTML='';for(let i=0;i<20;i++){const dot=document.createElement('div');if(i<dtHistory.length){const h=dtHistory[i];dot.className='g-dot '+(h==='dragon'?'d':h==='tiger'?'t':'e');dot.textContent=h==='dragon'?'龍':h==='tiger'?'虎':'平';}else{dot.className='g-dot x';}grid.appendChild(dot);}}
+    function dtUpdateWinRate(){const el=document.getElementById('dtWrNum'),adv=document.getElementById('dtWrAdvice');if(dtBetRounds===0){el.textContent='—';return;}const rate=Math.round(dtWins/dtBetRounds*100);el.textContent=rate+'%';if(rate>=70){el.style.color='var(--brand-gold)';adv.textContent=`手氣超旺！贏了 ${dtWins} 局 🔥`;}else if(rate>=50){el.style.color='#10b981';adv.textContent='不錯，繼續 💪';}else if(rate>=30){el.style.color='var(--brand-pink)';adv.textContent='普普，小賭怡情 😅';}else{el.style.color='var(--dragon)';adv.textContent=`手氣極差 ${rate}%，今天先算了 🙃`;}}
+    function dtUploadScore(){let name=document.getElementById('dtName').value.trim()||'User';uploadScore('dt',name,dtSession,dtWins,dtBetRounds);openLb('dt');}
+    function dtRestart(){clearInterval(dtTimerInt);dtTimerInt=null;dtDealing=false;const raw=document.getElementById('dtChipsInput').value.replace(/,/g,'');dtChips=Math.min(100000000,Math.max(10,parseInt(raw)||100000));dtStartChips=dtChips;dtSession=0;dtMyBets={dragon:0,tie:0,tiger:0};dtWins=0;dtBetRounds=0;dtHistory=[];dtSelectedChip=null;dtNo=dtGenNo();document.querySelectorAll('#dtContent .g-chip').forEach(c=>c.classList.remove('chip-selected'));document.getElementById('dtResultPanel').style.display='none';document.getElementById('dtWrNum').textContent='—';document.getElementById('dtWrAdvice').textContent='尚未開始，手氣未知 🎲';dtUpdateChips();dtUpdateBets();dtRenderHistory();dtGenCpu();dtUpdateNo();document.getElementById('dtStatus').textContent='先選籌碼，再下注';dtStartTimer();}
+
+    /* ══════════════════════════════
+       射龍門
+    ══════════════════════════════ */
+    const SLM_SUITS=['♠','♥','♦','♣'],SLM_RED=['♥','♦'];
+    const SLM_RANKS=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+    const SLM_VAL={A:1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'10':10,J:11,Q:12,K:13};
+    const SLM_ODDS={
+        0:{hit:null,miss:1.07,pole:7.91},1:{hit:11.87,miss:1.18,pole:7.91},
+        2:{hit:5.93,miss:1.31,pole:7.91},3:{hit:3.95,miss:1.48,pole:7.91},
+        4:{hit:2.96,miss:1.69,pole:7.91},5:{hit:2.37,miss:1.97,pole:7.91},
+        6:{hit:1.97,miss:2.37,pole:7.91},7:{hit:1.69,miss:2.96,pole:7.91},
+        8:{hit:1.48,miss:3.95,pole:7.91},9:{hit:1.31,miss:5.93,pole:7.91},
+        10:{hit:1.18,miss:11.87,pole:7.91},11:{hit:1.07,miss:null,pole:7.91},
+        '-1':{hit:null,miss:1.07,pole:23.75}
+    };
+
+    let slmChips=100000,slmStartChips=100000,slmSession=0;
+    let slmBets={hit:0,miss:0,pole:0},slmSelectedChip=null;
+    let slmTimer=15,slmTimerInt=null,slmDealing=false;
+    let slmHistory=[],slmWins=0,slmBetRounds=0,slmNo=0,slmOpen=false;
+    let slmCard1=null,slmCard2=null,slmWidth=null;
+
+    function slmGenNo(){return 5830012+Math.floor(Math.random()*800);}
+    function slmDrawCard(){return{suit:SLM_SUITS[Math.floor(Math.random()*4)],rank:SLM_RANKS[Math.floor(Math.random()*13)]};}
+
+    function toggleSLM(){
+        slmOpen=!slmOpen;
+        const content=document.getElementById('slmContent'),toggle=document.getElementById('slmToggle'),arrow=document.getElementById('slmArrow');
+        if(slmOpen){
+            content.style.display='block';toggle.classList.add('opened');arrow.classList.add('open');
+            if(slmNo===0){slmNo=slmGenNo();slmUpdateNo();slmApplyChips();slmNewRound();}
+            else if(!slmTimerInt){slmNewRound();}
+        }else{content.style.display='none';toggle.classList.remove('opened');arrow.classList.remove('open');clearInterval(slmTimerInt);slmTimerInt=null;}
     }
 
-    function closeLbOutside(e){
-        if(e.target===document.getElementById('dtModalOverlay'))closeLb();
+    function slmApplyChips(){const raw=document.getElementById('slmChipsInput').value.replace(/,/g,'');let val=Math.min(100000000,Math.max(10,parseInt(raw)||100000));slmChips=val;slmStartChips=val;slmSession=0;document.getElementById('slmChipsInput').value=val.toLocaleString();slmUpdateChips();}
+    function slmUpdateNo(){document.getElementById('slmNo').textContent='NO.'+slmNo;}
+    function slmUpdateChips(){
+        document.getElementById('slmChipsNum').textContent=slmChips.toLocaleString();
+        const sign=slmSession>=0?'+':'',color=slmSession>=0?'var(--brand-pink)':'var(--dragon)';
+        document.getElementById('slmSession').innerHTML=`累計 <span style="color:${color};font-weight:700;">${sign}${slmSession.toLocaleString()}</span>`;
+        updateNobleHint('slmNobleHint',slmSession);
     }
+
+    function slmNewRound(){
+        clearInterval(slmTimerInt);slmDealing=false;
+        slmBets={hit:0,miss:0,pole:0};
+        slmCard1=slmDrawCard();slmCard2=slmDrawCard();
+        if(SLM_VAL[slmCard1.rank]>SLM_VAL[slmCard2.rank])[slmCard1,slmCard2]=[slmCard2,slmCard1];
+        const v1=SLM_VAL[slmCard1.rank],v2=SLM_VAL[slmCard2.rank];
+        slmWidth=v1===v2?-1:v2-v1-1;
+        slmRenderOpenCards();slmRenderOddsZones();slmUpdateBets();
+        document.getElementById('slmResult').style.display='none';
+        document.getElementById('slmStatus').textContent='先選籌碼，再下注';
+        document.getElementById('slmBtnDeal').disabled=false;
+        slmGenCpu();slmStartTimer();
+    }
+
+    function slmRenderOpenCards(){
+        const c1=slmCard1,c2=slmCard2;
+        const r1=SLM_RED.includes(c1.suit),r2=SLM_RED.includes(c2.suit);
+        document.getElementById('slmC1rank').textContent=c1.rank;document.getElementById('slmC1rank').className='c-rank '+(r1?'red':'black');
+        document.getElementById('slmC1suit').textContent=c1.suit;document.getElementById('slmC1suit').className='c-suit '+(r1?'red':'black');
+        document.getElementById('slmC1card').style.background='#fff';document.getElementById('slmC1card').style.border='none';
+        document.getElementById('slmC2rank').textContent=c2.rank;document.getElementById('slmC2rank').className='c-rank '+(r2?'red':'black');
+        document.getElementById('slmC2suit').textContent=c2.suit;document.getElementById('slmC2suit').className='c-suit '+(r2?'red':'black');
+        document.getElementById('slmC2card').style.background='#fff';document.getElementById('slmC2card').style.border='none';
+        // 第三張背面
+        document.getElementById('slmC3card').style.background='linear-gradient(135deg,#1a1a2e,#16213e)';
+        document.getElementById('slmC3card').style.border='2px solid rgba(255,255,255,0.1)';
+        document.getElementById('slmC3rank').textContent='?';document.getElementById('slmC3rank').style.color='rgba(255,255,255,0.3)';
+        document.getElementById('slmC3suit').textContent='';
+        const w=slmWidth;
+        let wText='';
+        if(w===-1)wText='⚠️ 兩牌相同，可下注沒中或撞柱';
+        else if(w===0)wText=`龍門寬度：0（相鄰）`;
+        else if(w===11)wText=`龍門最寬：A～K（11格）`;
+        else wText=`龍門寬度：${w} 格`;
+        document.getElementById('slmWidthHint').textContent=wText;
+    }
+
+    function slmGetOdds(){return slmWidth===-1?SLM_ODDS['-1']:(SLM_ODDS[slmWidth]||SLM_ODDS[0]);}
+
+    function slmRenderOddsZones(){
+        const odds=slmGetOdds();
+        const hitZone=document.getElementById('slmZoneHit');
+        if(odds.hit===null){hitZone.style.opacity='0.35';hitZone.style.pointerEvents='none';document.getElementById('slmOddsHit').textContent='不開放';}
+        else{hitZone.style.opacity='1';hitZone.style.pointerEvents='auto';document.getElementById('slmOddsHit').textContent='贏 ×'+odds.hit;}
+        const missZone=document.getElementById('slmZoneMiss');
+        if(odds.miss===null){missZone.style.opacity='0.35';missZone.style.pointerEvents='none';document.getElementById('slmOddsMiss').textContent='不開放';}
+        else{missZone.style.opacity='1';missZone.style.pointerEvents='auto';document.getElementById('slmOddsMiss').textContent='贏 ×'+odds.miss;}
+        document.getElementById('slmOddsPole').textContent='贏 ×'+odds.pole;
+    }
+
+    function slmGenCpu(){const pool=(Math.floor(Math.random()*1200)+300)*10;document.getElementById('slmCpuHit').textContent=(Math.round(pool*0.5/10)*10).toLocaleString();document.getElementById('slmCpuMiss').textContent=(Math.round(pool*0.4/10)*10).toLocaleString();document.getElementById('slmCpuPole').textContent=(Math.round(pool*0.1/10)*10).toLocaleString();}
+
+    function slmSelectChip(val,el){slmSelectedChip=val;document.querySelectorAll('#slmContent .g-chip').forEach(c=>c.classList.remove('chip-selected'));el.classList.add('chip-selected');document.getElementById('slmStatus').textContent=`已選 ${val>=1000?val/1000+'K':val} 籌碼，點下注區`;}
+
+    function slmPlaceBet(zone){
+        if(slmDealing)return;
+        if(!slmSelectedChip){document.getElementById('slmStatus').textContent='⚠️ 請先選擇籌碼！';return;}
+        if(slmChips<=0){document.getElementById('slmStatus').textContent='❌ 🪐不足！';return;}
+        const odds=slmGetOdds();
+        if(zone==='hit'&&odds.hit===null){document.getElementById('slmStatus').textContent='❌ 此局射中不開放';return;}
+        if(zone==='miss'&&odds.miss===null){document.getElementById('slmStatus').textContent='❌ 此局沒中不開放';return;}
+        const actual=Math.min(slmSelectedChip,slmChips);slmBets[zone]+=actual;slmChips-=actual;slmUpdateChips();slmUpdateBets();
+    }
+
+    function slmUpdateBets(){
+        document.getElementById('slmMyHit').textContent=slmBets.hit>0?slmBets.hit.toLocaleString():'0';
+        document.getElementById('slmMyMiss').textContent=slmBets.miss>0?slmBets.miss.toLocaleString():'0';
+        document.getElementById('slmMyPole').textContent=slmBets.pole>0?slmBets.pole.toLocaleString():'0';
+        document.getElementById('slmZoneHit').classList.toggle('has-bet',slmBets.hit>0);
+        document.getElementById('slmZoneMiss').classList.toggle('has-bet',slmBets.miss>0);
+        document.getElementById('slmZonePole').classList.toggle('has-bet',slmBets.pole>0);
+    }
+
+    function slmStartTimer(){clearInterval(slmTimerInt);slmTimer=15;slmUpdateTimerUI();slmTimerInt=setInterval(()=>{slmTimer--;slmUpdateTimerUI();if(slmTimer<=0){clearInterval(slmTimerInt);slmTimerInt=null;if(!slmDealing)slmDeal();}},1000);}
+    function slmUpdateTimerUI(){const el=document.getElementById('slmTimerNum');el.textContent=slmTimer;el.classList.toggle('urgent',slmTimer<=5);document.getElementById('slmTimerBar').style.width=(slmTimer/15*100)+'%';const bar=document.getElementById('slmTimerBar');if(slmTimer<=3)bar.style.background='var(--dragon)';else if(slmTimer<=7)bar.style.background='linear-gradient(90deg,var(--dragon),#a855f7)';else bar.style.background='linear-gradient(90deg,#7c3aed,#a855f7)';}
+
+    function slmDeal(){
+        if(slmDealing)return;clearInterval(slmTimerInt);slmTimerInt=null;slmDealing=true;document.getElementById('slmBtnDeal').disabled=true;
+        const card3=slmDrawCard(),v3=SLM_VAL[card3.rank],v1=SLM_VAL[slmCard1.rank],v2=SLM_VAL[slmCard2.rank];
+        let outcome;
+        if(slmWidth===-1){outcome=v3===v1?'pole':'miss';}
+        else if(v3===v1||v3===v2){outcome='pole';}
+        else if(v3>v1&&v3<v2){outcome='hit';}
+        else{outcome='miss';}
+        // 翻開第三張
+        const isRed3=SLM_RED.includes(card3.suit);
+        const c3card=document.getElementById('slmC3card');
+        c3card.style.background='#fff';c3card.style.border='none';
+        document.getElementById('slmC3rank').textContent=card3.rank;document.getElementById('slmC3rank').style.color='';document.getElementById('slmC3rank').className='c-rank '+(isRed3?'red':'black');
+        document.getElementById('slmC3suit').textContent=card3.suit;document.getElementById('slmC3suit').className='c-suit '+(isRed3?'red':'black');
+        // 閃爍
+        const zoneEl=document.getElementById('slmZone'+outcome.charAt(0).toUpperCase()+outcome.slice(1));
+        const fc='win-'+outcome;zoneEl.classList.add(fc);setTimeout(()=>zoneEl.classList.remove(fc),2800);
+        // 結算
+        const odds=slmGetOdds();
+        const totalBet=slmBets.hit+slmBets.miss+slmBets.pole;let payout=0;
+        if(outcome==='hit'&&slmBets.hit>0)payout+=Math.floor(slmBets.hit*odds.hit);
+        if(outcome==='miss'&&slmBets.miss>0)payout+=Math.floor(slmBets.miss*odds.miss);
+        if(outcome==='pole'&&slmBets.pole>0)payout+=Math.floor(slmBets.pole*odds.pole);
+        slmChips+=payout;slmSession+=payout-totalBet;
+        const outcomeText={hit:'🎯 射中！',miss:'❌ 未射中',pole:'💥 撞柱！'};
+        const outcomeColor={hit:'#10b981',miss:'var(--dragon)',pole:'var(--brand-gold)'};
+        const resEl=document.getElementById('slmResult');resEl.style.display='block';
+        document.getElementById('slmResultText').textContent=outcomeText[outcome];document.getElementById('slmResultText').style.color=outcomeColor[outcome];
+        if(totalBet>0){slmBetRounds++;if(payout>0)slmWins++;document.getElementById('slmResultPayout').innerHTML=payout>0?`獲得 <span style="color:var(--brand-gold)">${payout.toLocaleString()}</span> 🪐 🎉`:`損失 <span style="color:var(--dragon)">${totalBet.toLocaleString()}</span> 🪐`;}
+        else{document.getElementById('slmResultPayout').textContent='本局未下注';}
+        slmHistory.unshift(outcome);if(slmHistory.length>20)slmHistory.pop();
+        slmRenderHistory();slmUpdateWinRate();slmUpdateChips();
+        slmNo++;slmUpdateNo();
+        setTimeout(()=>slmNewRound(),3000);
+    }
+
+    function slmRenderHistory(){const grid=document.getElementById('slmHistory');grid.innerHTML='';for(let i=0;i<20;i++){const dot=document.createElement('div');if(i<slmHistory.length){const h=slmHistory[i];dot.className='g-dot '+(h==='hit'?'slm-h':h==='miss'?'slm-m':'slm-p');dot.textContent=h==='hit'?'中':h==='miss'?'未':'柱';}else{dot.className='g-dot x';}grid.appendChild(dot);}}
+    function slmUpdateWinRate(){const el=document.getElementById('slmWrNum'),adv=document.getElementById('slmWrAdvice');if(slmBetRounds===0){el.textContent='—';return;}const rate=Math.round(slmWins/slmBetRounds*100);el.textContent=rate+'%';if(rate>=70){el.style.color='var(--brand-gold)';adv.textContent='手氣超旺 🔥';}else if(rate>=50){el.style.color='#10b981';adv.textContent='不錯，繼續 💪';}else if(rate>=30){el.style.color='var(--brand-pink)';adv.textContent='普普，小賭怡情 😅';}else{el.style.color='var(--dragon)';adv.textContent=`今天先算了吧 🙃`;}}
+    function slmUploadScore(){let name=document.getElementById('slmName').value.trim()||'User';uploadScore('slm',name,slmSession,slmWins,slmBetRounds);openLb('slm');}
+    function slmRestart(){clearInterval(slmTimerInt);slmTimerInt=null;slmDealing=false;const raw=document.getElementById('slmChipsInput').value.replace(/,/g,'');slmChips=Math.min(100000000,Math.max(10,parseInt(raw)||100000));slmStartChips=slmChips;slmSession=0;slmBets={hit:0,miss:0,pole:0};slmWins=0;slmBetRounds=0;slmHistory=[];slmSelectedChip=null;slmNo=slmGenNo();document.querySelectorAll('#slmContent .g-chip').forEach(c=>c.classList.remove('chip-selected'));document.getElementById('slmWrNum').textContent='—';document.getElementById('slmWrAdvice').textContent='尚未開始，手氣未知 🎲';slmUpdateChips();slmUpdateBets();slmRenderHistory();slmUpdateNo();slmNewRound();}
     </script>
 </body>
 </html>

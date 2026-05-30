@@ -228,6 +228,25 @@
             color: white; border: none; box-shadow: 0 10px 30px rgba(232,101,154,0.38), 0 0 0 1px rgba(255,255,255,0.15) inset; transform: translateY(-3px);
         }
 
+        /* 目標爵位按鈕 */
+        .target-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 4px; }
+        .btn-target {
+            background: rgba(255,255,255,0.035); color: var(--t2); border: 1px solid rgba(255,255,255,0.08);
+            padding: 16px 0; border-radius: 16px; font-family: 'Sora','Noto Sans TC',sans-serif; font-size: 0.95rem;
+            font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+        }
+        .btn-target:hover { background: rgba(255,255,255,0.09); color: #fff; transform: translateY(-1px); }
+        .btn-target.span2 { grid-column: span 2; }
+        .btn-target.active {
+            color: #fff; border: none;
+            background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
+            box-shadow: 0 10px 30px color-mix(in srgb, var(--target-rank-end) 42%, transparent), 0 0 0 1px rgba(255,255,255,0.16) inset;
+            transform: translateY(-2px);
+        }
+
+        /* 自訂倍數輸入框 */
+        .custom-multi-wrap { margin-top: 12px; animation: panel-rise 0.35s cubic-bezier(0.22,1,0.36,1) both; }
+
         .btn-main {
             position: relative; overflow: hidden;
             width: 100%; background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
@@ -535,20 +554,29 @@
 
         <div class="input-group">
             <label>選擇目標</label>
-            <select id="targetRank" onchange="updateTargetColor()">
-                <option value="25500"    data-rank="1">劍客 (25,500)</option>
-                <option value="175500"   data-rank="2">騎士 (175,500)</option>
-                <option value="425500"   data-rank="3">伯爵 (425,500)</option>
-                <option value="2425500"  data-rank="4">公爵 (2,425,500)</option>
-                <option value="5000000"  data-rank="5">教皇 (5,000,000)</option>
-                <option value="10000000" data-rank="6">至尊 (10,000,000)</option>
-                <option value="20000000" data-rank="7" selected>神王 (20,000,000)</option>
+            <select id="targetRank" onchange="updateTargetColor()" style="display:none;">
+                <option value="25500"    data-rank="1">劍客</option>
+                <option value="175500"   data-rank="2">騎士</option>
+                <option value="425500"   data-rank="3">伯爵</option>
+                <option value="2425500"  data-rank="4">公爵</option>
+                <option value="5000000"  data-rank="5">教皇</option>
+                <option value="10000000" data-rank="6">至尊</option>
+                <option value="20000000" data-rank="7" selected>神王</option>
             </select>
+            <div class="target-grid">
+                <button class="btn-target" onclick="selectTarget(0,this)">劍客</button>
+                <button class="btn-target" onclick="selectTarget(1,this)">騎士</button>
+                <button class="btn-target" onclick="selectTarget(2,this)">伯爵</button>
+                <button class="btn-target" onclick="selectTarget(3,this)">公爵</button>
+                <button class="btn-target" onclick="selectTarget(4,this)">教皇</button>
+                <button class="btn-target" onclick="selectTarget(5,this)">至尊</button>
+                <button class="btn-target span2 active" onclick="selectTarget(6,this)">神王</button>
+            </div>
         </div>
 
         <div class="input-group">
             <label>加倍讚倍數</label>
-            <input type="number" id="multi" value="30" inputmode="numeric" pattern="[0-9]*">
+            <input type="number" id="multi" value="30" style="display:none;">
             <div class="quick-btn-grid">
                 <button class="btn-small active" onclick="setMulti(30, this)">30x</button>
                 <button class="btn-small" onclick="setMulti(25, this)">25x</button>
@@ -556,7 +584,11 @@
                 <button class="btn-small" onclick="setMulti(15, this)">15x</button>
                 <button class="btn-small" onclick="setMulti(10, this)">10x</button>
                 <button class="btn-small" onclick="setMulti(5, this)">5x</button>
-                <button class="btn-small" onclick="setMulti(1, this)" style="grid-column:span 2;">無加倍</button>
+                <button class="btn-small" onclick="setMulti(1, this)">無加倍</button>
+                <button class="btn-small" id="btnCustomMulti" onclick="openCustomMulti(this)">自訂</button>
+            </div>
+            <div class="custom-multi-wrap" id="customMultiWrap" style="display:none;">
+                <input type="number" id="multiCustom" inputmode="numeric" pattern="[0-9]*" min="1" placeholder="輸入倍數，例如 50" oninput="onCustomMulti(this)" onclick="this.select()">
             </div>
         </div>
 
@@ -849,6 +881,29 @@
         document.getElementById('multi').value=val;
         document.querySelectorAll('.btn-small').forEach(b=>b.classList.remove('active'));
         el.classList.add('active');
+        const cw=document.getElementById('customMultiWrap'); if(cw) cw.style.display='none';
+        if(document.getElementById('resBoard').style.display==='block') doCalc();
+    }
+    function openCustomMulti(el){
+        document.querySelectorAll('.btn-small').forEach(b=>b.classList.remove('active'));
+        el.classList.add('active');
+        const cw=document.getElementById('customMultiWrap'); cw.style.display='block';
+        const inp=document.getElementById('multiCustom');
+        if(inp.value) document.getElementById('multi').value=parseInt(inp.value)||1;
+        inp.focus();
+        if(inp.value && document.getElementById('resBoard').style.display==='block') doCalc();
+    }
+    function onCustomMulti(inp){
+        const v=Math.max(1,parseInt(inp.value)||1);
+        document.getElementById('multi').value=v;
+        if(document.getElementById('resBoard').style.display==='block') doCalc();
+    }
+    function selectTarget(i,el){
+        const sel=document.getElementById('targetRank');
+        sel.selectedIndex=i;
+        document.querySelectorAll('.btn-target').forEach(b=>b.classList.remove('active'));
+        el.classList.add('active');
+        updateTargetColor();
         if(document.getElementById('resBoard').style.display==='block') doCalc();
     }
     function getCurrentRankInfo(val){for(let i=0;i<ranks.length;i++){if(val>=ranks[i].val)return ranks[i];}return{name:"V0",val:0,code:0};}

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -71,7 +72,7 @@
         }
 
         /* ════════ 氛圍層：極光 / 星塵 / 顆粒 ════════ */
-        .orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(90px); }
+        .orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(60px); will-change: transform; }
         .orb-1 { width: 650px; height: 520px; background: radial-gradient(circle, rgba(232,101,154,0.16) 0%, transparent 70%); top: -150px; right: -160px; animation: orb-drift 14s ease-in-out infinite alternate; }
         .orb-2 { width: 420px; height: 380px; background: radial-gradient(circle, rgba(0,242,255,0.11) 0%, transparent 70%); bottom: 6%; left: -90px; animation: orb-drift 18s ease-in-out infinite alternate-reverse; }
         .orb-3 { width: 520px; height: 460px; background: radial-gradient(circle, rgba(240,185,66,0.10) 0%, transparent 70%); top: 38%; left: 50%; transform: translateX(-50%); animation: orb-pulse 12s ease-in-out infinite; }
@@ -81,12 +82,12 @@
         .aurora {
             position: fixed; inset: -20% -20% auto -20%; height: 72vh; z-index: 0; pointer-events: none;
             background: conic-gradient(from 180deg at 50% 50%, rgba(232,101,154,0.14), rgba(0,170,255,0.10), rgba(168,85,247,0.11), rgba(240,185,66,0.10), rgba(232,101,154,0.14));
-            filter: blur(70px); opacity: 0.82; animation: aurora-rotate 30s linear infinite;
+            filter: blur(50px); opacity: 0.82; will-change: transform; animation: aurora-rotate 30s linear infinite;
         }
         .aurora-2 {
             position: fixed; inset: auto -25% -28% -25%; height: 62vh; z-index: 0; pointer-events: none;
             background: conic-gradient(from 0deg at 50% 50%, rgba(0,170,255,0.09), rgba(168,85,247,0.09), rgba(232,101,154,0.10), rgba(0,242,255,0.07), rgba(0,170,255,0.09));
-            filter: blur(82px); opacity: 0.6; animation: aurora-rotate 44s linear infinite reverse;
+            filter: blur(60px); opacity: 0.6; will-change: transform; animation: aurora-rotate 44s linear infinite reverse;
         }
         .vignette {
             position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -141,8 +142,8 @@
         @keyframes card-in { from { opacity: 0; transform: translateY(34px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes bd-rotate { to { --bd-angle: 360deg; } }
         @keyframes halo {
-            0%,100% { box-shadow: 0 0 0 1px rgba(255,255,255,0.05) inset, 0 1px 0 rgba(255,255,255,0.10) inset, 0 40px 90px rgba(0,0,0,0.62), 0 0 75px color-mix(in srgb, var(--current-rank-end) 26%, transparent); }
-            50%     { box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 1px 0 rgba(255,255,255,0.12) inset, 0 46px 104px rgba(0,0,0,0.62), 0 0 150px color-mix(in srgb, var(--current-rank-end) 55%, transparent); }
+            0%,100% { box-shadow: 0 0 0 1px rgba(255,255,255,0.05) inset, 0 1px 0 rgba(255,255,255,0.10) inset, 0 40px 90px rgba(0,0,0,0.62), 0 0 75px rgba(0,170,255,0.18); }
+            50%     { box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 1px 0 rgba(255,255,255,0.12) inset, 0 46px 104px rgba(0,0,0,0.62), 0 0 150px rgba(0,170,255,0.35); }
         }
 
         /* VIP 金角框 */
@@ -240,31 +241,23 @@
         .btn-target.active {
             color: #fff; border: none;
             background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
-            box-shadow: 0 10px 30px color-mix(in srgb, var(--target-rank-end) 42%, transparent), 0 0 0 1px rgba(255,255,255,0.16) inset;
+            box-shadow: 0 10px 30px rgba(0,170,255,0.28), 0 0 0 1px rgba(255,255,255,0.16) inset;
             transform: translateY(-2px);
         }
 
         /* 自訂倍數輸入框 */
         .custom-multi-wrap { margin-top: 12px; animation: panel-rise 0.35s cubic-bezier(0.22,1,0.36,1) both; }
 
-        .btn-main {
-            position: relative; overflow: hidden;
-            width: 100%; background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
-            color: #fff; border: none; padding: 18px; border-radius: 50px; font-family: 'Sora', sans-serif;
-            font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 36px;
-            transition: background 0.5s ease, box-shadow 0.3s, transform 0.2s; letter-spacing: 2px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.12) inset;
+        .res-accent-bar {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--target-rank-start), var(--target-rank-end), var(--target-rank-start), transparent);
+            background-size: 220% 100%;
+            animation: bar-slide 4.5s linear infinite;
+            transition: background 0.6s ease;
         }
-        .btn-main::after {
-            content: ''; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
-            background: linear-gradient(100deg, transparent, rgba(255,255,255,0.45), transparent);
-            transform: skewX(-18deg); transition: left 0.7s ease; pointer-events: none;
-        }
-        .btn-main:hover { filter: brightness(1.12); transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.18) inset; }
-        .btn-main:hover::after { left: 130%; }
 
         .result-panel {
-            margin-top: 30px; border-radius: 26px; overflow: hidden;
+            margin-top: 36px; border-radius: 26px; overflow: hidden;
             border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.24);
             display: none; backdrop-filter: blur(16px);
             box-shadow: 0 20px 50px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset;
@@ -331,7 +324,7 @@
         .game-toggle {
             width: 100%; background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent), rgba(20,24,33,0.7); border: 1px solid rgba(255,255,255,0.10);
             border-radius: 24px; cursor: pointer; transition: box-shadow 0.3s, transform 0.2s;
-            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%);
             box-shadow: 0 20px 55px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.06) inset;
             display: flex; align-items: center; gap: 16px; padding: 16px 20px; position: relative; overflow: hidden;
         }
@@ -341,7 +334,7 @@
         .game-content {
             display: none; background: rgba(20,24,33,0.74); border: 1px solid rgba(255,255,255,0.10);
             border-top: none; border-radius: 0 0 28px 28px; padding: 24px 20px 28px;
-            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%);
             box-shadow: 0 30px 80px rgba(0,0,0,0.55);
         }
 
@@ -525,6 +518,11 @@
         .lb-wr { font-size:0.65rem; color:var(--t3); }
         .lb-empty { text-align:center; font-size:0.82rem; color:var(--t3); padding:30px 0; }
 
+        @media (max-width: 480px) {
+            .aurora-2 { opacity: 0; }
+            .orb-3 { opacity: 0; }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.05ms !important; }
         }
@@ -592,12 +590,9 @@
             </div>
         </div>
 
-        <button class="btn-main" id="btnMain" onclick="doCalc()">開始試算</button>
-        <div style="text-align:center;margin-top:10px;font-size:0.7rem;color:var(--t3);letter-spacing:0.3px;">
-            * 調整現在讚數 (本頁 › 貴族等級 › 左下黃色數字) 或選擇目標請重按
-        </div>
 
         <div id="resBoard" class="result-panel">
+            <div class="res-accent-bar"></div>
             <div class="res-header">
                 <div class="res-label">預計晉升成本</div>
                 <span class="res-money" id="outCash">$0</span>
@@ -882,7 +877,7 @@
         document.querySelectorAll('.btn-small').forEach(b=>b.classList.remove('active'));
         el.classList.add('active');
         const cw=document.getElementById('customMultiWrap'); if(cw) cw.style.display='none';
-        if(document.getElementById('resBoard').style.display==='block') doCalc();
+        doCalc();
     }
     function openCustomMulti(el){
         document.querySelectorAll('.btn-small').forEach(b=>b.classList.remove('active'));
@@ -891,12 +886,12 @@
         const inp=document.getElementById('multiCustom');
         if(inp.value) document.getElementById('multi').value=parseInt(inp.value)||1;
         inp.focus();
-        if(inp.value && document.getElementById('resBoard').style.display==='block') doCalc();
+        if(inp.value) doCalc();
     }
     function onCustomMulti(inp){
         const v=Math.max(1,parseInt(inp.value)||1);
         document.getElementById('multi').value=v;
-        if(document.getElementById('resBoard').style.display==='block') doCalc();
+        doCalc();
     }
     function selectTarget(i,el){
         const sel=document.getElementById('targetRank');
@@ -904,12 +899,12 @@
         document.querySelectorAll('.btn-target').forEach(b=>b.classList.remove('active'));
         el.classList.add('active');
         updateTargetColor();
-        if(document.getElementById('resBoard').style.display==='block') doCalc();
+        doCalc();
     }
     function getCurrentRankInfo(val){for(let i=0;i<ranks.length;i++){if(val>=ranks[i].val)return ranks[i];}return{name:"V0",val:0,code:0};}
     function setRankColors(code,prefix){const c=rankGradients[code]||rankGradients[0];root.style.setProperty(`--${prefix}-rank-start`,c[0]);root.style.setProperty(`--${prefix}-rank-end`,c[1]);}
-    function updateRank(){const val=parseFloat(document.getElementById('currZan').value)||0;const r=getCurrentRankInfo(val);document.getElementById('rankDisplay').innerText='目前爵位：'+r.name;setRankColors(r.code,'current');}
-    function updateTargetColor(){const sel=document.getElementById('targetRank');const code=parseInt(sel.options[sel.selectedIndex].getAttribute('data-rank'));setRankColors(code,'target');const c=rankGradients[code]||rankGradients[7];const btn=document.getElementById('btnMain');btn.style.background=`linear-gradient(135deg,${c[0]},${c[1]})`;btn.style.boxShadow=`0 8px 25px ${c[1]}55`;}
+    function updateRank(){const val=parseFloat(document.getElementById('currZan').value)||0;const r=getCurrentRankInfo(val);document.getElementById('rankDisplay').innerText='目前爵位：'+r.name;setRankColors(r.code,'current');doCalc();}
+    function updateTargetColor(){const sel=document.getElementById('targetRank');const code=parseInt(sel.options[sel.selectedIndex].getAttribute('data-rank'));setRankColors(code,'target');const c=rankGradients[code]||rankGradients[7];const rb=document.getElementById('resBoard');rb.style.borderColor=c[1]+'55';rb.style.boxShadow=`0 20px 50px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset, 0 0 25px ${c[1]}1a`;}
     function adjustMoneyFontSize(text){const el=document.getElementById('outCash'),len=text.length;if(len<=7)el.style.fontSize='3rem';else if(len<=9)el.style.fontSize='2.4rem';else if(len<=11)el.style.fontSize='1.9rem';else el.style.fontSize='1.5rem';}
     let nobleDiff=null; // 共用：總需罐頭
     function doCalc(){
@@ -946,6 +941,7 @@
         dtNo=dtGenNo(); dtUpdateNo(); dtRenderHistory(); dtGenCpu(); dtUpdateChips();
         document.getElementById('dtChipsInput').addEventListener('change',dtApplyChips);
         document.getElementById('slmChipsInput').addEventListener('change',slmApplyChips);
+        doCalc();
     }
 
     /* ══ 共用 Noble Hint ══ */

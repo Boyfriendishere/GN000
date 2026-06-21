@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -1259,7 +1258,7 @@
 
         var sparks = [];
         function fire(x, y){
-          if (reduce) return;
+          if (reduce || document.documentElement.classList.contains('lite')) return;
           for (var i = 0; i < 46; i++){
             var ang = Math.random()*6.2832, sp = Math.random()*5.5 + 2;
             sparks.push({ x: x, y: y, vx: Math.cos(ang)*sp, vy: Math.sin(ang)*sp - 3.2,
@@ -1270,6 +1269,10 @@
         }
 
         function loop(){
+          if (reduce || document.documentElement.classList.contains('lite') || document.hidden){
+            dctx.clearRect(0,0,W,H); bctx.clearRect(0,0,W,H);
+            requestAnimationFrame(loop); return;
+          }
           dctx.clearRect(0,0,W,H);
           for (var i = 0; i < motes.length; i++){
             var m = motes[i];
@@ -1321,5 +1324,79 @@
       } catch(e) { /* 特效為裝飾性質，失敗時靜默略過 */ }
     })();
     </script>
+<!-- ⚡ 效能優化注入層（純外層降載，不更動任何計算 / 遊戲邏輯） -->
+<button id="perfToggle" onclick="togglePerf()" aria-label="效能模式切換">⚡ 效能模式</button>
+<style>
+    /* 全機型微降基礎模糊：50px → 26px，外觀仍維持玻璃感 */
+    :root { --glass-blur: blur(26px) saturate(150%); }
+
+    #perfToggle {
+        position: fixed; top: 14px; right: 14px; z-index: 60;
+        background: rgba(20,24,33,0.82); color: var(--t2);
+        border: 1px solid rgba(255,255,255,0.14); border-radius: 50px;
+        padding: 8px 15px; font-family: 'Sora', sans-serif; font-size: 0.72rem;
+        font-weight: 700; letter-spacing: 0.5px; cursor: pointer;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.35); transition: all 0.25s;
+    }
+    #perfToggle:hover { color: #fff; border-color: rgba(255,255,255,0.3); transform: translateY(-1px); }
+    .lite #perfToggle { background: rgba(16,185,129,0.2); border-color: rgba(16,185,129,0.55); color: #34d399; }
+
+    /* ════════ 省電 / 低階裝置模式 ════════ */
+    /* 1) 拿掉一直在重繪的氛圍層 */
+    .lite .aurora, .lite .aurora-2, .lite .orb, .lite .stars, .lite .grain { display: none !important; }
+    /* 2) 大幅調降 backdrop-filter（手機最吃效能的一項） */
+    .lite .card, .lite .game-toggle, .lite .game-content {
+        backdrop-filter: blur(7px) saturate(115%) !important;
+        -webkit-backdrop-filter: blur(7px) saturate(115%) !important;
+    }
+    /* 3) 停掉主卡的旋轉邊框 + 呼吸光暈，只保留進場動畫 */
+    .lite .card {
+        animation: card-in 0.6s cubic-bezier(0.22,1,0.36,1) both !important;
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.06) inset, 0 26px 64px rgba(0,0,0,0.6) !important;
+    }
+    /* 4) 關掉其餘無限迴圈動畫 */
+    .lite .rank-status-bar, .lite .res-accent-bar,
+    .lite h1, .lite .res-money, .lite .gift-tag { animation: none !important; }
+    .lite h1 { background-position: 0 center !important; }
+    .lite .playing-card::after { display: none !important; }
+</style>
+<script>
+(function(){
+    function detectLowEnd(){
+        try {
+            var mem = navigator.deviceMemory;          // Chrome / Android 才有
+            var cores = navigator.hardwareConcurrency;
+            if (mem && mem <= 4) return true;
+            if (cores && cores <= 4) return true;
+            return false;
+        } catch(e){ return false; }
+    }
+    window.updatePerfLabel = function(){
+        var b = document.getElementById('perfToggle'); if(!b) return;
+        b.textContent = document.documentElement.classList.contains('lite') ? '⚡ 省電模式 ON' : '⚡ 效能模式';
+    };
+    window.togglePerf = function(){
+        document.documentElement.classList.toggle('lite');
+        window.updatePerfLabel();
+    };
+    // 低階裝置自動進省電模式（手機仍可手動切換比較）
+    if (detectLowEnd()) document.documentElement.classList.add('lite');
+    window.updatePerfLabel();
+
+    // 分頁切走 / 隱藏時暫停遊戲計時器，回到畫面再續跑
+    document.addEventListener('visibilitychange', function(){
+        try {
+            if (document.hidden){
+                if (dtTimerInt){ clearInterval(dtTimerInt); dtTimerInt = null; }
+                if (slmTimerInt){ clearInterval(slmTimerInt); slmTimerInt = null; }
+            } else {
+                if (dtOpen && !dtDealing && !dtTimerInt) dtStartTimer();
+                if (slmOpen && !slmDealing && !slmTimerInt && slmCard1) slmStartTimer();
+            }
+        } catch(e){}
+    });
+})();
+</script>
 </body>
 </html>

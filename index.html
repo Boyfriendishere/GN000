@@ -118,16 +118,6 @@
         }
         @keyframes bar-slide { to { background-position: 220% 0; } }
 
-        /* 吉祥物 */
-        .hero-mascot {
-            display: block; width: 92px; height: 92px; margin: 6px auto 14px;
-            border-radius: 28px; object-fit: cover; object-position: left center;
-            border: 2.5px solid #fff;
-            box-shadow: 0 10px 26px rgba(150,110,40,0.22), 0 0 0 1.5px var(--gold-2);
-            animation: mascot-pop 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.15s both;
-        }
-        @keyframes mascot-pop { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: scale(1); } }
-
         h1 {
             font-family: 'Baloo 2', 'Noto Sans TC', sans-serif;
             background: linear-gradient(110deg, var(--current-rank-start) 0%, var(--current-rank-end) 42%, var(--current-rank-start) 84%);
@@ -477,7 +467,6 @@
     <!-- GN000 貴族計算 -->
     <div class="card">
         <div class="rank-status-bar" id="statusBar"></div>
-        <img class="hero-mascot" src="GN-OG-banner.png" alt="貴族計算器吉祥物">
         <h1 id="mainTitle">Goodnight</h1>
         <div class="title-ornament"><i></i><span>貴族計算</span><i></i></div>
 

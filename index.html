@@ -181,14 +181,13 @@
         }
 
         /* 目標爵位按鈕 */
-        .target-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 4px; }
+        .target-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px; }
         .btn-target {
             background: #fffdf8; color: var(--t2); border: 1.5px solid rgba(184,132,31,0.18);
-            padding: 15px 0; border-radius: 16px; font-family: 'Baloo 2','Noto Sans TC',sans-serif; font-size: 0.95rem;
-            font-weight: 800; letter-spacing: 3px; cursor: pointer; transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+            padding: 14px 0; border-radius: 16px; font-family: 'Baloo 2','Noto Sans TC',sans-serif; font-size: 0.85rem;
+            font-weight: 800; letter-spacing: 1px; cursor: pointer; transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
         }
         .btn-target:hover { border-color: var(--target-rank-end); color: var(--target-rank-end); transform: translateY(-2px); }
-        .btn-target.span2 { grid-column: span 2; }
         .btn-target.active {
             color: #fff; border-color: transparent;
             background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
@@ -485,7 +484,7 @@
                 <option value="2425500"  data-rank="4">公爵</option>
                 <option value="5000000"  data-rank="5">教皇</option>
                 <option value="10000000" data-rank="6">至尊</option>
-                <option value="20000000" data-rank="7" selected>神王</option>
+                <option value="20000000" data-rank="7">神王</option>
             </select>
             <div class="target-grid">
                 <button class="btn-target" onclick="selectTarget(0,this)">劍客</button>
@@ -494,15 +493,15 @@
                 <button class="btn-target" onclick="selectTarget(3,this)">公爵</button>
                 <button class="btn-target" onclick="selectTarget(4,this)">教皇</button>
                 <button class="btn-target" onclick="selectTarget(5,this)">至尊</button>
-                <button class="btn-target span2 active" onclick="selectTarget(6,this)">神王</button>
+                <button class="btn-target" onclick="selectTarget(6,this)">神王</button>
             </div>
         </div>
 
         <div class="input-group">
             <label>加倍讚倍數</label>
-            <input type="number" id="multi" value="30" style="display:none;">
+            <input type="number" id="multi" value="1" style="display:none;">
             <div class="quick-btn-grid">
-                <button class="btn-small active" onclick="setMulti(30, this)">30x</button>
+                <button class="btn-small" onclick="setMulti(30, this)">30x</button>
                 <button class="btn-small" onclick="setMulti(25, this)">25x</button>
                 <button class="btn-small" onclick="setMulti(20, this)">20x</button>
                 <button class="btn-small" onclick="setMulti(15, this)">15x</button>
@@ -803,6 +802,7 @@
         document.querySelectorAll('.btn-small').forEach(b=>b.classList.remove('active'));
         el.classList.add('active');
         const cw=document.getElementById('customMultiWrap'); if(cw) cw.style.display='none';
+        multiChosen=true;
         doCalc();
     }
     function openCustomMulti(el){
@@ -810,13 +810,14 @@
         el.classList.add('active');
         const cw=document.getElementById('customMultiWrap'); cw.style.display='block';
         const inp=document.getElementById('multiCustom');
-        if(inp.value) document.getElementById('multi').value=parseInt(inp.value)||1;
+        if(inp.value){ document.getElementById('multi').value=parseInt(inp.value)||1; multiChosen=true; }
         inp.focus();
         if(inp.value) doCalc();
     }
     function onCustomMulti(inp){
         const v=Math.max(1,parseInt(inp.value)||1);
         document.getElementById('multi').value=v;
+        multiChosen=true;
         doCalc();
     }
     function selectTarget(i,el){
@@ -824,6 +825,7 @@
         sel.selectedIndex=i;
         document.querySelectorAll('.btn-target').forEach(b=>b.classList.remove('active'));
         el.classList.add('active');
+        targetChosen=true;
         updateTargetColor();
         doCalc();
     }
@@ -833,7 +835,9 @@
     function updateTargetColor(){const sel=document.getElementById('targetRank');const code=parseInt(sel.options[sel.selectedIndex].getAttribute('data-rank'));setRankColors(code,'target');const c=rankGradients[code]||rankGradients[7];const rb=document.getElementById('resBoard');rb.style.borderColor=c[1]+'55';rb.style.boxShadow=`0 20px 50px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset, 0 0 25px ${c[1]}1a`;}
     function adjustMoneyFontSize(text){const el=document.getElementById('outCash'),len=text.length;if(len<=7)el.style.fontSize='3rem';else if(len<=9)el.style.fontSize='2.4rem';else if(len<=11)el.style.fontSize='1.9rem';else el.style.fontSize='1.5rem';}
     let nobleDiff=null; // 共用：總需罐頭
+    let targetChosen=false, multiChosen=false; // 選擇目標／加倍讚倍數 是否已由使用者主動選擇
     function doCalc(){
+        if(!targetChosen || !multiChosen){ document.getElementById('resBoard').style.display='none'; return; }
         const curr=parseFloat(document.getElementById('currZan').value)||0;
         const target=parseFloat(document.getElementById('targetRank').value);
         const multi=parseInt(document.getElementById('multi').value)||1;

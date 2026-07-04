@@ -188,6 +188,7 @@
             font-weight: 800; letter-spacing: 1px; cursor: pointer; transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
         }
         .btn-target:hover { border-color: var(--target-rank-end); color: var(--target-rank-end); transform: translateY(-2px); }
+        .btn-target-wide { grid-column: span 2; }
         .btn-target.active {
             color: #fff; border-color: transparent;
             background: linear-gradient(135deg, var(--target-rank-start), var(--target-rank-end));
@@ -493,7 +494,7 @@
                 <button class="btn-target" onclick="selectTarget(3,this)">公爵</button>
                 <button class="btn-target" onclick="selectTarget(4,this)">教皇</button>
                 <button class="btn-target" onclick="selectTarget(5,this)">至尊</button>
-                <button class="btn-target" onclick="selectTarget(6,this)">神王</button>
+                <button class="btn-target btn-target-wide" onclick="selectTarget(6,this)">神王</button>
             </div>
         </div>
 

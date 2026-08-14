@@ -23,7 +23,7 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@900&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
             --brand-pink: #f078ab;
@@ -110,21 +110,31 @@
         @keyframes bar-slide { to { background-position: 220% 0; } }
 
         h1 {
-            font-family: 'Baloo 2', 'Noto Sans TC', sans-serif;
+            font-family: 'Noto Serif TC', 'Noto Sans TC', serif;
             background: linear-gradient(110deg, var(--current-rank-start) 0%, var(--current-rank-end) 42%, var(--current-rank-start) 84%);
             background-size: 230% auto;
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-            text-align: center; font-size: clamp(2rem, 9vw, 2.5rem); margin-bottom: 8px; font-weight: 800;
-            letter-spacing: 0.5px; line-height: 1.05; transition: color 0.6s ease;
+            text-align: center; font-size: clamp(2rem, 9vw, 2.4rem); margin-bottom: 0; font-weight: 900;
+            letter-spacing: 3px; text-indent: 3px; line-height: 1.2; transition: color 0.6s ease;
             animation: title-sheen 6.5s linear infinite;
         }
         @keyframes title-sheen { to { background-position: 230% center; } }
+        .title-bar {
+            width: 52px; height: 3px; border-radius: 3px; margin: 14px auto 0;
+            background: linear-gradient(135deg, var(--current-rank-start), var(--current-rank-end));
+            transition: background 0.6s ease;
+        }
         .title-ornament {
             display: flex; align-items: center; justify-content: center; gap: 12px;
-            margin-bottom: 34px;
+            margin-top: 14px; margin-bottom: 10px;
         }
         .title-ornament span { font-size: 0.82rem; letter-spacing: 6px; padding-left: 6px; color: var(--gold-1); font-family: 'Noto Sans TC', sans-serif; font-weight: 700; }
         .title-ornament i { display: block; height: 1.5px; width: 46px; background: linear-gradient(90deg, transparent, var(--gold-2), transparent); }
+        .h-sub {
+            font-family: 'Space Grotesk', 'Noto Sans TC', sans-serif;
+            font-size: 0.64rem; font-weight: 600; letter-spacing: 5px; text-indent: 5px;
+            color: var(--t3); text-align: center; margin-bottom: 32px;
+        }
 
         label {
             font-family: 'Baloo 2', 'Noto Sans TC', sans-serif; color: var(--t2); font-size: 0.72rem; font-weight: 700;
@@ -537,7 +547,9 @@
     <div class="card">
         <div class="rank-status-bar" id="statusBar"></div>
         <h1 id="mainTitle">Goodnight</h1>
+        <div class="title-bar"></div>
         <div class="title-ornament"><i></i><span>貴族計算</span><i></i></div>
+        <div class="h-sub">CANS → CROWN</div>
 
         <div class="input-group">
             <label>現在讚數 (本頁 › 貴族等級 › 左下黃色數字)</label>
